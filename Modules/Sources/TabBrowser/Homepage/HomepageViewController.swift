@@ -24,7 +24,7 @@ class HomepageViewController: UIViewController, UICollectionViewDelegate {
     private let collectionViewLayout = Layout()
 
     private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+        let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: collectionViewLayout)
         collectionView.delegate = self
         collectionView.backgroundColor = Colors.background.color
         return collectionView
