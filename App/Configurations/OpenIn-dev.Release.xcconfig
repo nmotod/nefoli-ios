@@ -1,0 +1,2 @@
+#include "includes/Base.Release.xcconfig"
+#include "includes/OpenIn-dev.xcconfig"

@@ -1,0 +1,14 @@
+--exclude **/*-Generated.*
+--exclude DerivedData
+--exclude Build
+
+--disable redundantReturn
+--disable unusedArguments
+--disable andOperator
+--header strip
+--ifdef no-indent
+--trimwhitespace nonblank-lines
+--extensionacl on-declarations
+
+# Exclude default Logger methods which use autoclosures
+--selfrequired print,debug,info,notice,warning,trace,error,critical

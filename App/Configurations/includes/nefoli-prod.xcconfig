@@ -1,0 +1,7 @@
+#include "prod.xcconfig"
+#include "nefoli.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = app.nefoli
+PRODUCT_NAME = nefoli
+INFOPLIST_KEY_CFBundleDisplayName = nefoli
+ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon
