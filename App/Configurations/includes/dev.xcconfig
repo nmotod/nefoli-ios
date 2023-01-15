@@ -1,0 +1,3 @@
+NFL_URL_SCHEME = app.nefoli.dev
+
+GCC_PREPROCESSOR_DEFINITIONS = NFL_URL_SCHEME=@\"$(NFL_URL_SCHEME)\" $(inherited)

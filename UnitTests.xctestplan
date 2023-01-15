@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "FB0583FA-AD29-4D87-B3C8-7E360C51F606",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:..\/Modules",
+        "identifier" : "DatabaseTests",
+        "name" : "DatabaseTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Modules",
+        "identifier" : "TabBrowserTests",
+        "name" : "TabBrowserTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Modules",
+        "identifier" : "UtilitiesTests",
+        "name" : "UtilitiesTests"
+      }
+    }
+  ],
+  "version" : 1
+}

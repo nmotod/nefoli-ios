@@ -1,0 +1,11 @@
+xcassets:
+  inputs:
+    - Resources/Colors.xcassets
+    - Resources/Images.xcassets
+  outputs:
+    - templateName: swift5
+      params:
+        forceProvidesNamespaces: false
+        forceFileNameEnum: true
+        publicAccess: true
+      output: Asset-Generated.swift
