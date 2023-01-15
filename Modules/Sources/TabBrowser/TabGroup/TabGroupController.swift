@@ -242,7 +242,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
     func tabGroupViewRequestsAddNewTab(_: TabGroupView) {
         guard let group = group else { return }
 
-        let tab = Tab()
+        let tab = Tab(initialURL: InternalURL.home.url)
 
         try! group.realm!.write {
             group.add(tab: tab, options: .init(
