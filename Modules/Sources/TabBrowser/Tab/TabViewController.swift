@@ -101,10 +101,8 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, H
     }
 
     // MARK: - View lifecycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    
+    override func loadView() {
         let rootView = RootView(frame: UIScreen.main.bounds)
         self.rootView = rootView
         view = rootView
@@ -118,6 +116,10 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, H
         rootView.addressBar.labelButton.addAction(.init(handler: { [weak self] _ in
             self?.editAddress()
         }), for: .touchUpInside)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
         Task { @MainActor in
             let webView = await webViewManager.getWebView(frame: view.bounds)
