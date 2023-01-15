@@ -92,7 +92,8 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, H
 
         tabDidSet()
         
-//        overrideUserInterfaceStyle = .light
+        // TODO: Allow setting light/dark
+        // overrideUserInterfaceStyle = .light
     }
 
     @available(*, unavailable)
@@ -120,6 +121,8 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, H
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // TODO: Show homepage if needed
 
         Task { @MainActor in
             let webView = await webViewManager.getWebView(frame: view.bounds)
