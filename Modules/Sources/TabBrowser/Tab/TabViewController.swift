@@ -309,6 +309,10 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, H
 
     func webView(_ webView: WKWebView, didCommit _: WKNavigation!) {
         guard let tab = tab else { return }
+        
+        try! tab.realm!.write {
+            tab.updateBackForwardList(wkBackForwardList: webView.backForwardList)
+        }
 
         rootView.progressBar.finish()
 
