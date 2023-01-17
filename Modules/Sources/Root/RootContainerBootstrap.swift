@@ -3,6 +3,26 @@ import Foundation
 import TabBrowser
 import UIKit
 
+private func downloadSeedData(url: URL, maxRetry: Int) async -> Data? {
+    for i in 0 ..< maxRetry {
+        if i > 0 {
+            print("Retrying...")
+            try! await Task.sleep(for: .seconds(1))
+        }
+        
+        do {
+            let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData)
+            let (data, _) = try await URLSession.shared.data(for: request)
+            return data
+            
+        } catch {
+            print("ERROR - Failed to load seed: \(error)")
+        }
+    }
+    
+    return nil
+}
+
 private let seedLoader: DatabaseBootstrap.SeedLoader = { () async throws -> RootState? in
     return await Task {
         guard let seedURLString = ProcessInfo.processInfo.environment["NFL_SEED_URL"],
@@ -18,18 +38,10 @@ private let seedLoader: DatabaseBootstrap.SeedLoader = { () async throws -> Root
         
         print("Downloading database seed: \(url)")
 
-        let data: Data
+        let data = await downloadSeedData(url: url, maxRetry: 3)
 
         do {
-            let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData)
-            (data, _) = try await URLSession.shared.data(for: request)
-        } catch {
-            print("ERROR - Failed to load seed: \(error)")
-            return nil
-        }
-
-        do {
-            let seed = try JSONSerialization.jsonObject(with: data)
+            let seed = try JSONSerialization.jsonObject(with: data!)
 
             let rootState = RootState(value: seed)
             return rootState
@@ -53,7 +65,7 @@ class RootContainerBootstrap {
 
     private let webViewManager = WebViewManager()
 
-    private let databaseBootstrap: DatabaseBootstrap
+    let databaseBootstrap: DatabaseBootstrap
 
     init() {
         appBundleIdentifier = Bundle.main.bundleIdentifier!
