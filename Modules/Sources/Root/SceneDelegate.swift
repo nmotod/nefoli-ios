@@ -1,3 +1,4 @@
+import RealmSwift
 import TabBrowser
 import UIKit
 import Utilities
@@ -17,33 +18,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         splashWindow?.windowLevel = .normal + 1
         splashWindow?.rootViewController = UIStoryboard(name: "LaunchScreen", bundle: .main).instantiateInitialViewController()
 
-        Task {
-            let container = try await RootContainerBootstrap.shared.container
-
-            await MainActor.run {
-                let g1 = container.rootState.groups.first
-
-                let controller = TabGroupController(group: g1, dependency: container)
-                self.tabGroupController = controller
-
-                window.rootViewController = controller
-
-                UIView.animate(withDuration: 0.3) {
-                    splashWindow?.alpha = 0
-                } completion: { _ in
-                    splashWindow = nil
-                }
-
-                #if DEBUG
-                executeDebugAction()
-                #endif
-            }
-        }
-
         self.window = window
 
         splashWindow?.isHidden = false
         window.makeKeyAndVisible()
+
+        Task<Void, Never> {
+            let container = try! await RootContainerBootstrap.shared.container
+
+            let g1 = container.rootState.groups.first
+
+            let controller = TabGroupController(group: g1, dependency: container)
+            self.tabGroupController = controller
+
+            window.rootViewController = controller
+
+            UIView.animate(withDuration: 0.3) {
+                splashWindow?.alpha = 0
+            } completion: { _ in
+                splashWindow = nil
+            }
+
+            #if DEBUG
+            executeDebugAction()
+            #endif
+        }
 
         if !connectionOptions.urlContexts.isEmpty {
 //            handleOpenURL(urlContexts: connectionOptions.urlContexts)
