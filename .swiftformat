@@ -7,7 +7,6 @@
 --disable andOperator
 --header strip
 --ifdef no-indent
---trimwhitespace nonblank-lines
 --extensionacl on-declarations
 
 # Exclude default Logger methods which use autoclosures
