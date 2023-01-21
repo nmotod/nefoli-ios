@@ -75,10 +75,7 @@ class RootContainerBootstrap {
             cachesDirectoryURL: URL.cachesDirectory.appending(path: appBundleIdentifier + ".screenshots")
         )
 
-        databaseBootstrap = .init(
-            // configuration: .init(inMemoryIdentifier: UUID().uuidString),
-            configuration: .init(),
-            seedLoader: seedLoader
+        databaseBootstrap = .init(seedLoader: seedLoader)
         )
     }
 

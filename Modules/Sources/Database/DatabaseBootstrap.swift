@@ -3,22 +3,23 @@ import RealmSwift
 
 public class DatabaseBootstrap {
     public typealias SeedLoader = () async throws -> RootState?
-    
-    public let configuration: Realm.Configuration
-    
+
     public let seedLoader: SeedLoader
-    
-    public init(configuration: Realm.Configuration, seedLoader: @escaping SeedLoader) {
-        // TODO: Set schemaVersion, migrationBlock
-        self.configuration = configuration
+
+    public init(seedLoader: @escaping SeedLoader) {
         self.seedLoader = seedLoader
     }
 
     public var database: Database {
         get async throws { try await bootstrapTask.value }
     }
-    
+
     private lazy var bootstrapTask = Task { @MainActor () throws -> Database in
+        let configuration = Realm.Configuration(
+            schemaVersion: schemaVersion,
+            migrationBlock: doMigrate(_:oldSchemaVersion:)
+        )
+
         let realm = try Realm(configuration: configuration)
 
         let rootState: RootState
@@ -52,11 +53,11 @@ public class DatabaseBootstrap {
                 if rootState.realm == nil {
                     realm.add(rootState)
                 }
-                    
+
                 if rootState.bookmarksFolder == nil {
                     rootState.bookmarksFolder = bookmarksFolder
                 }
-                    
+
                 if rootState.favoritesFolder == nil {
                     rootState.favoritesFolder = favoritesFolder
                 }
