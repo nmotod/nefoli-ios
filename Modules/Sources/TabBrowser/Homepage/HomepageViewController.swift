@@ -4,11 +4,11 @@ import Theme
 import UIKit
 import Utilities
 
-public typealias HomepageViewControllerDependency = UsesBookmarkFolders
+public typealias HomepageViewControllerDependency = UsesBookmarkFolders & HomepageViewControllerCellDependency
 
 protocol HomepageViewControllerDelegate: AnyObject {
     func homepageVC(_: HomepageViewController, openBookmark bookmark: BookmarkItem)
-    
+
     func homepageVCForwardGestureDidRecognize(_: HomepageViewController)
 }
 
@@ -16,9 +16,11 @@ class HomepageViewController: UIViewController, UICollectionViewDelegate {
     enum Section: Int {
         case favorites
     }
-    
+
+    let dependency: HomepageViewControllerDependency
+
     weak var delegate: HomepageViewControllerDelegate?
-    
+
     let allowsForwardGesture: Bool
 
     private let collectionViewLayout = Layout()
@@ -29,7 +31,7 @@ class HomepageViewController: UIViewController, UICollectionViewDelegate {
         collectionView.backgroundColor = Colors.background.color
         return collectionView
     }()
-    
+
     let favoritesFolder: BookmarkItem
 
     private var dataSource: UICollectionViewDiffableDataSource<Section, BookmarkItem>?
@@ -44,7 +46,8 @@ class HomepageViewController: UIViewController, UICollectionViewDelegate {
         self.delegate = delegate
         self.allowsForwardGesture = allowsForwardGesture
         favoritesFolder = dependency.favoritesFolder
-        
+        self.dependency = dependency
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -57,21 +60,21 @@ class HomepageViewController: UIViewController, UICollectionViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
 
         setUpDataSource()
-        
+
         if allowsForwardGesture {
             let interaction = ForwardPanGestureInteraction(contentView: collectionView) { [weak self] _ in
                 guard let self = self else { return }
-                
+
                 self.delegate?.homepageVCForwardGestureDidRecognize(self)
             }
-            
+
             view.addInteraction(interaction)
         }
     }
@@ -83,9 +86,16 @@ class HomepageViewController: UIViewController, UICollectionViewDelegate {
 
         let headerRegistration = UICollectionView.SupplementaryRegistration<HeroHeaderView>(elementKind: UICollectionView.elementKindSectionHeader) { _, _, _ in }
 
-        let dataSource = UICollectionViewDiffableDataSource<Section, BookmarkItem>(collectionView: collectionView) { collectionView, indexPath, item in
-            collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
-        }
+        let dataSource = UICollectionViewDiffableDataSource<Section, BookmarkItem>(
+            collectionView: collectionView,
+            cellProvider: { [weak self] collectionView, indexPath, item in
+                guard let self else { return nil }
+
+                let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
+                cell.injectIfNeeded(dependency: self.dependency)
+                return cell
+            }
+        )
         self.dataSource = dataSource
 
         dataSource.supplementaryViewProvider = { collectionView, elementKind, indexPath in
@@ -107,12 +117,12 @@ class HomepageViewController: UIViewController, UICollectionViewDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
     }
-    
+
     // MARK: - Collection view
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = favoritesFolder.children[indexPath.item]
-        
+
         delegate?.homepageVC(self, openBookmark: item)
     }
 }
