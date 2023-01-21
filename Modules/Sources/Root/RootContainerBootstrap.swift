@@ -1,3 +1,4 @@
+import Bookmarks
 import Database
 import Foundation
 import TabBrowser
@@ -9,17 +10,17 @@ private func downloadSeedData(url: URL, maxRetry: Int) async -> Data? {
             print("Retrying...")
             try! await Task.sleep(for: .seconds(1))
         }
-        
+
         do {
             let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData)
             let (data, _) = try await URLSession.shared.data(for: request)
             return data
-            
+
         } catch {
             print("ERROR - Failed to load seed: \(error)")
         }
     }
-    
+
     return nil
 }
 
@@ -35,7 +36,7 @@ private let seedLoader: DatabaseBootstrap.SeedLoader = { () async throws -> Root
             print("invalid seed URL: \(seedURLString)")
             return nil
         }
-        
+
         print("Downloading database seed: \(url)")
 
         let data = await downloadSeedData(url: url, maxRetry: 3)
@@ -58,24 +59,30 @@ class RootContainerBootstrap {
     var container: RootContainer {
         get async throws { try await bootstrapTask.value }
     }
-    
+
     private let appBundleIdentifier: String
 
     private let screenshotManager: ScreenshotManager
 
     private let webViewManager = WebViewManager()
 
+    private let bookmarkIconManager: BookmarkIconManager
+
     let databaseBootstrap: DatabaseBootstrap
 
     init() {
         appBundleIdentifier = Bundle.main.bundleIdentifier!
-               
+
         screenshotManager = ScreenshotManager(
             screenshotSize: UIScreen.main.bounds.size,
             cachesDirectoryURL: URL.cachesDirectory.appending(path: appBundleIdentifier + ".screenshots")
         )
 
         databaseBootstrap = .init(seedLoader: seedLoader)
+
+        bookmarkIconManager = BookmarkIconManager(
+            maxSize: .init(width: 180, height: 180),
+            cachesDirectoryURL: URL.applicationSupportDirectory.appending(path: appBundleIdentifier + "/BookmarkIcons")
         )
     }
 
@@ -89,7 +96,8 @@ class RootContainerBootstrap {
             bookmarksFolder: db.bookmarksFolder,
             favoritesFolder: db.favoritesFolder,
             screenshotManager: screenshotManager,
-            webViewManager: webViewManager
+            webViewManager: webViewManager,
+            bookmarkIconManager: bookmarkIconManager
         )
     }
 }

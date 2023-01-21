@@ -1,3 +1,4 @@
+import Bookmarks
 import Database
 import Foundation
 import RealmSwift
@@ -11,4 +12,5 @@ struct RootContainer: TabGroupControllerDependency {
     var favoritesFolder: BookmarkItem
     var screenshotManager: ScreenshotManager
     var webViewManager: WebViewManager
+    var bookmarkIconManager: BookmarkIconManager
 }
