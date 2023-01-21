@@ -5,7 +5,7 @@ import Utilities
 extension TabGroupController {
     public enum Action: String, ActionProtocol {
         public static var category: String { "tabGroup" }
-        
+
         case bookmarks
         case showMenuSheet
         case listTabs
@@ -71,7 +71,7 @@ extension TabGroupController {
 
         return nil
     }
-    
+
     public static func supportedActions() -> [any ActionProtocol] {
         return TabGroupController.Action.allCases + TabViewController.Action.allCases
     }

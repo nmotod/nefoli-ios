@@ -12,9 +12,9 @@ class StickyContainerView: UIView, StickyView {
     let contentView = UIView()
 
     var maximumHeight: CGFloat { frame.height }
-    
+
     var minimumHeight: CGFloat = 0
-    
+
     var percentHidden: CGFloat = 0 {
         didSet {
             switch position {
@@ -29,7 +29,7 @@ class StickyContainerView: UIView, StickyView {
             isUserInteractionEnabled = percentHidden < 1
         }
     }
-    
+
     var hiddenHeight: CGFloat {
         return minimumHeight + (maximumHeight - minimumHeight) * percentHidden
     }
@@ -60,7 +60,7 @@ class StickyContainerView: UIView, StickyView {
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func layoutSuperviewIfNeeded() {
         superview?.layoutIfNeeded()
     }

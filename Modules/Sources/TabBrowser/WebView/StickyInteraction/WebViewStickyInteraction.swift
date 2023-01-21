@@ -17,7 +17,7 @@ class WebViewStickyInteraction: NSObject, UIScrollViewDelegate {
     private(set) var topBar: StickyView?
 
     var bottomBar: StickyView?
-    
+
     private(set) weak var webView: WKWebView?
 
     private var isScrollTrackkingDisabled = false

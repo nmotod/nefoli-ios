@@ -23,7 +23,7 @@ class TabGroupView: UIView,
     //    private let tabStore = Container.shared.tabStore
 
 //    private var log = defaultLogger
-    
+
     private(set) var style: Style = .default
 
     var group: TabGroup? {
@@ -183,13 +183,13 @@ class TabGroupView: UIView,
 
         if recognizer.state == .ended, recognizer.recognizedGesture != nil {
             hideCloseIndicator()
-            
+
             guard let group = group else { return }
-            
+
             try! group.realm!.write {
                 group.remove(at: closeRecognizingIndexPath.item)
             }
-            
+
             return
         }
 
@@ -419,7 +419,7 @@ class TabGroupView: UIView,
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let group = group else { return }
-        
+
         collectionView.deselectItem(at: indexPath, animated: false)
 
         try! group.realm!.write {

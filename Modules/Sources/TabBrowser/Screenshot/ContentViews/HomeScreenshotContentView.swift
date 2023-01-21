@@ -3,7 +3,7 @@ import UIKit
 class HomeScreenshotContentView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         backgroundColor = UIColor(white: 0.89, alpha: 1)
 
         let iconView = UIImageView(image: UIImage(systemName: "square.grid.3x3.fill")!)

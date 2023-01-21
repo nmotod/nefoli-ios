@@ -13,17 +13,17 @@ class InternalURLSchemeHandler: NSObject, WKURLSchemeHandler {
         </body>
         </html>
         """
-        
+
         let respones = URLResponse(
             url: urlSchemeTask.request.url!,
             mimeType: "text/html",
             expectedContentLength: html.lengthOfBytes(using: .utf8),
             textEncodingName: "UTF-8"
         )
-        
+
         urlSchemeTask.didReceive(respones)
         urlSchemeTask.didReceive(html.data(using: .utf8)!)
-        
+
         urlSchemeTask.didFinish()
     }
 

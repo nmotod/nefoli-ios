@@ -24,19 +24,19 @@ class WebLinkLongPressGestureRecognizer: UIGestureRecognizer {
             longPressTimer?.invalidate()
         }
     }
-    
+
     typealias Handler = (WebLinkLongPressGestureRecognizer) -> Void
-    
+
     let handler: Handler
-    
+
     init(handler: @escaping Handler) {
         self.handler = handler
-        
+
         super.init(target: nil, action: nil)
-        
+
         addTarget(self, action: #selector(didRecognize(_:)))
     }
-    
+
     @objc private func didRecognize(_: Any) {
         handler(self)
     }

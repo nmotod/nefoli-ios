@@ -31,7 +31,7 @@ public class WebpageMetadata: NSObject, UIActivityItemSource {
         Task { @MainActor in
             fetchMetadataIfNeeded()
         }
-        
+
         return lpMetadata
     }
 

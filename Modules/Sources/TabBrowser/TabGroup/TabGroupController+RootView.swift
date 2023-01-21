@@ -14,13 +14,13 @@ extension TabGroupController {
 
             // A non-empty frame should be specified to prevent auto layout warning.
             let toolbar = UIToolbar(frame: .init(x: 0, y: 0, width: 300, height: 44))
-            
+
             toolbar.standardAppearance = appearance
             toolbar.tintColor = Colors.tint.color
-            
+
             return toolbar
         }()
-        
+
         let stickyToolbar = StickyContainerView(position: .bottom)
 
         let tabGroupView: TabGroupView
@@ -36,7 +36,7 @@ extension TabGroupController {
             containerView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
-            
+
             stickyToolbar.contentView.addSubview(toolbar)
             toolbar.snp.makeConstraints { make in
                 make.edges.equalToSuperview()

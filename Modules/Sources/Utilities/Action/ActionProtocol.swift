@@ -24,7 +24,7 @@ extension ActionProtocol {
         guard let action = Self(rawValue: ext) else {
             return nil
         }
-        
+
         self = action
     }
 }

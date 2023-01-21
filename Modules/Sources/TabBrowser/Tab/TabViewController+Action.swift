@@ -88,7 +88,7 @@ extension TabViewController {
                     image: nil,
                     builder: { definition, tabVC in
                         weak var tabVC = tabVC
-                        
+
                         return ExecutableAction(definition: definition) { context in
                             tabVC?.editAddress(context)
                         }

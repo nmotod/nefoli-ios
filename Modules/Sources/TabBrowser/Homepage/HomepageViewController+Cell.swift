@@ -22,11 +22,11 @@ extension HomepageViewController {
         }
 
         var bookmarkIconManager: BookmarkIconManager!
-        
+
         let iconView = UIView()
 
         let iconImageView = UIImageView()
-        
+
         let titleLabel = UILabel()
 
         var item: BookmarkItem? {
@@ -39,7 +39,7 @@ extension HomepageViewController {
 
         override init(frame: CGRect) {
             super.init(frame: frame)
-            
+
             iconView.backgroundColor = .white
             iconView.layer.cornerRadius = Self.iconCornerRadius
             iconView.layer.masksToBounds = true

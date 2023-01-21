@@ -24,12 +24,12 @@ extension TabGroup {
             guard let activeTabId = activeTabId else {
                 return nil
             }
-            
+
             return children.firstIndex { tab in
                 tab.id == activeTabId
             }
         }
-        
+
         set {
             if let index = newValue {
                 activeTabId = children[index].id
