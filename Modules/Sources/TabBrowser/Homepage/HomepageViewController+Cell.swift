@@ -1,23 +1,32 @@
+import Bookmarks
 import Database
 import Foundation
 import Theme
 import UIKit
+import Utilities
+
+public protocol HomepageViewControllerCellDependency: UsesBookmarkIconManager {}
 
 extension HomepageViewController {
     class Cell: UICollectionViewCell {
         static let spacing: CGFloat = 8
         static let insets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
 
-        static let imageSize: CGFloat = 60
-        static let imageCornerRadius: CGFloat = 12
+        static let iconSize: CGFloat = 60
+        static let iconCornerRadius: CGFloat = 12
 
         static let titleFont = UIFont.systemFont(ofSize: 13)
 
         static var preferredHeight: CGFloat {
-            return imageSize + 10 + titleFont.lineHeight * 2 * 1.3
+            return iconSize + 10 + titleFont.lineHeight * 2 * 1.3
         }
 
-        let imageView = UIView()
+        var bookmarkIconManager: BookmarkIconManager!
+        
+        let iconView = UIView()
+
+        let iconImageView = UIImageView()
+        
         let titleLabel = UILabel()
 
         var item: BookmarkItem? {
@@ -26,15 +35,24 @@ extension HomepageViewController {
             }
         }
 
+        private var metadata: WebpageMetadata?
+
         override init(frame: CGRect) {
             super.init(frame: frame)
+            
+            iconView.backgroundColor = .white
+            iconView.layer.cornerRadius = Self.iconCornerRadius
+            iconView.layer.masksToBounds = true
+            iconView.layer.shouldRasterize = true
+            iconView.snp.makeConstraints { make in
+                make.width.height.equalTo(Self.iconSize)
+            }
 
-            imageView.backgroundColor = .red
-            imageView.layer.cornerRadius = Self.imageCornerRadius
-            imageView.layer.masksToBounds = true
-            imageView.layer.shouldRasterize = true
-            imageView.snp.makeConstraints { make in
-                make.width.height.equalTo(Self.imageSize)
+            iconImageView.contentMode = .scaleAspectFit
+            iconView.addSubview(iconImageView)
+            iconImageView.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.width.height.lessThanOrEqualToSuperview()
             }
 
             titleLabel.font = Self.titleFont
@@ -42,7 +60,7 @@ extension HomepageViewController {
             titleLabel.numberOfLines = 2
             titleLabel.textAlignment = .center
 
-            let vStack = UIStackView(arrangedSubviews: [imageView, titleLabel])
+            let vStack = UIStackView(arrangedSubviews: [iconView, titleLabel])
             vStack.axis = .vertical
             vStack.spacing = Self.spacing
             vStack.alignment = .center
@@ -56,13 +74,33 @@ extension HomepageViewController {
             }
         }
 
-        private func itemDidSet() {
-            titleLabel.text = item?.title
-        }
-
         @available(*, unavailable)
         required init?(coder _: NSCoder) {
             fatalError("init(coder:) has not been implemented")
+        }
+
+        func injectIfNeeded(dependency: HomepageViewControllerCellDependency) {
+            bookmarkIconManager = dependency.bookmarkIconManager
+        }
+
+        private func itemDidSet() {
+            titleLabel.text = item?.title
+
+            if let item = item {
+                Task { @MainActor in
+                    iconImageView.image = try! await bookmarkIconManager.getImage(for: item)
+                }
+
+            } else {
+                iconImageView.image = nil
+            }
+        }
+
+        override func prepareForReuse() {
+            super.prepareForReuse()
+
+            item = nil
+            iconImageView.image = nil
         }
     }
 }
