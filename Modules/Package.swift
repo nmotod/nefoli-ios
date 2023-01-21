@@ -71,6 +71,7 @@ let package = Package(
                 .target(name: "Theme"),
                 .target(name: "Utilities"),
                 .target(name: "MenuSheet"),
+                .target(name: "Bookmarks"),
             ]
         ),
         .testTarget(
@@ -106,6 +107,20 @@ let package = Package(
                 .product(name: "SnapKit", package: "SnapKit"),
                 .target(name: "Utilities"),
                 .target(name: "Theme"),
+                .target(name: "Bookmarks"),
+            ]
+        ),
+        .target(
+            name: "Bookmarks",
+            dependencies: [
+                .target(name: "Database"),
+                .target(name: "Theme"),
+            ]
+        ),
+        .testTarget(
+            name: "BookmarksTests",
+            dependencies: [
+                .target(name: "Bookmarks"),
             ]
         ),
     ]
