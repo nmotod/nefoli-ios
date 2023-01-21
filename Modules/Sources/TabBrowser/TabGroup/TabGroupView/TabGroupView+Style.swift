@@ -12,13 +12,13 @@ extension TabGroupView {
         var showsDropShadow: Bool = false
         var showsTitle: Bool = false
         var showsActiveIndicator: Bool = true
-        
+
         var hidesActiveIndicator: Bool { !showsActiveIndicator }
-        
+
         static var `default`: Style { .collapsed }
-        
+
         static var collapsed = Style()
-        
+
         // TODO: var --> let
         static var expanded = Style(
             indentationWidthPerDepth: 10,
@@ -26,7 +26,7 @@ extension TabGroupView {
             showsTitle: true,
             showsActiveIndicator: false
         )
-        
+
         static var list = Style(
             indentationWidthPerDepth: 10,
             screenshotScale: 2,

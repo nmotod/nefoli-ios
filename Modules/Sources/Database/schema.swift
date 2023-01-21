@@ -6,6 +6,6 @@ let schemaVersion: UInt64 = 8
 
 func doMigrate(_ migration: Migration, oldSchemaVersion: UInt64) {
     let log = Logger(category: "migration")
-    
+
     log.info("doMigrate - \(oldSchemaVersion, privacy: .public) => \(schemaVersion, privacy: .public)")
 }

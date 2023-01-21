@@ -129,7 +129,7 @@ class AddressBar: UIView {
 
         addressText = title
     }
-    
+
     override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: Self.defaultHeight)
     }

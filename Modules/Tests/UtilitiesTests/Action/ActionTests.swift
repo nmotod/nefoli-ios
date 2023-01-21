@@ -5,16 +5,16 @@ import XCTest
 final class ActionTests: XCTestCase {
     enum Action: String, ActionProtocol {
         typealias BuilderContext = Void
-        
+
         static var category: String { "test" }
-        
+
         case test
-        
+
         var definition: ActionDefinition<ActionTests.Action> {
             fatalError()
         }
     }
-    
+
     func testIsEnabledPublisher() throws {
         let subject = CurrentValueSubject<Bool, Never>(false)
 

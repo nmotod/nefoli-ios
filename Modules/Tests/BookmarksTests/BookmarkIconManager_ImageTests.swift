@@ -45,12 +45,12 @@ final class BookmarkIconManager_ImageTests: XCTestCase {
     )
 
     let realm = try! Realm(configuration: .init(inMemoryIdentifier: UUID().uuidString))
-    
+
     var item: BookmarkItem!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-        
+
         item = BookmarkItem()
         item.url = URL(string: "https://example.com/")
 

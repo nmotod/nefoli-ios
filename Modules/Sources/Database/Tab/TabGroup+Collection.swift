@@ -22,7 +22,7 @@ extension TabGroup {
     public func move(from: Int, to: Int) {
         children.move(from: from, to: to)
     }
-    
+
     public func observeChildren(
         on queue: DispatchQueue? = nil,
         _ block: @escaping (RealmCollectionChange<List<Tab>>) -> Void

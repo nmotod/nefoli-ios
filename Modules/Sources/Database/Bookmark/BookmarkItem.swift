@@ -10,7 +10,7 @@ public class BookmarkItem: Object, CreatedDateStorable {
         case bookmark
         case folder
     }
-    
+
     @Persisted(primaryKey: true) public var id = UUID().uuidString
 
     @Persisted public var kind: Kind = .bookmark
@@ -22,10 +22,10 @@ public class BookmarkItem: Object, CreatedDateStorable {
     @Persisted public var title: String
 
     @Persisted public var url: URL?
-    
+
     @Persisted public var children: List<BookmarkItem>
-    
+
     @Persisted public var createdDate = Date.now
-    
+
     @Persisted public var remoteIconExists: Bool?
 }

@@ -23,9 +23,9 @@ public class BookmarkIconManager {
     @MainActor
     public func getImage(for item: BookmarkItem) async throws -> UIImage? {
         if let remoteIconExists = item.remoteIconExists, !remoteIconExists { return nil }
-        
+
         guard let webpageURL = item.url else { return nil }
-        
+
         let fileURL = cacheFileURL(for: item)
 
         if FileManager.default.fileExists(atPath: fileURL.path),
@@ -40,7 +40,7 @@ public class BookmarkIconManager {
             try item.realm!.write {
                 item.remoteIconExists = false
             }
-            
+
             return nil
         }
 

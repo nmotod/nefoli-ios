@@ -15,9 +15,9 @@ public class Tab: EmbeddedObject, CreatedDateStorable, PropertyIterable {
     @Persisted public var initialURL: URL?
 
     @Persisted public private(set) var backList: List<BackForwardListItem>
-    
+
     @Persisted public private(set) var forwardList: List<BackForwardListItem>
-    
+
     @Persisted public private(set) var current: BackForwardListItem?
 
     @Persisted public private(set) var createdDate: Date = .init()
@@ -35,10 +35,10 @@ public class Tab: EmbeddedObject, CreatedDateStorable, PropertyIterable {
         if let currentItem = wkBackForwardList.currentItem {
             current = .init(wkItem: currentItem)
         }
-        
+
         backList.removeAll()
         backList.append(objectsIn: wkBackForwardList.backList.map(BackForwardListItem.init(wkItem:)))
-        
+
         forwardList.removeAll()
         forwardList.append(objectsIn: wkBackForwardList.forwardList.map(BackForwardListItem.init(wkItem:)))
     }

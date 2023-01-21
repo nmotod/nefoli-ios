@@ -179,29 +179,29 @@ final class TabGroupTests: XCTestCase {
 
     func testRemoveActive() throws {
         let group = TabGroup()
-        
+
         try realm.write {
             rootState.groups.append(group)
-            
+
             group.children.append(objectsIn: [
                 .init(initialURL: URL(string: "https://example.com/first")!),
                 .init(initialURL: URL(string: "https://example.com/second")!),
                 .init(initialURL: URL(string: "https://example.com/third")!),
             ])
-            
+
             group.activeTabId = group[1].id
         }
-        
+
         XCTAssertEqual(dumpTabGroup(group), [
             "https://example.com/first",
             "* https://example.com/second",
             "https://example.com/third",
         ])
-        
+
         try realm.write {
             group.remove(at: 1)
         }
-        
+
         XCTAssertEqual(dumpTabGroup(group), [
             "https://example.com/first",
             "* https://example.com/third",

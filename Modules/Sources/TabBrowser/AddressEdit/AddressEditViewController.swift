@@ -12,7 +12,7 @@ class AddressEditViewController: UIViewController, AddressEditViewControllerRoot
     weak var delegate: AddressEditViewControllerDelegate?
 
     private var rootView: RootView!
-    
+
     init(
         initialText: String,
         delegate: AddressEditViewControllerDelegate

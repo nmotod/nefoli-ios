@@ -91,7 +91,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, H
         super.init(nibName: nil, bundle: nil)
 
         tabDidSet()
-        
+
         // TODO: Allow setting light/dark
         // overrideUserInterfaceStyle = .light
     }
@@ -102,7 +102,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, H
     }
 
     // MARK: - View lifecycle
-    
+
     override func loadView() {
         let rootView = RootView(frame: UIScreen.main.bounds)
         self.rootView = rootView
@@ -121,7 +121,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, H
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // TODO: Show homepage if needed
 
         Task { @MainActor in
@@ -211,12 +211,12 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, H
         let activityVC = UIActivityViewController(activityItems: [webpageMetadata], applicationActivities: [])
         (context?.viewController ?? self).present(activityVC, animated: true)
     }
-    
+
     func editAddress(_ context: ExecutableAction.Context? = nil) {
         context?.viewController?.dismiss(animated: true)
-        
+
         let text = webView?.url?.absoluteString ?? tab?.initialURL?.absoluteString ?? ""
-        
+
         let editVC = AddressEditViewController(initialText: text, delegate: self)
         present(editVC, animated: true)
     }
@@ -309,7 +309,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, H
 
     func webView(_ webView: WKWebView, didCommit _: WKNavigation!) {
         guard let tab = tab else { return }
-        
+
         try! tab.realm!.write {
             tab.updateBackForwardList(wkBackForwardList: webView.backForwardList)
         }
@@ -411,19 +411,19 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, H
             homepageVC.view.alpha = 0
         }
     }
-    
+
     // MARK: - Address edit
-    
+
     func addressEditVC(_: AddressEditViewController, didEnter text: String) {
         dismiss(animated: true)
-        
+
         if let url = URL(string: text) {
             webView?.load(URLRequest(url: url))
-            
+
         } else {
             var urlComponents = URLComponents(string: "https://www.google.com/search")!
             urlComponents.queryItems = [URLQueryItem(name: "q", value: text)]
-            
+
             webView?.load(URLRequest(url: urlComponents.url!))
         }
     }

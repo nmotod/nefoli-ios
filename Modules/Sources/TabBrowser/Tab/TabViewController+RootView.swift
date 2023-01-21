@@ -5,7 +5,7 @@ import UIKit
 extension TabViewController {
     class RootView: UIView {
         let addressBar = AddressBar()
-        
+
         let stickyAddressBar = StickyContainerView(position: .top)
 
         let progressBar = ProgressBar()
@@ -21,7 +21,7 @@ extension TabViewController {
                 make.bottom.equalToSuperview().offset(0.5)
                 make.height.equalTo(3)
             }
-            
+
             stickyAddressBar.contentView.addSubview(addressBar)
             addressBar.snp.makeConstraints { make in
                 make.edges.equalToSuperview()

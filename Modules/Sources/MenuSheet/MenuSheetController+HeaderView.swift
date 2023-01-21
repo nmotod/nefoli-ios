@@ -18,12 +18,12 @@ extension MenuSheetController {
             urlLabel = .init()
             urlLabel.font = .systemFont(ofSize: 14)
             urlLabel.textColor = Colors.textNormal.color.withAlphaComponent(0.6)
-            
+
             super.init(frame: .zero)
-            
+
             axis = .vertical
             distribution = .fill
-            
+
             addArrangedSubview({
                 let hStack = UIStackView()
 
@@ -35,14 +35,14 @@ extension MenuSheetController {
                     let vStack = UIStackView(arrangedSubviews: [titleLabel, urlLabel])
                     vStack.axis = .vertical
                     vStack.alignment = .leading
-                    
+
                     vStack.directionalLayoutMargins = .init(top: 10, leading: 20, bottom: 10, trailing: 10)
                     vStack.isLayoutMarginsRelativeArrangement = true
-                    
+
                     vStack.snp.makeConstraints { make in
                         make.height.greaterThanOrEqualTo(60)
                     }
-                    
+
                     return vStack
                 }())
 

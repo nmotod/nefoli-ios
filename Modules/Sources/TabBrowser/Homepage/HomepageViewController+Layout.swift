@@ -3,7 +3,7 @@ import UIKit
 extension HomepageViewController {
     class Layout: UICollectionViewFlowLayout {
         override class var layoutAttributesClass: AnyClass { LayoutAttributes.self }
-        
+
         /// A height of the top part of the hero header.
         /// It gets off screen if scrolled down.
         private var shrinkableHeaderHeight: CGFloat { HeroHeaderView.maximumHeight - HeroHeaderView.minimumHeight }
@@ -38,7 +38,7 @@ extension HomepageViewController {
                 super.prepare()
                 return
             }
-            
+
             let minWidth = min(collectionView.bounds.width, collectionView.bounds.height)
             let xInset: CGFloat = 10
 
@@ -71,7 +71,7 @@ extension HomepageViewController {
             guard let collectionView = collectionView else { return }
 
             let adjustedOffsetY = bounds.origin.y + collectionView.adjustedContentInset.top
-            
+
             let percentExpansion = (shrinkableHeaderHeight - adjustedOffsetY) / shrinkableHeaderHeight
             headerAttributes.headerPercentExpansion = max(0, min(percentExpansion, 1))
 
@@ -81,7 +81,7 @@ extension HomepageViewController {
                 width: bounds.width,
                 height: HeroHeaderView.maximumHeight
             )
-            
+
             headerAttributes.zIndex = 100
 
             if adjustedOffsetY < 0 {
