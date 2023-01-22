@@ -2,5 +2,5 @@
 #include "OpenIn.xcconfig"
 
 PRODUCT_BUNDLE_IDENTIFIER = app.nefoli.dev.OpenIn
-PRODUCT_NAME = OpenIn
+PRODUCT_NAME = OpenIn-dev
 INFOPLIST_KEY_CFBundleDisplayName = Open in nefoli-dev

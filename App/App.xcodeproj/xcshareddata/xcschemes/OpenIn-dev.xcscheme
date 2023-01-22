@@ -17,7 +17,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2C51AA6F296FB34100FA0963"
                BuildableName = "OpenIn.appex"
-               BlueprintName = "OpenIn"
+               BlueprintName = "OpenIn-prod"
                ReferencedContainer = "container:App.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -31,14 +31,14 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2C367EA2294DC3590077380E"
                BuildableName = "nefoli.app"
-               BlueprintName = "nefoli"
+               BlueprintName = "nefoli-dev"
                ReferencedContainer = "container:App.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "dev.Debug"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
@@ -46,7 +46,7 @@
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "dev.Debug"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = ""
       selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
       launchStyle = "0"
@@ -67,13 +67,13 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C367EA2294DC3590077380E"
             BuildableName = "nefoli.app"
-            BlueprintName = "nefoli"
+            BlueprintName = "nefoli-dev"
             ReferencedContainer = "container:App.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </LaunchAction>
    <ProfileAction
-      buildConfiguration = "dev.Release"
+      buildConfiguration = "Release"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
@@ -86,16 +86,16 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C367EA2294DC3590077380E"
             BuildableName = "nefoli.app"
-            BlueprintName = "nefoli"
+            BlueprintName = "nefoli-dev"
             ReferencedContainer = "container:App.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
-      buildConfiguration = "dev.Debug">
+      buildConfiguration = "Debug">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "dev.Release"
+      buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
