@@ -1,3 +1,4 @@
+import ContentBlocker
 import Database
 import Foundation
 import WebKit
@@ -9,19 +10,34 @@ public protocol UsesWebViewManager {
 @MainActor
 public class WebViewManager {
     private let internalURLSchemeHandler = InternalURLSchemeHandler()
-
+    
     private let settings: Settings
+
+    private let contentFilterManager: ContentFilterManager
 
     private var tokens = [NotificationToken]()
 
     public init(
-        settings: Settings
+        settings: Settings,
+        contentFilterManager: ContentFilterManager
     ) {
         self.settings = settings
+        self.contentFilterManager = contentFilterManager
+
+        tokens.append(contentFilterManager.observeFilters { [weak self] in
+            guard let self else { return }
+
+            Task { @MainActor in
+                let controller = try! await self.userContentControllerBootstrap.value
+                try! await self.contentFilterManager.reloadFilters(userContentController: controller)
+            }
+        })
     }
 
     private lazy var userContentControllerBootstrap = Task { @MainActor in
         let controller = WKUserContentController()
+
+        try await contentFilterManager.reloadFilters(userContentController: controller)
 
         return controller
     }

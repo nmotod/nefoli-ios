@@ -1,4 +1,5 @@
 import Bookmarks
+import ContentBlocker
 import Database
 import Foundation
 import RealmSwift
@@ -14,4 +15,5 @@ struct RootContainer: TabGroupControllerDependency {
     var webViewManager: WebViewManager
     var bookmarkIconManager: BookmarkIconManager
     var settings: Settings
+    var contentFilterManager: ContentFilterManager
 }
