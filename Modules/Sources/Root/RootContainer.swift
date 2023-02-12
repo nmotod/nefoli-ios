@@ -13,4 +13,5 @@ struct RootContainer: TabGroupControllerDependency {
     var screenshotManager: ScreenshotManager
     var webViewManager: WebViewManager
     var bookmarkIconManager: BookmarkIconManager
+    var settings: Settings
 }

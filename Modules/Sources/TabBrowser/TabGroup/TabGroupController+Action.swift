@@ -1,4 +1,5 @@
 import Foundation
+import SettingsUI
 import UIKit
 import Utilities
 
@@ -51,8 +52,16 @@ extension TabGroupController {
                 return buildDefinition(
                     title: NSLocalizedString("Settings", comment: ""),
                     image: UIImage(systemName: "gear"),
-                    builder: { definition, _ in
-                        ExecutableAction(definition: definition) { _ in }
+                    builder: { definition, controller in
+                        weak var controller = controller
+
+                        return ExecutableAction(definition: definition) { context in
+                            guard let controller else { return }
+
+                            let settingsController = SettingsController(dependency: controller.dependency)
+
+                            (context.viewController ?? controller)?.present(settingsController, animated: true)
+                        }
                     }
                 )
             }

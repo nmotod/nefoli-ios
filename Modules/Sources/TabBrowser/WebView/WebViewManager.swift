@@ -1,3 +1,4 @@
+import Database
 import Foundation
 import WebKit
 
@@ -5,14 +6,31 @@ public protocol UsesWebViewManager {
     var webViewManager: WebViewManager { get }
 }
 
+@MainActor
 public class WebViewManager {
     private let internalURLSchemeHandler = InternalURLSchemeHandler()
 
-    public init() {}
+    private let settings: Settings
+
+    private var tokens = [NotificationToken]()
+
+    public init(
+        settings: Settings
+    ) {
+        self.settings = settings
+    }
+
+    private lazy var userContentControllerBootstrap = Task { @MainActor in
+        let controller = WKUserContentController()
+
+        return controller
+    }
 
     func getWebView(frame: CGRect) async -> WKWebView {
-        let webView = await MainActor.run {
+        let webView = await Task { @MainActor in
             let configuration = WKWebViewConfiguration()
+
+            configuration.userContentController = try! await userContentControllerBootstrap.value
 
             // Ignore <meta name="viewport" content="user-scalable=no">
             configuration.ignoresViewportScaleLimits = true
@@ -25,7 +43,7 @@ public class WebViewManager {
             webView.scrollView.contentInsetAdjustmentBehavior = .always
 
             return webView
-        }
+        }.value
 
         return webView
     }
