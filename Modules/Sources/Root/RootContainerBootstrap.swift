@@ -3,6 +3,7 @@ import Database
 import Foundation
 import TabBrowser
 import UIKit
+import WebKit
 
 private func downloadSeedData(url: URL, maxRetry: Int) async -> Data? {
     for i in 0 ..< maxRetry {
@@ -64,8 +65,6 @@ class RootContainerBootstrap {
 
     private let screenshotManager: ScreenshotManager
 
-    private let webViewManager = WebViewManager()
-
     private let bookmarkIconManager: BookmarkIconManager
 
     let databaseBootstrap: DatabaseBootstrap
@@ -86,7 +85,7 @@ class RootContainerBootstrap {
         )
     }
 
-    private lazy var bootstrapTask = Task<RootContainer, Error> {
+    private lazy var bootstrapTask = Task<RootContainer, Error> { @MainActor in
         let db = try await self.databaseBootstrap.database
 
         return RootContainer(
@@ -96,8 +95,11 @@ class RootContainerBootstrap {
             bookmarksFolder: db.bookmarksFolder,
             favoritesFolder: db.favoritesFolder,
             screenshotManager: screenshotManager,
-            webViewManager: webViewManager,
-            bookmarkIconManager: bookmarkIconManager
+            webViewManager: WebViewManager(
+                settings: db.settings
+            ),
+            bookmarkIconManager: bookmarkIconManager,
+            settings: db.settings
         )
     }
 }

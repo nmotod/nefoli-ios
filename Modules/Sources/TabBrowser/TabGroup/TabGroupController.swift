@@ -2,14 +2,17 @@ import Database
 import Foundation
 import MenuSheet
 import RealmSwift
+import SettingsUI
 import Theme
 import UIKit
 import Utilities
 
-public typealias TabGroupControllerDependency = TabGroupViewDependency & TabViewControllerDependency
+public typealias TabGroupControllerDependency = UsesSettings & TabGroupViewDependency & TabViewControllerDependency & SettingsControllerDependency
 
-public class TabGroupController: UIViewController, TabGroupViewDelegate, TabViewControllerDelegate {
-    private let dependency: TabGroupControllerDependency
+public class TabGroupController: UIViewController, TabGroupViewDelegate, TabViewControllerDelegate, UsesSettings {
+    let dependency: TabGroupControllerDependency
+
+    public let settings: Settings
 
     private var rootView: RootView?
 
@@ -30,6 +33,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
     public init(group: TabGroup?, dependency: TabGroupControllerDependency) {
         self.group = group
         self.dependency = dependency
+        settings = dependency.settings
 
         super.init(nibName: nil, bundle: nil)
 

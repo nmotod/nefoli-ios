@@ -18,8 +18,8 @@ let package = Package(
             targets: ["Root"]
         ),
         .library(
-            name: "Previews",
-            targets: ["Previews"]
+            name: "SettingsUI.Previews",
+            targets: ["SettingsUI"]
         ),
     ],
     dependencies: [
@@ -34,12 +34,6 @@ let package = Package(
         .package(url: "https://github.com/krzysztofzablocki/Difference.git", from: "1.0.2"),
     ],
     targets: [
-        .target(
-            name: "Previews",
-            dependencies: [
-                .target(name: "Root"),
-            ]
-        ),
         .target(
             name: "Root",
             dependencies: [
@@ -72,6 +66,7 @@ let package = Package(
                 .target(name: "Utilities"),
                 .target(name: "MenuSheet"),
                 .target(name: "Bookmarks"),
+                .target(name: "SettingsUI"),
             ]
         ),
         .testTarget(
@@ -121,6 +116,20 @@ let package = Package(
             name: "BookmarksTests",
             dependencies: [
                 .target(name: "Bookmarks"),
+            ]
+        ),
+        .target(
+            name: "SettingsUI",
+            dependencies: [
+                .target(name: "Database"),
+                .target(name: "Theme"),
+                .target(name: "Utilities"),
+            ]
+        ),
+        .testTarget(
+            name: "SettingsUITests",
+            dependencies: [
+                .target(name: "SettingsUI"),
             ]
         ),
     ]
