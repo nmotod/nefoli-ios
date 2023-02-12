@@ -25,6 +25,7 @@ public class DatabaseBootstrap {
         let rootState: RootState
         let bookmarksFolder: BookmarkItem
         let favoritesFolder: BookmarkItem
+        let settings: Settings
 
         if let aRootState = realm.objects(RootState.self).first {
             rootState = aRootState
@@ -45,9 +46,16 @@ public class DatabaseBootstrap {
             favoritesFolder = .init()
         }
 
+        if let aSettings = rootState.settings {
+            settings = aSettings
+        } else {
+            settings = .init()
+        }
+
         if rootState.realm == nil
             || rootState.bookmarksFolder == nil
             || rootState.favoritesFolder == nil
+            || rootState.settings == nil
         {
             try realm.write {
                 if rootState.realm == nil {
@@ -61,6 +69,10 @@ public class DatabaseBootstrap {
                 if rootState.favoritesFolder == nil {
                     rootState.favoritesFolder = favoritesFolder
                 }
+
+                if rootState.settings == nil {
+                    rootState.settings = settings
+                }
             }
         }
 
@@ -68,7 +80,8 @@ public class DatabaseBootstrap {
             realm: realm,
             rootState: rootState,
             bookmarksFolder: bookmarksFolder,
-            favoritesFolder: favoritesFolder
+            favoritesFolder: favoritesFolder,
+            settings: settings
         )
     }
 }

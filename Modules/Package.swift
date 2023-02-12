@@ -17,6 +17,10 @@ let package = Package(
             name: "Root",
             targets: ["Root"]
         ),
+        .library(
+            name: "SettingsUI.Previews",
+            targets: ["SettingsUI"]
+        ),
     ],
     dependencies: [
         // .package(url: "https://github.com/mischa-hildebrand/AlignedCollectionViewFlowLayout", revision: "49330ef67177dba5c9e1a3efdd0df93d83f12ee7"),
@@ -112,6 +116,20 @@ let package = Package(
             name: "BookmarksTests",
             dependencies: [
                 .target(name: "Bookmarks"),
+            ]
+        ),
+        .target(
+            name: "SettingsUI",
+            dependencies: [
+                .target(name: "Database"),
+                .target(name: "Theme"),
+                .target(name: "Utilities"),
+            ]
+        ),
+        .testTarget(
+            name: "SettingsUITests",
+            dependencies: [
+                .target(name: "SettingsUI"),
             ]
         ),
     ]

@@ -10,11 +10,14 @@ public class RootState: Object {
 
     @Persisted public var favoritesFolder: BookmarkItem?
 
+    @Persisted public var settings: Settings?
+
     public convenience init(
         groups: [TabGroup],
         closedTabs: [Tab],
         bookmarksFolder: BookmarkItem,
-        favoritesFolder: BookmarkItem
+        favoritesFolder: BookmarkItem,
+        settings: Settings
     ) {
         self.init()
 
@@ -22,5 +25,6 @@ public class RootState: Object {
         self.closedTabs.append(objectsIn: closedTabs)
         self.bookmarksFolder = bookmarksFolder
         self.favoritesFolder = favoritesFolder
+        self.settings = settings
     }
 }
