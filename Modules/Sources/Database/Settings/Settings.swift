@@ -7,4 +7,5 @@ public protocol UsesSettings {
 
 public class Settings: EmbeddedObject, ObjectKeyIdentifiable {
     @Persisted public var id = UUID().uuidString
+    @Persisted public var contentFilterSettings: List<ContentFilterSetting>
 }

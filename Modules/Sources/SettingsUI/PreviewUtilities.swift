@@ -1,3 +1,4 @@
+import ContentBlocker
 import Database
 import Foundation
 import RealmSwift
@@ -12,12 +13,20 @@ enum PreviewUtilities {
         let settings = Settings()
         rootState.settings = settings
 
+        settings.contentFilterSettings.append(objectsIn: [
+            .init(name: "Filter 01"),
+            .init(name: "Filter 02"),
+        ])
+
         try! realm.write {
             realm.add(rootState)
         }
 
         return settings
     }()
+
+    @MainActor
+    static let contentFilterManager = ContentFilterManager(settings: settings, contentRuleListStore: .default()!)
 }
 
 #endif
