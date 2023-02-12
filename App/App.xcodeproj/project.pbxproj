@@ -12,19 +12,33 @@
 		2C367EB3294DC35A0077380E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C367EB1294DC35A0077380E /* LaunchScreen.storyboard */; };
 		2C367EC5294DDE300077380E /* Root in Frameworks */ = {isa = PBXBuildFile; productRef = 2C367EC4294DDE300077380E /* Root */; };
 		2C367EC9294ED2B00077380E /* infoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C367ECB294ED2B00077380E /* infoPlist.strings */; };
-		2C51AA95296FBABD00FA0963 /* OpenIn.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2C51AA70296FB34100FA0963 /* OpenIn.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2C51AA9D296FBD9200FA0963 /* ActionRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51AA9B296FBD9200FA0963 /* ActionRequestHandler.swift */; };
 		2C51AA9E296FBD9200FA0963 /* OpenInExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C51AA9C296FBD9200FA0963 /* OpenInExtension.m */; };
-		2C51AAA1296FC09D00FA0963 /* prod.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2C51AAA0296FC09D00FA0963 /* prod.xcconfig */; };
+		2C8563D0297D09E20003D442 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C367EA6294DC3590077380E /* main.swift */; };
+		2C8563D2297D09E20003D442 /* Root in Frameworks */ = {isa = PBXBuildFile; productRef = 2C8563CD297D09E20003D442 /* Root */; };
+		2C8563D4297D09E20003D442 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C367EB1294DC35A0077380E /* LaunchScreen.storyboard */; };
+		2C8563D5297D09E20003D442 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C367EAF294DC35A0077380E /* Assets.xcassets */; };
+		2C8563D6297D09E20003D442 /* infoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C367ECB294ED2B00077380E /* infoPlist.strings */; };
+		2C8563E3297D0B340003D442 /* ActionRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51AA9B296FBD9200FA0963 /* ActionRequestHandler.swift */; };
+		2C8563E4297D0B340003D442 /* OpenInExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C51AA9C296FBD9200FA0963 /* OpenInExtension.m */; };
+		2C8563ED297D0C970003D442 /* OpenIn.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2C51AA70296FB34100FA0963 /* OpenIn.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2C8563F1297D0D960003D442 /* OpenIn-dev.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2C8563EB297D0B340003D442 /* OpenIn-dev.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2C51AA96296FBABD00FA0963 /* PBXContainerItemProxy */ = {
+		2C8563EE297D0C970003D442 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2C367E9B294DC3590077380E /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 2C51AA6F296FB34100FA0963;
-			remoteInfo = OpenIn;
+			remoteInfo = "OpenIn-prod";
+		};
+		2C8563F2297D0D960003D442 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C367E9B294DC3590077380E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2C8563E1297D0B340003D442;
+			remoteInfo = "OpenIn-dev";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -39,13 +53,34 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2C51AA98296FBABD00FA0963 /* Embed Foundation Extensions */ = {
+		2C8563D7297D09E20003D442 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C8563F0297D0C980003D442 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				2C51AA95296FBABD00FA0963 /* OpenIn.appex in Embed Foundation Extensions */,
+				2C8563ED297D0C970003D442 /* OpenIn.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C8563F4297D0D960003D442 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2C8563F1297D0D960003D442 /* OpenIn-dev.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -53,7 +88,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2C367EA3294DC3590077380E /* nefoli.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nefoli.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C367EA3294DC3590077380E /* nefoli-dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nefoli-dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C367EA6294DC3590077380E /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		2C367EAF294DC35A0077380E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C367EB2294DC35A0077380E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -88,6 +123,8 @@
 		2C51AA9C296FBD9200FA0963 /* OpenInExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenInExtension.m; sourceTree = "<group>"; };
 		2C51AA9F296FC04600FA0963 /* dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = dev.xcconfig; sourceTree = "<group>"; };
 		2C51AAA0296FC09D00FA0963 /* prod.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = prod.xcconfig; sourceTree = "<group>"; };
+		2C8563DF297D09E20003D442 /* nefoli.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nefoli.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C8563EB297D0B340003D442 /* OpenIn-dev.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "OpenIn-dev.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +137,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2C51AA6D296FB34100FA0963 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C8563D1297D09E20003D442 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C8563D2297D09E20003D442 /* Root in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C8563E5297D0B340003D442 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,8 +174,10 @@
 		2C367EA4294DC3590077380E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2C367EA3294DC3590077380E /* nefoli.app */,
+				2C367EA3294DC3590077380E /* nefoli-dev.app */,
 				2C51AA70296FB34100FA0963 /* OpenIn.appex */,
+				2C8563DF297D09E20003D442 /* nefoli.app */,
+				2C8563EB297D0B340003D442 /* OpenIn-dev.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -208,33 +262,33 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2C367EA2294DC3590077380E /* nefoli */ = {
+		2C367EA2294DC3590077380E /* nefoli-dev */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2C367EB7294DC35A0077380E /* Build configuration list for PBXNativeTarget "nefoli" */;
+			buildConfigurationList = 2C367EB7294DC35A0077380E /* Build configuration list for PBXNativeTarget "nefoli-dev" */;
 			buildPhases = (
 				2C367EC6294EC11D0077380E /* SwiftFormat --lint */,
 				2C367E9F294DC3590077380E /* Sources */,
 				2C367EA0294DC3590077380E /* Frameworks */,
 				2C367EA1294DC3590077380E /* Resources */,
 				2C367EDF294EE95D0077380E /* Embed Frameworks */,
-				2C51AA98296FBABD00FA0963 /* Embed Foundation Extensions */,
+				2C8563F4297D0D960003D442 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				2C51AA97296FBABD00FA0963 /* PBXTargetDependency */,
+				2C8563F3297D0D960003D442 /* PBXTargetDependency */,
 			);
-			name = nefoli;
+			name = "nefoli-dev";
 			packageProductDependencies = (
 				2C367EC4294DDE300077380E /* Root */,
 			);
 			productName = "nefoli-iOS";
-			productReference = 2C367EA3294DC3590077380E /* nefoli.app */;
+			productReference = 2C367EA3294DC3590077380E /* nefoli-dev.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2C51AA6F296FB34100FA0963 /* OpenIn */ = {
+		2C51AA6F296FB34100FA0963 /* OpenIn-prod */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2C51AA7E296FB34100FA0963 /* Build configuration list for PBXNativeTarget "OpenIn" */;
+			buildConfigurationList = 2C51AA7E296FB34100FA0963 /* Build configuration list for PBXNativeTarget "OpenIn-prod" */;
 			buildPhases = (
 				2C51AA6C296FB34100FA0963 /* Sources */,
 				2C51AA6D296FB34100FA0963 /* Frameworks */,
@@ -244,9 +298,50 @@
 			);
 			dependencies = (
 			);
-			name = OpenIn;
+			name = "OpenIn-prod";
 			productName = OpenIn;
 			productReference = 2C51AA70296FB34100FA0963 /* OpenIn.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		2C8563CA297D09E20003D442 /* nefoli-prod */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2C8563DA297D09E20003D442 /* Build configuration list for PBXNativeTarget "nefoli-prod" */;
+			buildPhases = (
+				2C8563CE297D09E20003D442 /* SwiftFormat --lint */,
+				2C8563CF297D09E20003D442 /* Sources */,
+				2C8563D1297D09E20003D442 /* Frameworks */,
+				2C8563D3297D09E20003D442 /* Resources */,
+				2C8563D7297D09E20003D442 /* Embed Frameworks */,
+				2C8563F0297D0C980003D442 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2C8563EF297D0C970003D442 /* PBXTargetDependency */,
+			);
+			name = "nefoli-prod";
+			packageProductDependencies = (
+				2C8563CD297D09E20003D442 /* Root */,
+			);
+			productName = "nefoli-iOS";
+			productReference = 2C8563DF297D09E20003D442 /* nefoli.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2C8563E1297D0B340003D442 /* OpenIn-dev */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2C8563E8297D0B340003D442 /* Build configuration list for PBXNativeTarget "OpenIn-dev" */;
+			buildPhases = (
+				2C8563E2297D0B340003D442 /* Sources */,
+				2C8563E5297D0B340003D442 /* Frameworks */,
+				2C8563E6297D0B340003D442 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "OpenIn-dev";
+			productName = OpenIn;
+			productReference = 2C8563EB297D0B340003D442 /* OpenIn-dev.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -282,8 +377,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2C367EA2294DC3590077380E /* nefoli */,
-				2C51AA6F296FB34100FA0963 /* OpenIn */,
+				2C8563CA297D09E20003D442 /* nefoli-prod */,
+				2C367EA2294DC3590077380E /* nefoli-dev */,
+				2C51AA6F296FB34100FA0963 /* OpenIn-prod */,
+				2C8563E1297D0B340003D442 /* OpenIn-dev */,
 			);
 		};
 /* End PBXProject section */
@@ -303,7 +400,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C51AAA1296FC09D00FA0963 /* prod.xcconfig in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C8563D3297D09E20003D442 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C8563D4297D09E20003D442 /* LaunchScreen.storyboard in Resources */,
+				2C8563D5297D09E20003D442 /* Assets.xcassets in Resources */,
+				2C8563D6297D09E20003D442 /* infoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C8563E6297D0B340003D442 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,6 +424,25 @@
 
 /* Begin PBXShellScriptBuildPhase section */
 		2C367EC6294EC11D0077380E /* SwiftFormat --lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "SwiftFormat --lint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# @see https://github.com/nicklockwood/SwiftFormat/blob/0.50.6/README.md#xcode-build-phase\ncd ../BuildTools\n\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\n# Lint while project\nswift run swiftformat --lint --lenient \"$SRCROOT/..\"\n";
+		};
+		2C8563CE297D09E20003D442 /* SwiftFormat --lint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -349,13 +481,35 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2C8563CF297D09E20003D442 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C8563D0297D09E20003D442 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C8563E2297D0B340003D442 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C8563E3297D0B340003D442 /* ActionRequestHandler.swift in Sources */,
+				2C8563E4297D0B340003D442 /* OpenInExtension.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2C51AA97296FBABD00FA0963 /* PBXTargetDependency */ = {
+		2C8563EF297D0C970003D442 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2C51AA6F296FB34100FA0963 /* OpenIn */;
-			targetProxy = 2C51AA96296FBABD00FA0963 /* PBXContainerItemProxy */;
+			target = 2C51AA6F296FB34100FA0963 /* OpenIn-prod */;
+			targetProxy = 2C8563EE297D0C970003D442 /* PBXContainerItemProxy */;
+		};
+		2C8563F3297D0D960003D442 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2C8563E1297D0B340003D442 /* OpenIn-dev */;
+			targetProxy = 2C8563F2297D0D960003D442 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -380,25 +534,24 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		2C367EB5294DC35A0077380E /* dev.Debug */ = {
+		2C367EB5294DC35A0077380E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2C51AA2E296D451200FA0963 /* Base.Debug.xcconfig */;
 			buildSettings = {
 			};
-			name = dev.Debug;
+			name = Debug;
 		};
-		2C367EB6294DC35A0077380E /* dev.Release */ = {
+		2C367EB6294DC35A0077380E /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2C51AA2F296D451200FA0963 /* Base.Release.xcconfig */;
 			buildSettings = {
 			};
-			name = dev.Release;
+			name = Release;
 		};
-		2C367EB8294DC35A0077380E /* dev.Debug */ = {
+		2C367EB8294DC35A0077380E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2C51AA38296D484B00FA0963 /* nefoli-dev.Debug.xcconfig */;
 			buildSettings = {
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -406,13 +559,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				MARKETING_VERSION = 1.0;
 			};
-			name = dev.Debug;
+			name = Debug;
 		};
-		2C367EB9294DC35A0077380E /* dev.Release */ = {
+		2C367EB9294DC35A0077380E /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2C51AA54296D4CDB00FA0963 /* nefoli-dev.Release.xcconfig */;
 			buildSettings = {
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -420,89 +572,75 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				MARKETING_VERSION = 1.0;
 			};
-			name = dev.Release;
+			name = Release;
 		};
-		2C51AA7C296FB34100FA0963 /* dev.Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C51AA87296FB65B00FA0963 /* OpenIn-dev.Debug.xcconfig */;
-			buildSettings = {
-				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_KEY_CFBundleDisplayName = "Open in nefoli-dev";
-				MARKETING_VERSION = 1.0;
-			};
-			name = dev.Debug;
-		};
-		2C51AA7D296FB34100FA0963 /* dev.Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C51AA8F296FB8B400FA0963 /* OpenIn-dev.Release.xcconfig */;
-			buildSettings = {
-				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_KEY_CFBundleDisplayName = "Open in nefoli-dev";
-				MARKETING_VERSION = 1.0;
-			};
-			name = dev.Release;
-		};
-		2C51AA8A296FB81900FA0963 /* prod.Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C51AA2E296D451200FA0963 /* Base.Debug.xcconfig */;
-			buildSettings = {
-			};
-			name = prod.Debug;
-		};
-		2C51AA8B296FB81900FA0963 /* prod.Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C51AA52296D497C00FA0963 /* nefoli-prod.Debug.xcconfig */;
-			buildSettings = {
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				MARKETING_VERSION = 1.0;
-			};
-			name = prod.Debug;
-		};
-		2C51AA8D296FB81900FA0963 /* prod.Debug */ = {
+		2C51AA7C296FB34100FA0963 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2C51AA8E296FB86500FA0963 /* OpenIn-prod.Debug.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_KEY_CFBundleDisplayName = "Open in nefoli-dev";
 				MARKETING_VERSION = 1.0;
 			};
-			name = prod.Debug;
+			name = Debug;
 		};
-		2C51AA91296FB9B800FA0963 /* prod.Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C51AA2F296D451200FA0963 /* Base.Release.xcconfig */;
-			buildSettings = {
-			};
-			name = prod.Release;
-		};
-		2C51AA92296FB9B800FA0963 /* prod.Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C51AA55296D4CE600FA0963 /* nefoli-prod.Release.xcconfig */;
-			buildSettings = {
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				MARKETING_VERSION = 1.0;
-			};
-			name = prod.Release;
-		};
-		2C51AA93296FB9B800FA0963 /* prod.Release */ = {
+		2C51AA7D296FB34100FA0963 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2C51AA90296FB8C600FA0963 /* OpenIn-prod.Release.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_KEY_CFBundleDisplayName = "Open in nefoli-dev";
 				MARKETING_VERSION = 1.0;
 			};
-			name = prod.Release;
+			name = Release;
+		};
+		2C8563DB297D09E20003D442 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C51AA52296D497C00FA0963 /* nefoli-prod.Debug.xcconfig */;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_KEY_CFBundleDisplayName = nefoli;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				MARKETING_VERSION = 1.0;
+			};
+			name = Debug;
+		};
+		2C8563DD297D09E20003D442 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C51AA55296D4CE600FA0963 /* nefoli-prod.Release.xcconfig */;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_KEY_CFBundleDisplayName = nefoli;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				MARKETING_VERSION = 1.0;
+			};
+			name = Release;
+		};
+		2C8563E9297D0B340003D442 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C51AA87296FB65B00FA0963 /* OpenIn-dev.Debug.xcconfig */;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2C8563EA297D0B340003D442 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C51AA8F296FB8B400FA0963 /* OpenIn-dev.Release.xcconfig */;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -510,40 +648,56 @@
 		2C367E9E294DC3590077380E /* Build configuration list for PBXProject "App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2C367EB5294DC35A0077380E /* dev.Debug */,
-				2C51AA8A296FB81900FA0963 /* prod.Debug */,
-				2C367EB6294DC35A0077380E /* dev.Release */,
-				2C51AA91296FB9B800FA0963 /* prod.Release */,
+				2C367EB5294DC35A0077380E /* Debug */,
+				2C367EB6294DC35A0077380E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = dev.Release;
+			defaultConfigurationName = Release;
 		};
-		2C367EB7294DC35A0077380E /* Build configuration list for PBXNativeTarget "nefoli" */ = {
+		2C367EB7294DC35A0077380E /* Build configuration list for PBXNativeTarget "nefoli-dev" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2C367EB8294DC35A0077380E /* dev.Debug */,
-				2C51AA8B296FB81900FA0963 /* prod.Debug */,
-				2C367EB9294DC35A0077380E /* dev.Release */,
-				2C51AA92296FB9B800FA0963 /* prod.Release */,
+				2C367EB8294DC35A0077380E /* Debug */,
+				2C367EB9294DC35A0077380E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = dev.Release;
+			defaultConfigurationName = Release;
 		};
-		2C51AA7E296FB34100FA0963 /* Build configuration list for PBXNativeTarget "OpenIn" */ = {
+		2C51AA7E296FB34100FA0963 /* Build configuration list for PBXNativeTarget "OpenIn-prod" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2C51AA7C296FB34100FA0963 /* dev.Debug */,
-				2C51AA8D296FB81900FA0963 /* prod.Debug */,
-				2C51AA7D296FB34100FA0963 /* dev.Release */,
-				2C51AA93296FB9B800FA0963 /* prod.Release */,
+				2C51AA7C296FB34100FA0963 /* Debug */,
+				2C51AA7D296FB34100FA0963 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = dev.Release;
+			defaultConfigurationName = Release;
+		};
+		2C8563DA297D09E20003D442 /* Build configuration list for PBXNativeTarget "nefoli-prod" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C8563DB297D09E20003D442 /* Debug */,
+				2C8563DD297D09E20003D442 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2C8563E8297D0B340003D442 /* Build configuration list for PBXNativeTarget "OpenIn-dev" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C8563E9297D0B340003D442 /* Debug */,
+				2C8563EA297D0B340003D442 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		2C367EC4294DDE300077380E /* Root */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Root;
+		};
+		2C8563CD297D09E20003D442 /* Root */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Root;
 		};

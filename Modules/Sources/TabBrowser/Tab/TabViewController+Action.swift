@@ -85,7 +85,7 @@ extension TabViewController {
             case .editAddress:
                 return buildDefinition(
                     title: NSLocalizedString("Search", comment: ""),
-                    image: nil,
+                    image: UIImage(systemName: "magnifyingglass"),
                     builder: { definition, tabVC in
                         weak var tabVC = tabVC
 
