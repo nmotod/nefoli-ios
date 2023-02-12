@@ -30,7 +30,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2C367EA2294DC3590077380E"
-               BuildableName = "nefoli.app"
+               BuildableName = "nefoli-dev.app"
                BlueprintName = "nefoli-dev"
                ReferencedContainer = "container:App.xcodeproj">
             </BuildableReference>
@@ -66,7 +66,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C367EA2294DC3590077380E"
-            BuildableName = "nefoli.app"
+            BuildableName = "nefoli-dev.app"
             BlueprintName = "nefoli-dev"
             ReferencedContainer = "container:App.xcodeproj">
          </BuildableReference>
@@ -85,7 +85,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C367EA2294DC3590077380E"
-            BuildableName = "nefoli.app"
+            BuildableName = "nefoli-dev.app"
             BlueprintName = "nefoli-dev"
             ReferencedContainer = "container:App.xcodeproj">
          </BuildableReference>
