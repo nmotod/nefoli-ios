@@ -124,12 +124,25 @@ let package = Package(
                 .target(name: "Database"),
                 .target(name: "Theme"),
                 .target(name: "Utilities"),
+                .target(name: "ContentBlocker"),
             ]
         ),
         .testTarget(
             name: "SettingsUITests",
             dependencies: [
                 .target(name: "SettingsUI"),
+            ]
+        ),
+        .target(
+            name: "ContentBlocker",
+            dependencies: [
+                .target(name: "Database"),
+            ]
+        ),
+        .testTarget(
+            name: "ContentBlockerTests",
+            dependencies: [
+                .target(name: "ContentBlocker"),
             ]
         ),
     ]

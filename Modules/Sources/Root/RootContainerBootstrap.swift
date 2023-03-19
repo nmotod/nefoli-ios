@@ -1,4 +1,5 @@
 import Bookmarks
+import ContentBlocker
 import Database
 import Foundation
 import TabBrowser
@@ -88,6 +89,11 @@ class RootContainerBootstrap {
     private lazy var bootstrapTask = Task<RootContainer, Error> { @MainActor in
         let db = try await self.databaseBootstrap.database
 
+        let contentFilterManager = ContentFilterManager(
+            settings: db.settings,
+            contentRuleListStore: WKContentRuleListStore.default()!
+        )
+
         return RootContainer(
             appBundleIdentifier: appBundleIdentifier,
             realm: db.realm,
@@ -96,10 +102,12 @@ class RootContainerBootstrap {
             favoritesFolder: db.favoritesFolder,
             screenshotManager: screenshotManager,
             webViewManager: WebViewManager(
-                settings: db.settings
+                settings: db.settings,
+                contentFilterManager: contentFilterManager
             ),
             bookmarkIconManager: bookmarkIconManager,
-            settings: db.settings
+            settings: db.settings,
+            contentFilterManager: contentFilterManager
         )
     }
 }
