@@ -10,7 +10,7 @@ public protocol UsesWebViewManager {
 @MainActor
 public class WebViewManager {
     private let internalURLSchemeHandler = InternalURLSchemeHandler()
-    
+
     private let settings: Settings
 
     private let contentFilterManager: ContentFilterManager

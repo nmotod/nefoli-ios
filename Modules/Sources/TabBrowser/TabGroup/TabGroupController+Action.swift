@@ -1,3 +1,4 @@
+import Bookmarks
 import Foundation
 import SettingsUI
 import UIKit
@@ -20,8 +21,23 @@ extension TabGroupController {
                 return buildDefinition(
                     title: NSLocalizedString("Bookmarks", comment: ""),
                     image: UIImage(systemName: "book"),
-                    builder: { definition, _ in
-                        ExecutableAction(definition: definition) { _ in }
+                    builder: { definition, controller in
+                        weak var controller = controller
+
+                        return ExecutableAction(definition: definition) { _ in
+                            guard let controller else { return }
+
+                            let manager = BookmarkManager(
+                                bookmarksFolder: controller.dependency.bookmarksFolder,
+                                favoritesFolder: controller.dependency.favoritesFolder
+                            )
+
+                            let vc = BookmarkManagerController(
+                                bookmarkManager: manager,
+                                onOpen: { _ in }
+                            )
+                            controller.present(vc, animated: true)
+                        }
                     }
                 )
 

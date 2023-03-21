@@ -21,6 +21,10 @@ let package = Package(
             name: "SettingsUI.Previews",
             targets: ["SettingsUI"]
         ),
+        .library(
+            name: "Bookmarks.Previews",
+            targets: ["Bookmarks"]
+        ),
     ],
     dependencies: [
         // .package(url: "https://github.com/mischa-hildebrand/AlignedCollectionViewFlowLayout", revision: "49330ef67177dba5c9e1a3efdd0df93d83f12ee7"),

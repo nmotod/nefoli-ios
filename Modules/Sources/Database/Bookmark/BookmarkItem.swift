@@ -5,7 +5,7 @@ import RealmSwift
 ///
 /// Inherit Object because cycles containing embedded objects are not currently supported.
 /// (RealmSwift 10.33.0)
-public class BookmarkItem: Object, CreatedDateStorable {
+public class BookmarkItem: Object, CreatedDateStorable, Identifiable {
     public enum Kind: String, PersistableEnum {
         case bookmark
         case folder
@@ -21,6 +21,8 @@ public class BookmarkItem: Object, CreatedDateStorable {
 
     @Persisted public var title: String
 
+    public var localizedTitle: String { title }
+
     @Persisted public var url: URL?
 
     @Persisted public var children: List<BookmarkItem>
@@ -28,4 +30,8 @@ public class BookmarkItem: Object, CreatedDateStorable {
     @Persisted public var createdDate = Date.now
 
     @Persisted public var remoteIconExists: Bool?
+
+    var parents = LinkingObjects(fromType: BookmarkItem.self, property: "children")
+
+    public var parent: BookmarkItem? { parents.first }
 }
