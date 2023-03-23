@@ -185,7 +185,7 @@ struct ContentFilterImportConfirmForm_Previews: PreviewProvider {
                 .navigationTitle("Import Filters")
                 .navigationDestination(for: Int.self) { _ in
                     ContentFilterImportConfirmForm(
-                        contentFilterManager: PreviewUtilities.contentFilterManager,
+                        contentFilterManager: PreviewUtils.contentFilterManager,
                         filters: filters,
                         onDone: { dismiss() }
                     )

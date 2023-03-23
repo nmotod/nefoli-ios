@@ -5,7 +5,7 @@ import RealmSwift
 
 #if DEBUG
 
-enum PreviewUtilities {
+enum PreviewUtils {
     static let realm = try! Realm(configuration: .init(inMemoryIdentifier: UUID().uuidString))
 
     static let settings: Settings = {

@@ -3,7 +3,7 @@ import Database
 import Foundation
 import RealmSwift
 import UIKit
-import Utilities
+import Utils
 import WebKit
 
 public typealias TabViewControllerDependency = UsesWebViewManager & UsesScreenshotManager & NewTabViewControllerDependency

@@ -3,7 +3,7 @@ import Database
 import Foundation
 import Theme
 import UIKit
-import Utilities
+import Utils
 
 public protocol NewTabViewControllerCellDependency: UsesBookmarkIconManager {}
 

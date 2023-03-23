@@ -1,6 +1,6 @@
 import Foundation
 import UIKit
-import Utilities
+import Utils
 
 extension TabViewController {
     enum Action: String, ActionProtocol {

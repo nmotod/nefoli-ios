@@ -5,7 +5,7 @@ import RealmSwift
 import SettingsUI
 import Theme
 import UIKit
-import Utilities
+import Utils
 
 public typealias TabGroupControllerDependency = UsesSettings & TabGroupViewDependency & TabViewControllerDependency & SettingsControllerDependency
 

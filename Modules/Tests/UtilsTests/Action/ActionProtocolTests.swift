@@ -1,4 +1,4 @@
-@testable import Utilities
+@testable import Utils
 import XCTest
 
 final class ActionProtocolTests: XCTestCase {

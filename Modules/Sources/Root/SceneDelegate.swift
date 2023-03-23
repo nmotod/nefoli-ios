@@ -1,7 +1,7 @@
 import RealmSwift
 import TabBrowser
 import UIKit
-import Utilities
+import Utils
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?

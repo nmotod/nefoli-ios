@@ -116,19 +116,19 @@ struct ContentFilterImportModal: View {
 struct ContentFilterImportModal_Previews: PreviewProvider {
     static var previews: some View {
         ContentFilterImportModal(
-            contentFilterManager: PreviewUtilities.contentFilterManager,
+            contentFilterManager: PreviewUtils.contentFilterManager,
             inputURLString: "http://localhost:5000/filters/valid.1blockpkg"
         )
         .previewDisplayName("Valid")
 
         ContentFilterImportModal(
-            contentFilterManager: PreviewUtilities.contentFilterManager,
+            contentFilterManager: PreviewUtils.contentFilterManager,
             inputURLString: "http://localhost:5000/filters/notfound.1blockpkg"
         )
         .previewDisplayName("Not found")
 
         ContentFilterImportModal(
-            contentFilterManager: PreviewUtilities.contentFilterManager,
+            contentFilterManager: PreviewUtils.contentFilterManager,
             inputURLString: "http://localhost:5000/filters/notfound.1blockpkg"
         )
         .previewDisplayName("Empty rules")

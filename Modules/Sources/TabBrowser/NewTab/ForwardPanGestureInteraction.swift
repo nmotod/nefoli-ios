@@ -1,7 +1,7 @@
 import Foundation
 import Theme
 import UIKit
-import Utilities
+import Utils
 
 class ForwardPanGestureInteraction: NSObject, UIInteraction {
     typealias Handler = (ForwardPanGestureInteraction) -> Void

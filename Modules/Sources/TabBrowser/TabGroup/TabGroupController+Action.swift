@@ -2,7 +2,7 @@ import Bookmarks
 import Foundation
 import SettingsUI
 import UIKit
-import Utilities
+import Utils
 
 extension TabGroupController {
     public enum Action: String, ActionProtocol {

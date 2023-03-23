@@ -67,7 +67,7 @@ let package = Package(
                 .product(name: "SnapKit", package: "SnapKit"),
                 .target(name: "Database"),
                 .target(name: "Theme"),
-                .target(name: "Utilities"),
+                .target(name: "Utils"),
                 .target(name: "MenuSheet"),
                 .target(name: "Bookmarks"),
                 .target(name: "SettingsUI"),
@@ -92,19 +92,19 @@ let package = Package(
             ]
         ),
         .target(
-            name: "Utilities"
+            name: "Utils"
         ),
         .testTarget(
-            name: "UtilitiesTests",
+            name: "UtilsTests",
             dependencies: [
-                .target(name: "Utilities"),
+                .target(name: "Utils"),
             ]
         ),
         .target(
             name: "MenuSheet",
             dependencies: [
                 .product(name: "SnapKit", package: "SnapKit"),
-                .target(name: "Utilities"),
+                .target(name: "Utils"),
                 .target(name: "Theme"),
                 .target(name: "Bookmarks"),
             ]
@@ -127,7 +127,7 @@ let package = Package(
             dependencies: [
                 .target(name: "Database"),
                 .target(name: "Theme"),
-                .target(name: "Utilities"),
+                .target(name: "Utils"),
                 .target(name: "ContentBlocker"),
             ]
         ),

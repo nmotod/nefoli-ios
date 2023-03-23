@@ -1,5 +1,5 @@
 import UIKit
-import Utilities
+import Utils
 
 class ScreenshotView: UIView {
     public typealias Dependency = UsesScreenshotManager

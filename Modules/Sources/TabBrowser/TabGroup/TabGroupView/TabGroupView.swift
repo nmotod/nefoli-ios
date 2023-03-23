@@ -1,6 +1,6 @@
 import Database
 import UIKit
-import Utilities
+import Utils
 
 protocol TabGroupViewDelegate: AnyObject {
     func tabGroupViewRequestsAddNewTab(_: TabGroupView)

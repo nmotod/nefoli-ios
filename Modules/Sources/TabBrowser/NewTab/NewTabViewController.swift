@@ -2,7 +2,7 @@ import Database
 import Foundation
 import Theme
 import UIKit
-import Utilities
+import Utils
 
 public typealias NewTabViewControllerDependency = UsesBookmarkFolders & NewTabViewControllerCellDependency
 

@@ -28,7 +28,7 @@ public struct BookmarkManagerView: View {
 struct BookmarkManagerView_Previews: PreviewProvider {
     static var previews: some View {
         BookmarkManagerView(
-            bookmarkManager: PreviewUtilities.bookmarkManager,
+            bookmarkManager: PreviewUtils.bookmarkManager,
             onOpen: { _ in }
         )
     }

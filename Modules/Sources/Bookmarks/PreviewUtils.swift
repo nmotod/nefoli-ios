@@ -28,7 +28,7 @@ private func makeBookmark(
     return item
 }
 
-enum PreviewUtilities {
+enum PreviewUtils {
     static let realm = try! Realm(configuration: .init(inMemoryIdentifier: UUID().uuidString))
 
     @MainActor static var bookmarkManager: BookmarkManager = {

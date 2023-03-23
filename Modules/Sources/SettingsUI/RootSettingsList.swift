@@ -42,7 +42,7 @@ struct RootSettingssList_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             RootSettingsList(
-                settings: PreviewUtilities.settings
+                settings: PreviewUtils.settings
             )
         }
     }

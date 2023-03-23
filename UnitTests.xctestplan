@@ -29,8 +29,29 @@
     {
       "target" : {
         "containerPath" : "container:..\/Modules",
-        "identifier" : "UtilitiesTests",
-        "name" : "UtilitiesTests"
+        "identifier" : "UtilsTests",
+        "name" : "UtilsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Modules",
+        "identifier" : "BookmarksTests",
+        "name" : "BookmarksTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Modules",
+        "identifier" : "ContentBlockerTests",
+        "name" : "ContentBlockerTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Modules",
+        "identifier" : "SettingsUITests",
+        "name" : "SettingsUITests"
       }
     }
   ],

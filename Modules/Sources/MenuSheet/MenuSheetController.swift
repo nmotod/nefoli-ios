@@ -2,7 +2,7 @@ import Foundation
 import SnapKit
 import Theme
 import UIKit
-import Utilities
+import Utils
 
 private let backgroundColor = Colors.backgroundDark.color
 

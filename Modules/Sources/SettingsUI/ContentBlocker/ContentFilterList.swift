@@ -67,7 +67,7 @@ extension ContentFilterList {
 struct ContentFiltering_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            ContentFilterList(contentFilterManager: PreviewUtilities.contentFilterManager)
+            ContentFilterList(contentFilterManager: PreviewUtils.contentFilterManager)
         }
         .colorScheme(.dark)
     }
