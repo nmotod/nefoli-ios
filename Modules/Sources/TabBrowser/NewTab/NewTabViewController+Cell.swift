@@ -5,9 +5,9 @@ import Theme
 import UIKit
 import Utilities
 
-public protocol HomepageViewControllerCellDependency: UsesBookmarkIconManager {}
+public protocol NewTabViewControllerCellDependency: UsesBookmarkIconManager {}
 
-extension HomepageViewController {
+extension NewTabViewController {
     class Cell: UICollectionViewCell {
         static let spacing: CGFloat = 8
         static let insets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
@@ -79,7 +79,7 @@ extension HomepageViewController {
             fatalError("init(coder:) has not been implemented")
         }
 
-        func injectIfNeeded(dependency: HomepageViewControllerCellDependency) {
+        func injectIfNeeded(dependency: NewTabViewControllerCellDependency) {
             bookmarkIconManager = dependency.bookmarkIconManager
         }
 

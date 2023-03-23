@@ -1,10 +1,10 @@
 import UIKit
 
-extension HomepageViewController {
+extension NewTabViewController {
     class LayoutAttributes: UICollectionViewLayoutAttributes {
         /// A percent expansion of hero header.
         ///
-        /// see ``HomepageViewController.HeroHeaderView.percentExpansion``
+        /// see ``NewTabViewController.HeroHeaderView.percentExpansion``
         var headerPercentExpansion: CGFloat = 0
 
         override func copy(with zone: NSZone? = nil) -> Any {

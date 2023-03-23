@@ -6,11 +6,11 @@ import UIKit
 import Utilities
 import WebKit
 
-public typealias TabViewControllerDependency = UsesWebViewManager & UsesScreenshotManager & HomepageViewControllerDependency
+public typealias TabViewControllerDependency = UsesWebViewManager & UsesScreenshotManager & NewTabViewControllerDependency
 
 protocol TabViewControllerDelegate: AnyObject {}
 
-class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, HomepageViewControllerDelegate, AddressEditViewControllerDelegate {
+class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, NewTabViewControllerDelegate, AddressEditViewControllerDelegate {
     private let dependency: TabViewControllerDependency
 
     private let webViewManager: WebViewManager
@@ -122,7 +122,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, H
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // TODO: Show homepage if needed
+        // TODO: Show newTabVC if needed
 
         Task { @MainActor in
             let webView = await webViewManager.getWebView(frame: view.bounds)
@@ -284,9 +284,9 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, H
         let internalURL = InternalURL(url: url)
 
         if case .home = internalURL {
-            showHomepage()
+            showNewTabVC()
         } else {
-            hideHomepageIfNeeded()
+            hideNewTabVCIfNeeded()
         }
 
         if let scheme = url.scheme, webViewManager.handlesURLScheme(scheme) {
@@ -346,7 +346,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, H
         present(alert, animated: true)
     }
 
-    private var homepageVC: HomepageViewController?
+    private var newTabVC: NewTabViewController?
 
     private func addressDidChange() {
         guard let webView = webView else { return }
@@ -355,48 +355,48 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, H
         rootView.addressBar.isSecure = webView.hasOnlySecureContent
     }
 
-    // MARK: - Homepage
+    // MARK: - New Tab VC
 
-    private func showHomepage() {
-        guard let webView = webView, homepageVC == nil else {
+    private func showNewTabVC() {
+        guard let webView = webView, newTabVC == nil else {
             return
         }
 
-        let homepageVC = HomepageViewController(
+        let newTabVC = NewTabViewController(
             delegate: self,
             allowsForwardGesture: webView.canGoForward,
             dependency: dependency
         )
-        self.homepageVC = homepageVC
+        self.newTabVC = newTabVC
 
-        addChild(homepageVC)
-        view.addSubview(homepageVC.view)
-        homepageVC.view.snp.makeConstraints { make in
+        addChild(newTabVC)
+        view.addSubview(newTabVC.view)
+        newTabVC.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
 
-        homepageVC.didMove(toParent: self)
+        newTabVC.didMove(toParent: self)
 
         if webView.canGoForward {
-            homepageVC.view.alpha = 0
+            newTabVC.view.alpha = 0
 
             UIView.animate(withDuration: 0.1) {
-                homepageVC.view.alpha = 1
+                newTabVC.view.alpha = 1
             }
         }
     }
 
-    private func hideHomepageIfNeeded() {
-        guard let homepageVC = homepageVC else { return }
+    private func hideNewTabVCIfNeeded() {
+        guard let newTabVC = newTabVC else { return }
 
-        self.homepageVC = nil
+        self.newTabVC = nil
 
-        homepageVC.willMove(toParent: nil)
-        homepageVC.viewIfLoaded?.removeFromSuperview()
-        homepageVC.removeFromParent()
+        newTabVC.willMove(toParent: nil)
+        newTabVC.viewIfLoaded?.removeFromSuperview()
+        newTabVC.removeFromParent()
     }
 
-    func homepageVC(_: HomepageViewController, openBookmark bookmark: BookmarkItem) {
+    func newTabVC(_: NewTabViewController, openBookmark bookmark: BookmarkItem) {
         guard let webView = webView,
               let url = bookmark.url
         else { return }
@@ -404,11 +404,11 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, H
         webView.load(URLRequest(url: url))
     }
 
-    func homepageVCForwardGestureDidRecognize(_ homepageVC: HomepageViewController) {
+    func newTabVCForwardGestureDidRecognize(_ newTabVC: NewTabViewController) {
         webView?.goForward()
 
         UIView.animate(withDuration: 0.1) {
-            homepageVC.view.alpha = 0
+            newTabVC.view.alpha = 0
         }
     }
 

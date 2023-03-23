@@ -4,22 +4,22 @@ import Theme
 import UIKit
 import Utilities
 
-public typealias HomepageViewControllerDependency = UsesBookmarkFolders & HomepageViewControllerCellDependency
+public typealias NewTabViewControllerDependency = UsesBookmarkFolders & NewTabViewControllerCellDependency
 
-protocol HomepageViewControllerDelegate: AnyObject {
-    func homepageVC(_: HomepageViewController, openBookmark bookmark: BookmarkItem)
+protocol NewTabViewControllerDelegate: AnyObject {
+    func newTabVC(_: NewTabViewController, openBookmark bookmark: BookmarkItem)
 
-    func homepageVCForwardGestureDidRecognize(_: HomepageViewController)
+    func newTabVCForwardGestureDidRecognize(_: NewTabViewController)
 }
 
-class HomepageViewController: UIViewController, UICollectionViewDelegate {
+class NewTabViewController: UIViewController, UICollectionViewDelegate {
     enum Section: Int {
         case favorites
     }
 
-    let dependency: HomepageViewControllerDependency
+    let dependency: NewTabViewControllerDependency
 
-    weak var delegate: HomepageViewControllerDelegate?
+    weak var delegate: NewTabViewControllerDelegate?
 
     let allowsForwardGesture: Bool
 
@@ -39,9 +39,9 @@ class HomepageViewController: UIViewController, UICollectionViewDelegate {
     // MARK: - Initializer
 
     init(
-        delegate: HomepageViewControllerDelegate?,
+        delegate: NewTabViewControllerDelegate?,
         allowsForwardGesture: Bool,
-        dependency: HomepageViewControllerDependency
+        dependency: NewTabViewControllerDependency
     ) {
         self.delegate = delegate
         self.allowsForwardGesture = allowsForwardGesture
@@ -72,7 +72,7 @@ class HomepageViewController: UIViewController, UICollectionViewDelegate {
             let interaction = ForwardPanGestureInteraction(contentView: collectionView) { [weak self] _ in
                 guard let self = self else { return }
 
-                self.delegate?.homepageVCForwardGestureDidRecognize(self)
+                self.delegate?.newTabVCForwardGestureDidRecognize(self)
             }
 
             view.addInteraction(interaction)
@@ -123,6 +123,6 @@ class HomepageViewController: UIViewController, UICollectionViewDelegate {
     func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = favoritesFolder.children[indexPath.item]
 
-        delegate?.homepageVC(self, openBookmark: item)
+        delegate?.newTabVC(self, openBookmark: item)
     }
 }

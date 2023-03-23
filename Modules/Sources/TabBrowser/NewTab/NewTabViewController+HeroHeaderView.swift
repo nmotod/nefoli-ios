@@ -2,20 +2,20 @@ import SwiftUI
 import Theme
 import UIKit
 
-protocol HomepageHeroHeaderViewDelegate: AnyObject {
-    func homeHeroHeaderRequestsEditAddress(_ heroHeaderView: HomepageViewController.HeroHeaderView)
+protocol NewTabHeroHeaderViewDelegate: AnyObject {
+    func newTabHeroHeaderRequestsEditAddress(_ heroHeaderView: NewTabViewController.HeroHeaderView)
 }
 
 private func clamp(min: CGFloat, max: CGFloat, percent: CGFloat) -> CGFloat {
     return min + (max - min) * percent
 }
 
-extension HomepageViewController {
+extension NewTabViewController {
     class HeroHeaderView: UICollectionReusableView {
         static let minimumHeight: CGFloat = 50
         static let maximumHeight: CGFloat = 200
 
-        weak var delegate: HomepageHeroHeaderViewDelegate?
+        weak var delegate: NewTabHeroHeaderViewDelegate?
 
         private let backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterialDark))
 
@@ -143,7 +143,7 @@ extension HomepageViewController {
         }
 
         @objc private func editAddress(_: Any) {
-            delegate?.homeHeroHeaderRequestsEditAddress(self)
+            delegate?.newTabHeroHeaderRequestsEditAddress(self)
         }
 
         override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {

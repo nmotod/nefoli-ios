@@ -1,6 +1,6 @@
 import UIKit
 
-extension HomepageViewController {
+extension NewTabViewController {
     class Layout: UICollectionViewFlowLayout {
         override class var layoutAttributesClass: AnyClass { LayoutAttributes.self }
 
