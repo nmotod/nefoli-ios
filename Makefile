@@ -6,7 +6,7 @@ ARGS = $(filter-out $@,$(MAKECMDGOALS))
 export
 LOCALIZATION_DIR = ./Localizations
 LANGUAGES = en ja
-MODULES = Root Database TabBrowser Theme Utils MenuSheet
+MODULES = Root Database TabBrowser Theme Utils
 
 ## help
 .PHONY: help
