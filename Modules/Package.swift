@@ -91,7 +91,10 @@ let package = Package(
             ]
         ),
         .target(
-            name: "Utils"
+            name: "Utils",
+            dependencies: [
+                .target(name: "Theme"),
+            ]
         ),
         .testTarget(
             name: "UtilsTests",
