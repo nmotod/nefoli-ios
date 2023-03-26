@@ -146,11 +146,14 @@ struct BookmarkList: View {
                 })
                 .sheet(isPresented: $isPresentedNewFolderForm) {
                     NavigationView {
-                        BookmarkItemEditForm(editingItem: {
-                            let folder = BookmarkItem()
-                            folder.kind = .folder
-                            return folder
-                        }(), bookmarkManager: bookmarkManager)
+                        BookmarkItemEditForm(
+                            bookmarkManager: bookmarkManager,
+                            editingItem: {
+                                let folder = BookmarkItem()
+                                folder.kind = .folder
+                                return folder
+                            }()
+                        )
                     }
                 }
             }
@@ -161,7 +164,10 @@ struct BookmarkList: View {
                 }
                 .sheet(isPresented: $itemEditingState.isEditing) {
                     NavigationView {
-                        BookmarkItemEditForm(editingItem: itemEditingState.item!, bookmarkManager: bookmarkManager)
+                        BookmarkItemEditForm(
+                            bookmarkManager: bookmarkManager,
+                            editingItem: itemEditingState.item!
+                        )
                     }
                 }
             }

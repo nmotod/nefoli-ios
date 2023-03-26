@@ -67,11 +67,11 @@ struct BookmarkItemEditForm: View {
     }
 
     init(
-        editingItem: BookmarkItem,
-        bookmarkManager: BookmarkManager
+        bookmarkManager: BookmarkManager,
+        editingItem: BookmarkItem
     ) {
-        self.editingItem = editingItem
         self.bookmarkManager = bookmarkManager
+        self.editingItem = editingItem
 
         // For some reason, when using @Environment(\.dismiss), State must be explicitly initialized.
         _title = State(initialValue: editingItem.localizedTitle)
