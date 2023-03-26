@@ -17,9 +17,6 @@
       location = "group:UnitTests.xctestplan">
    </FileRef>
    <FileRef
-      location = "group:scripts">
-   </FileRef>
-   <FileRef
       location = "group:Localizations">
    </FileRef>
    <FileRef
