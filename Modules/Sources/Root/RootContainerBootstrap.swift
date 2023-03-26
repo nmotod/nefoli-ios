@@ -98,8 +98,10 @@ class RootContainerBootstrap {
             appBundleIdentifier: appBundleIdentifier,
             realm: db.realm,
             rootState: db.rootState,
-            bookmarksFolder: db.bookmarksFolder,
-            favoritesFolder: db.favoritesFolder,
+            bookmarkManager: BookmarkManager(
+                bookmarksFolder: db.bookmarksFolder,
+                favoritesFolder: db.favoritesFolder
+            ),
             screenshotManager: screenshotManager,
             webViewManager: WebViewManager(
                 settings: db.settings,

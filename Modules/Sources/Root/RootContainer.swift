@@ -9,8 +9,7 @@ struct RootContainer: TabGroupControllerDependency {
     var appBundleIdentifier: String
     var realm: Realm
     var rootState: RootState
-    var bookmarksFolder: BookmarkItem
-    var favoritesFolder: BookmarkItem
+    var bookmarkManager: BookmarkManager
     var screenshotManager: ScreenshotManager
     var webViewManager: WebViewManager
     var bookmarkIconManager: BookmarkIconManager
