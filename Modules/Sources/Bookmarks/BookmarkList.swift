@@ -37,7 +37,7 @@ struct BookmarkList: View {
 
     var body: some View {
         SwiftUI.List {
-            if folder.id == BookmarkItemSystemID.bookmarksFolder.rawValue {
+            if folder.id == .bookmarks {
                 NavigationLink(destination: {
                     BookmarkList(
                         bookmarkManager: bookmarkManager,

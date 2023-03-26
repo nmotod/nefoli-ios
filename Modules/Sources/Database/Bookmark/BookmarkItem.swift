@@ -11,7 +11,7 @@ public class BookmarkItem: Object, CreatedDateStorable, Identifiable {
         case folder
     }
 
-    @Persisted(primaryKey: true) public var id = UUID().uuidString
+    @Persisted(primaryKey: true) public var id = BookmarkItemID.regular(UUID().uuidString)
 
     @Persisted public var kind: Kind = .bookmark
 
@@ -21,7 +21,18 @@ public class BookmarkItem: Object, CreatedDateStorable, Identifiable {
 
     @Persisted public var title: String
 
-    public var localizedTitle: String { title }
+    public var localizedTitle: String {
+        switch id {
+        case .favorites:
+            return NSLocalizedString("Favorites", comment: "")
+
+        case .bookmarks:
+            return NSLocalizedString("Bookmarks", comment: "")
+
+        default:
+            return title
+        }
+    }
 
     @Persisted public var url: URL?
 

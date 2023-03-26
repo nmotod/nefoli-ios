@@ -57,7 +57,7 @@ public class BookmarkIconManager {
     }
 
     func cacheFileURL(for item: BookmarkItem) -> URL {
-        return cachesDirectoryURL.appending(component: item.id)
+        return cachesDirectoryURL.appending(component: item.id.persistableValue)
     }
 
     private func save(image: UIImage, fileURL: URL) throws {

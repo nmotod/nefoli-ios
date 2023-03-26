@@ -15,7 +15,7 @@ struct BookmarkListItem: View {
 
             Group {
                 if item.isFolder {
-                    if item.id == BookmarkItemSystemID.favoritesFolder.rawValue {
+                    if item.id == .favorites {
                         Image(systemName: "star")
                             .font(symbolFont)
                     } else {

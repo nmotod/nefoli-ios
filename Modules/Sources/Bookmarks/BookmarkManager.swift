@@ -1,11 +1,6 @@
 import Database
 import Foundation
 
-enum BookmarkItemSystemID: String {
-    case bookmarksFolder = "bookmarks"
-    case favoritesFolder = "favorites"
-}
-
 public class BookmarkManager {
     public let bookmarksFolder: BookmarkItem
     public let favoritesFolder: BookmarkItem

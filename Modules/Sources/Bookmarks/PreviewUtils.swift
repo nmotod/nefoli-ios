@@ -5,7 +5,7 @@ import Foundation
 import RealmSwift
 
 private func makeFolder(
-    id: String?,
+    id: BookmarkItemID?,
     title: String,
     children: [BookmarkItem]
 ) -> BookmarkItem {
@@ -33,13 +33,13 @@ enum PreviewUtils {
 
     @MainActor static var bookmarkManager: BookmarkManager = {
         let rootState = RootState()
-        let bookmarksFolder = makeFolder(id: BookmarkItemSystemID.bookmarksFolder.rawValue, title: "", children: [
+        let bookmarksFolder = makeFolder(id: .bookmarks, title: "", children: [
             makeBookmark(id: nil, title: "Bookmark 1", urlString: "https://example.com/1"),
             makeBookmark(id: nil, title: "Bookmark 2", urlString: "https://example.com/2"),
             makeBookmark(id: nil, title: "Bookmark 3", urlString: "https://example.com/3"),
         ])
 
-        let favoritesFolder = makeFolder(id: BookmarkItemSystemID.favoritesFolder.rawValue, title: "", children: [
+        let favoritesFolder = makeFolder(id: .favorites, title: "", children: [
             makeBookmark(id: nil, title: "Favorite 1", urlString: "https://example.com/1"),
             makeBookmark(id: nil, title: "Favorite 2", urlString: "https://example.com/2"),
             makeBookmark(id: nil, title: "Favorite 3", urlString: "https://example.com/3"),

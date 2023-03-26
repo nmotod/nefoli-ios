@@ -7,7 +7,7 @@ struct BookmarkFolderChooser: View {
         var folder: BookmarkItem
         var depth: Int
 
-        var id: String { folder.id }
+        var id: BookmarkItem.ID { folder.id }
     }
 
     private let rows: [FolderRow]
@@ -21,7 +21,7 @@ struct BookmarkFolderChooser: View {
     init(
         bookmarkManager: BookmarkManager,
         selectedFolder: BookmarkItem,
-        excludedFolderIDs: [String],
+        excludedFolderIDs: [BookmarkItem.ID],
         onSelect: @escaping (BookmarkItem) -> Void
     ) {
         self.selectedFolder = selectedFolder
