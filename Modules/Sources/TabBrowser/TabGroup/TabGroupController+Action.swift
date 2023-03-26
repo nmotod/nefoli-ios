@@ -13,6 +13,10 @@ extension TabGroupController {
         case listTabs
         case settings
 
+        #if DEBUG
+        case debugEditBookmark
+        #endif
+
         public typealias BuilderContext = TabGroupController
 
         public var definition: ActionDefinition<Action> {
@@ -75,6 +79,27 @@ extension TabGroupController {
                         }
                     }
                 )
+            #if DEBUG
+            case .debugEditBookmark:
+                return buildDefinition(
+                    title: "[Debug] Edit Bookmark",
+                    builder: { definition, controller in
+                        weak var controller = controller
+
+                        return ExecutableAction(definition: definition) { context in
+                            guard let controller else { return }
+
+                            let editController = BookmarkItemEditController(
+                                bookmarkManager: controller.dependency.bookmarkManager,
+                                editingItem: controller.dependency.bookmarkManager.favoritesFolder.children.last!
+                            ) { _ in
+                            }
+
+                            (context.viewController ?? controller)?.present(editController, animated: true)
+                        }
+                    }
+                )
+            #endif
             }
         }
     }
