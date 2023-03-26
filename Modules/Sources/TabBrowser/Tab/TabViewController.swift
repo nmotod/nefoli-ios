@@ -275,7 +275,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
     }
 
     func webView(_: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
-        log.debug("\(navigationAction.request.httpMethod ?? "<nil method>") \(navigationAction.request.url?.absoluteString ?? "<nil url>")")
+        logger.debug("\(navigationAction.request.httpMethod ?? "<nil method>") \(navigationAction.request.url?.absoluteString ?? "<nil url>")")
 
         guard let url = navigationAction.request.url else {
             return .allow

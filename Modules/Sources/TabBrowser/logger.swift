@@ -1,4 +1,4 @@
 import Foundation
 import os.log
 
-let log = Logger()
+let logger = Logger()

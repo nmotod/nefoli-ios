@@ -298,7 +298,7 @@ class TabGroupView: UIView,
             reloadData()
 
         case let .update(_, deletions, insertions, modifications):
-            log.debug("d=\(deletions),  i=\(insertions),  m=\(modifications)")
+            logger.debug("d=\(deletions),  i=\(insertions),  m=\(modifications)")
 
             for indexPath in deletions.map({ IndexPath(row: $0, section: 0) }) {
                 if let cell = collectionView.cellForItem(at: indexPath) as? Cell {
@@ -381,7 +381,7 @@ class TabGroupView: UIView,
     func tabGroupViewCell(_ cell: Cell, dragStateDidChange dragState: UICollectionViewCell.DragState) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
 
-        log.debug("[\(indexPath.row)] dragStateDidChange --> \(dragState.rawValue)")
+        logger.debug("[\(indexPath.row)] dragStateDidChange --> \(dragState.rawValue)")
     }
 
     func tabGroupViewCellRequestsDelete(_: Cell) {}
@@ -431,7 +431,7 @@ class TabGroupView: UIView,
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning _: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         guard let tab = tabAt(indexPath) else { return [] }
 
-        log.debug("itemsForBeginning row: \(indexPath.row)")
+        logger.debug("itemsForBeginning row: \(indexPath.row)")
 
         let dragItem = UIDragItem(itemProvider: NSItemProvider())
         dragItem.localObject = tab
@@ -492,7 +492,7 @@ class TabGroupView: UIView,
 
         if let sourceIndexPath = dropItem.sourceIndexPath {
             // Move within one collectionView.
-            log.debug("move \(sourceIndexPath.row) --> \(destinationIndexPath.row)")
+            logger.debug("move \(sourceIndexPath.row) --> \(destinationIndexPath.row)")
 
             try! group.realm!.write(withoutNotifying: groupTokens) {
                 group.move(from: sourceIndexPath.row, to: destinationIndexPath.row)
@@ -505,7 +505,7 @@ class TabGroupView: UIView,
 
         } else {
             // Move from other collectionView to this one.
-            log.debug("move (other group) --> \(destinationIndexPath)")
+            logger.debug("move (other group) --> \(destinationIndexPath)")
 
 //            try! group.realm!.write(withoutNotifying: groupTokens) {
 //                tabStore.transfer(tab: tab, toGroup: group, isRecursive: true)
