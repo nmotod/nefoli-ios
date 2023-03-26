@@ -31,7 +31,7 @@ public class BookmarkItem: Object, CreatedDateStorable, Identifiable {
 
     @Persisted public var remoteIconExists: Bool?
 
-    var parents = LinkingObjects(fromType: BookmarkItem.self, property: "children")
+    @Persisted(originProperty: "children") var parents: LinkingObjects<BookmarkItem>
 
     public var parent: BookmarkItem? { parents.first }
 }
