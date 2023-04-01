@@ -102,5 +102,16 @@ extension NewTabViewController {
             item = nil
             iconImageView.image = nil
         }
+
+        var dragPreviewParameters: UIDragPreviewParameters {
+            let parameters = UIDragPreviewParameters()
+
+            parameters.visiblePath = UIBezierPath(
+                roundedRect: iconView.frame,
+                cornerRadius: Self.iconCornerRadius
+            )
+
+            return parameters
+        }
     }
 }

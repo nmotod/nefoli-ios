@@ -1,10 +1,11 @@
+import Bookmarks
 import Database
 import Foundation
 import Theme
 import UIKit
 import Utils
 
-public typealias NewTabViewControllerDependency = UsesBookmarkFolders & NewTabViewControllerCellDependency
+public typealias NewTabViewControllerDependency = UsesBookmarkManager & NewTabViewControllerCellDependency
 
 protocol NewTabViewControllerDelegate: AnyObject {
     func newTabVC(_: NewTabViewController, openBookmark bookmark: BookmarkItem)
@@ -12,12 +13,16 @@ protocol NewTabViewControllerDelegate: AnyObject {
     func newTabVCForwardGestureDidRecognize(_: NewTabViewController)
 }
 
-class NewTabViewController: UIViewController, UICollectionViewDelegate {
+class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDragDelegate, UICollectionViewDropDelegate {
     enum Section: Int {
         case favorites
     }
 
     let dependency: NewTabViewControllerDependency
+
+    private let bookmarkManager: BookmarkManager
+
+    private let favoritesFolder: BookmarkItem
 
     weak var delegate: NewTabViewControllerDelegate?
 
@@ -29,10 +34,13 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: collectionViewLayout)
         collectionView.delegate = self
         collectionView.backgroundColor = Colors.background.color
+
+        collectionView.dragInteractionEnabled = true
+        collectionView.dragDelegate = self
+        collectionView.dropDelegate = self
+
         return collectionView
     }()
-
-    let favoritesFolder: BookmarkItem
 
     private var dataSource: UICollectionViewDiffableDataSource<Section, BookmarkItem>?
 
@@ -45,7 +53,8 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate {
     ) {
         self.delegate = delegate
         self.allowsForwardGesture = allowsForwardGesture
-        favoritesFolder = dependency.favoritesFolder
+        bookmarkManager = dependency.bookmarkManager
+        favoritesFolder = dependency.bookmarkManager.favoritesFolder
         self.dependency = dependency
 
         super.init(nibName: nil, bundle: nil)
@@ -124,5 +133,89 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate {
         let item = favoritesFolder.children[indexPath.item]
 
         delegate?.newTabVC(self, openBookmark: item)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
+        guard let i = indexPaths.first?.item else { return nil }
+
+        let item = favoritesFolder.children[i]
+
+        return UIContextMenuConfiguration(actionProvider: { _ in
+            return UIMenu(children: [
+                UIAction(
+                    title: NSLocalizedString("Edit", comment: ""),
+                    image: UIImage(systemName: "square.and.pencil"),
+                    handler: { [weak self] _ in
+                        self?.editBookmarkItem(item)
+                    }
+                ),
+                UIAction(title: NSLocalizedString("Delete", comment: ""), image: UIImage(systemName: "trash"), attributes: .destructive, handler: { _ in
+                }),
+            ])
+        })
+    }
+
+    private func editBookmarkItem(_ item: BookmarkItem) {
+        let controller = BookmarkItemEditController(bookmarkManager: bookmarkManager, editingItem: item) { _ in
+        }
+
+        present(controller, animated: true)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfiguration configuration: UIContextMenuConfiguration, highlightPreviewForItemAt indexPath: IndexPath) -> UITargetedPreview? {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? Cell else { return nil }
+
+        return UITargetedPreview(view: cell, parameters: cell.dragPreviewParameters)
+    }
+
+    // MARK: - Collection view drag delegate
+
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        let item = favoritesFolder.children[indexPath.item]
+
+        let dragItem = UIDragItem(itemProvider: NSItemProvider())
+        dragItem.localObject = item
+        return [dragItem]
+    }
+
+    func collectionView(_ collectionView: UICollectionView, dragSessionAllowsMoveOperation session: UIDragSession) -> Bool {
+        return true
+    }
+
+    func collectionView(_ collectionView: UICollectionView, dragPreviewParametersForItemAt indexPath: IndexPath) -> UIDragPreviewParameters? {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? Cell else { return nil }
+
+        return cell.dragPreviewParameters
+    }
+
+    // MARK: - Collection view drop delegate
+
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        return .init(operation: .move, intent: .insertAtDestinationIndexPath)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, dropPreviewParametersForItemAt indexPath: IndexPath) -> UIDragPreviewParameters? {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? Cell else { return nil }
+
+        return cell.dragPreviewParameters
+    }
+
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        // Support only reordering within itself
+        guard let dataSource,
+              let dropItem = coordinator.items.first,
+              let sourceIndexPath = dropItem.sourceIndexPath,
+              let destinationIndexPath = coordinator.destinationIndexPath else { return }
+
+        try! favoritesFolder.realm!.write {
+            favoritesFolder.children.move(from: sourceIndexPath.item, to: destinationIndexPath.item)
+        }
+
+        var snapshot = dataSource.snapshot(for: .favorites)
+        snapshot.deleteAll()
+        snapshot.append(Array(favoritesFolder.children))
+        dataSource.apply(snapshot, to: .favorites, animatingDifferences: true)
+
+        coordinator.drop(dropItem.dragItem, toItemAt: destinationIndexPath)
     }
 }
