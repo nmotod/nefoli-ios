@@ -30,7 +30,7 @@ struct BookmarkFolderChooser: View {
 
         var rows = [FolderRow]()
 
-        bookmarkManager.traverseAllFolders { folder, depth in
+        bookmarkManager.recursiveEnumerateAllFolders { folder, depth in
             if excludedFolderIDs.contains(folder.id) {
                 return .ignore
             }
@@ -58,14 +58,12 @@ struct BookmarkFolderChooser: View {
                     checked: selectedFolder.id == row.folder.id
                 )
             }
-            .tint(Color(Colors.tint.color))
-            .listRowBackground(Color(Colors.formFieldBackground.color))
+            .tint(Colors.tint.swiftUIColor)
+            .listRowBackground(Colors.formFieldBackground.swiftUIColor)
         }
+        .themedNavigationBar()
+        .themedGroupedList()
         .navigationTitle("Choose Location")
-        .navigationBarTitleDisplayMode(.inline)
-//            .introspectTableView { tableView in
-//                tableView.backgroundColor = Colors.background.color
-//            }
     }
 }
 

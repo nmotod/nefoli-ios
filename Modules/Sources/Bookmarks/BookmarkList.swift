@@ -47,7 +47,7 @@ struct BookmarkList: View {
                 }) {
                     BookmarkListItem(item: bookmarkManager.favoritesFolder)
                 }
-                .listRowBackground(Colors.background.swiftUIColor)
+                .listRowBackground(Colors.backgroundDark.swiftUIColor)
             }
 
             if folder.children.isEmpty {
@@ -115,17 +115,19 @@ struct BookmarkList: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                 // Extend tappable area
-                .background(Colors.background.swiftUIColor)
+                .listRowBackground(Colors.backgroundDark.swiftUIColor)
                 .gesture(editMode == .active ? TapGesture().onEnded { _ in
                     itemEditingState.edit(item: item)
                 } : nil)
             }
             .onDelete(perform: $folder.children.remove)
             .onMove(perform: $folder.children.move)
-            .listRowBackground(Colors.background.swiftUIColor)
+            .listRowBackground(Colors.backgroundDark.swiftUIColor)
         }
+        .themedNavigationBar()
         .listStyle(.plain)
-        .background(Colors.background.swiftUIColor)
+        .listRowBackground(Colors.backgroundDark.swiftUIColor)
+        .background(Colors.backgroundDark.swiftUIColor)
         .foregroundColor(Colors.textNormal.swiftUIColor)
         .navigationTitle(folder.localizedTitle)
         .navigationBarTitleDisplayMode(.inline)
@@ -159,24 +161,18 @@ struct BookmarkList: View {
             }
 
             ToolbarItem(placement: .bottomBar) {
-                Button(action: {}) {
-                    EmptyView()
-                }
-                .sheet(isPresented: $itemEditingState.isEditing) {
-                    NavigationView {
-                        BookmarkItemEditForm(
-                            bookmarkManager: bookmarkManager,
-                            editingItem: itemEditingState.item!
-                        )
-                    }
-                }
-            }
-
-            ToolbarItem(placement: .bottomBar) {
                 EditButton()
             }
         }
         .tint(Color(Colors.tint.color))
         .environment(\.editMode, $editMode)
+        .sheet(isPresented: $itemEditingState.isEditing) {
+            NavigationView {
+                BookmarkItemEditForm(
+                    bookmarkManager: bookmarkManager,
+                    editingItem: itemEditingState.item!
+                )
+            }
+        }
     }
 }

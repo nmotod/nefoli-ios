@@ -82,10 +82,11 @@ public struct BookmarkItemEditForm: View {
     }
 
     private func backgroundFor(field: Field) -> Color {
+//        return Colors.formFieldBackground.swiftUIColor
         if field == focusedField {
-            return Color(Colors.formFieldBackgroundFocused.color)
+            return Colors.formFieldBackgroundFocused.swiftUIColor
         }
-        return Color(Colors.formFieldBackground.color)
+        return Colors.formFieldBackground.swiftUIColor
     }
 
     public var body: some View {
@@ -138,7 +139,7 @@ public struct BookmarkItemEditForm: View {
                     }
                 }
             }
-            .listRowBackground(Color(Colors.formFieldBackground.color))
+            .listRowBackground(Colors.formFieldBackground.swiftUIColor)
 
             Section {
                 Button(action: {
@@ -149,10 +150,11 @@ public struct BookmarkItemEditForm: View {
                         .font(Font.system(.body).bold())
                 }
             }
-            .listRowBackground(Color(Colors.formFieldBackground.color))
+            .listRowBackground(Colors.formFieldBackground.swiftUIColor)
         }
+        .themedGroupedList()
+        .themedNavigationBar()
         .navigationTitle(formTitle)
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel", action: {
