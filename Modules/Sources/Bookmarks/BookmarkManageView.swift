@@ -1,7 +1,7 @@
 import Database
 import SwiftUI
 
-public struct BookmarkManagerView: View {
+public struct BookmarkManageView: View {
     var bookmarkManager: BookmarkManager
 
     var onOpen: (BookmarkItem) -> Void
@@ -25,9 +25,9 @@ public struct BookmarkManagerView: View {
     }
 }
 
-struct BookmarkManagerView_Previews: PreviewProvider {
+struct BookmarkManageView_Previews: PreviewProvider {
     static var previews: some View {
-        BookmarkManagerView(
+        BookmarkManageView(
             bookmarkManager: PreviewUtils.bookmarkManager,
             onOpen: { _ in }
         )

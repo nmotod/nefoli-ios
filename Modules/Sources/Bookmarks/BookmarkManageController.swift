@@ -2,7 +2,7 @@ import Database
 import SwiftUI
 import UIKit
 
-public class BookmarkManagerController: UIHostingController<BookmarkManagerView> {
+public class BookmarkManageController: UIHostingController<BookmarkManagerView> {
     public init(
         bookmarkManager: BookmarkManager,
         onOpen: @escaping (BookmarkItem) -> Void

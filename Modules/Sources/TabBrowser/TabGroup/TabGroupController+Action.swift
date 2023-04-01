@@ -31,7 +31,7 @@ extension TabGroupController {
                         return ExecutableAction(definition: definition) { _ in
                             guard let controller else { return }
 
-                            let vc = BookmarkManagerController(
+                            let vc = BookmarkManageController(
                                 bookmarkManager: controller.dependency.bookmarkManager,
                                 onOpen: { _ in }
                             )
