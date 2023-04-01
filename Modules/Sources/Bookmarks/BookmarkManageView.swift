@@ -1,7 +1,7 @@
 import Database
 import SwiftUI
 
-public struct BookmarkManageView: View {
+struct BookmarkManageView: View {
     var bookmarkManager: BookmarkManager
 
     var onOpen: (BookmarkItem) -> Void
@@ -14,7 +14,7 @@ public struct BookmarkManageView: View {
         self.onOpen = onOpen
     }
 
-    public var body: some View {
+    var body: some View {
         NavigationStack {
             BookmarkList(
                 bookmarkManager: bookmarkManager,

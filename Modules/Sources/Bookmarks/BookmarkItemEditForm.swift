@@ -2,7 +2,7 @@ import Database
 import SwiftUI
 import Theme
 
-public struct BookmarkItemEditForm: View {
+struct BookmarkItemEditForm: View {
     enum Field: Hashable {
         case title
         case url
@@ -89,7 +89,7 @@ public struct BookmarkItemEditForm: View {
         return Colors.formFieldBackground.swiftUIColor
     }
 
-    public var body: some View {
+    var body: some View {
         Form {
             Section("Title") {
                 TextField("Title", text: $title)

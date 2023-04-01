@@ -4,14 +4,14 @@ import Foundation
 import SwiftUI
 import Theme
 
-public struct RootView: View {
-    @ObservedRealmObject public var settings: Settings
+struct RootView: View {
+    @ObservedRealmObject var settings: Settings
 
-    public var contentFilterManager: ContentFilterManager
+    var contentFilterManager: ContentFilterManager
 
     @Environment(\.dismiss) private var dismiss
 
-    public var body: some View {
+    var body: some View {
         NavigationStack {
             List {
                 Section("Content Blocking (Ad Blocking)") {

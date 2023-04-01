@@ -5,11 +5,13 @@ import SwiftUI
 
 public typealias SettingsControllerDependency = UsesSettings & UsesContentFilterManager
 
-public class SettingsController: UIHostingController<RootView> {
+public class SettingsController: UIHostingController<AnyView> {
     public init(dependency: SettingsControllerDependency) {
-        super.init(rootView: RootView(
-            settings: dependency.settings,
-            contentFilterManager: dependency.contentFilterManager
+        super.init(rootView: AnyView(
+            RootView(
+                settings: dependency.settings,
+                contentFilterManager: dependency.contentFilterManager
+            )
         ))
 
         overrideUserInterfaceStyle = .dark
