@@ -161,7 +161,21 @@ struct BookmarkList: View {
             }
 
             ToolbarItem(placement: .bottomBar) {
-                EditButton()
+                // Do not use EditButton
+                // Because EditButton does not work after closing edit modal.
+                if editMode == .active {
+                    Button("Done", action: {
+                        withAnimation {
+                            editMode = .inactive
+                        }
+                    })
+                } else {
+                    Button("Edit", action: {
+                        withAnimation {
+                            editMode = .active
+                        }
+                    })
+                }
             }
         }
         .tint(Color(Colors.tint.color))
