@@ -57,68 +57,38 @@ struct BookmarkList: View {
 
             ForEach(folder.children) { (item: BookmarkItem) in
                 HStack {
-                    if item.isFolder {
-                        NavigationLink(destination: {
-                            BookmarkList(
-                                bookmarkManager: bookmarkManager,
-                                folder: item,
-                                onOpen: onOpen
-                            )
+                    if editMode == .active {
+                        Button(action: {
+                            itemEditingState.edit(item: item)
                         }) {
                             BookmarkListItem(item: item)
                         }
+
                     } else {
-                        Button(action: {
-                            onOpen(item)
-                            dismiss()
-                        }) {
-                            BookmarkListItem(item: item)
+                        if item.isFolder {
+                            NavigationLink(destination: {
+                                BookmarkList(
+                                    bookmarkManager: bookmarkManager,
+                                    folder: item,
+                                    onOpen: onOpen
+                                )
+                            }) {
+                                BookmarkListItem(item: item)
+                            }
+                        } else {
+                            Button(action: {
+                                onOpen(item)
+                                dismiss()
+                            }) {
+                                BookmarkListItem(item: item)
+                            }
                         }
                     }
                 }
                 .contextMenu {
-                    Button(action: {
-                        onOpen(item)
-                        dismiss()
-                    }) {
-                        HStack {
-                            Text("Open in New Tab")
-                            Image(systemName: "plus.square.on.square")
-                        }
-                    }
-
-                    Divider()
-
-                    Button(action: {
-                        itemEditingState.edit(item: item)
-                    }) {
-                        HStack {
-                            Text("Edit")
-                            Image(systemName: "square.and.pencil")
-                        }
-                    }
-
-                    Button(role: .destructive, action: {
-                        if let index = folder.children.firstIndex(where: { $0.id == item.id }) {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                withAnimation {
-                                    $folder.children.remove(at: index)
-                                }
-                            }
-                        }
-                    }) {
-                        HStack {
-                            Text("Delete")
-                            Image(systemName: "trash")
-                        }
-                    }
+                    buildContextMenu(item: item)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                // Extend tappable area
-                .listRowBackground(Colors.backgroundDark.swiftUIColor)
-                .gesture(editMode == .active ? TapGesture().onEnded { _ in
-                    itemEditingState.edit(item: item)
-                } : nil)
             }
             .onDelete(perform: $folder.children.remove)
             .onMove(perform: $folder.children.move)
@@ -131,7 +101,6 @@ struct BookmarkList: View {
         .foregroundColor(Colors.textNormal.swiftUIColor)
         .navigationTitle(folder.localizedTitle)
         .navigationBarTitleDisplayMode(.inline)
-//        .toolbarBackground(Colors.background.swiftUIColor, for: .navigationBar)
         .toolbarColorScheme(.dark)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
@@ -186,6 +155,45 @@ struct BookmarkList: View {
                     bookmarkManager: bookmarkManager,
                     editingItem: itemEditingState.item!
                 )
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func buildContextMenu(item: BookmarkItem) -> some View {
+        Button(action: {
+            onOpen(item)
+            dismiss()
+        }) {
+            HStack {
+                Text("Open in New Tab")
+                Image(systemName: "plus.square.on.square")
+            }
+        }
+
+        Divider()
+
+        Button(action: {
+            itemEditingState.edit(item: item)
+        }) {
+            HStack {
+                Text("Edit")
+                Image(systemName: "square.and.pencil")
+            }
+        }
+
+        Button(role: .destructive, action: {
+            if let index = folder.children.firstIndex(where: { $0.id == item.id }) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    withAnimation {
+                        $folder.children.remove(at: index)
+                    }
+                }
+            }
+        }) {
+            HStack {
+                Text("Delete")
+                Image(systemName: "trash")
             }
         }
     }
