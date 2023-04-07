@@ -147,6 +147,14 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
 
                     Task { @MainActor in
                         self.addressDidChange()
+                        self.titleOrURLDidChange()
+                    }
+                },
+                webView.observe(\.title) { [weak self] _, _ in
+                    guard let self = self else { return }
+
+                    Task { @MainActor in
+                        self.titleOrURLDidChange()
                     }
                 },
                 webView.observe(\.hasOnlySecureContent) { [weak self] _, _ in
@@ -353,6 +361,14 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
 
         rootView.addressBar.addressText = webView.url?.host ?? ""
         rootView.addressBar.isSecure = webView.hasOnlySecureContent
+    }
+
+    private func titleOrURLDidChange() {
+        guard let tab, let webView else { return }
+
+        try! tab.realm!.write {
+            tab.updateCurrentTitleOrURL(webView: webView)
+        }
     }
 
     // MARK: - New Tab VC

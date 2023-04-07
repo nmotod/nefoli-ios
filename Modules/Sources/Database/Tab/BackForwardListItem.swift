@@ -12,4 +12,11 @@ public class BackForwardListItem: EmbeddedObject {
         title = wkItem.title ?? ""
         url = wkItem.url
     }
+
+    convenience init(title: String, url: URL?) {
+        self.init()
+
+        self.title = title
+        self.url = url
+    }
 }

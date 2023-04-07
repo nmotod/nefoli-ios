@@ -42,4 +42,8 @@ public class Tab: EmbeddedObject, CreatedDateStorable, PropertyIterable {
         forwardList.removeAll()
         forwardList.append(objectsIn: wkBackForwardList.forwardList.map(BackForwardListItem.init(wkItem:)))
     }
+
+    public func updateCurrentTitleOrURL(webView: WKWebView) {
+        current = .init(title: webView.title ?? "", url: webView.url)
+    }
 }
