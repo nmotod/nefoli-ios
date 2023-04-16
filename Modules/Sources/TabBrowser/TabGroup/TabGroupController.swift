@@ -82,7 +82,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
             ],
             [
                 TabGroupController.Action.bookmarks,
-                TabGroupController.Action.listTabs,
+                TabGroupController.Action.tabs,
             ],
             [
                 TabViewController.Action.share,
@@ -191,7 +191,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
                 TabViewController.Action.goForward,
                 TabGroupController.Action.showMenuSheet,
                 TabGroupController.Action.bookmarks,
-                TabGroupController.Action.listTabs,
+                TabGroupController.Action.tabs,
             ]
 
             setToolbarItems(from: actionTypes.compactMap { executableAction(action: $0) })

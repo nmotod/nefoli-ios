@@ -1,6 +1,7 @@
 import Bookmarks
 import Foundation
 import SettingsUI
+import TabManageUI
 import UIKit
 import Utils
 
@@ -10,7 +11,7 @@ extension TabGroupController {
 
         case bookmarks
         case showMenuSheet
-        case listTabs
+        case tabs
         case settings
 
         #if DEBUG
@@ -53,13 +54,21 @@ extension TabGroupController {
                     }
                 )
 
-            case .listTabs: return
+            case .tabs: return
                 buildDefinition(
                     title: NSLocalizedString("List Tabs", comment: ""),
                     image: UIImage(systemName: "square.on.square",
                                    withConfiguration: UIImage.SymbolConfiguration(pointSize: 15)),
-                    builder: { definition, _ in
-                        ExecutableAction(definition: definition) { _ in }
+                    builder: { definition, controller in
+                        weak var controller = controller
+
+                        return ExecutableAction(definition: definition) { context in
+                            guard let controller, let group = controller.group else { return }
+
+                            let tabManageController = TabManageController(group: group)
+
+                            (context.viewController ?? controller)?.present(tabManageController, animated: true)
+                        }
                     }
                 )
 
@@ -79,6 +88,7 @@ extension TabGroupController {
                         }
                     }
                 )
+
             #if DEBUG
             case .debugEditBookmark:
                 return buildDefinition(
