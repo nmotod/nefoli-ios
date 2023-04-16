@@ -31,7 +31,7 @@ class TabGroupView: UIView,
                 group?.observe { [weak self] change in
                     self?.didChangeTabGroup(change)
                 },
-                group?.observeChildren { [weak self] change in
+                group?.children.observe { [weak self] change in
                     self?.childrenDidChange(change)
                 },
             ].compactMap { $0 }
@@ -361,15 +361,15 @@ class TabGroupView: UIView,
 
         let index = indexPath.row + offset
 
-        if index >= 0, index < group.count {
-            return group[index]
+        if index >= 0, index < group.children.count {
+            return group.children[index]
         }
 
         return nil
     }
 
     private func indexPathFor(tab: Tab) -> IndexPath? {
-        guard let index = group?.firstIndex(of: tab) else {
+        guard let index = group?.children.firstIndex(of: tab) else {
             return nil
         }
 
@@ -389,7 +389,7 @@ class TabGroupView: UIView,
     // MARK: - Collection view data source
 
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        return group?.count ?? 0
+        return group?.children.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -397,7 +397,7 @@ class TabGroupView: UIView,
             fatalError()
         }
 
-        let tab = group[indexPath.item]
+        let tab = group.children[indexPath.item]
         return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: tab)
     }
 
@@ -495,7 +495,7 @@ class TabGroupView: UIView,
             logger.debug("move \(sourceIndexPath.row) --> \(destinationIndexPath.row)")
 
             try! group.realm!.write(withoutNotifying: groupTokens) {
-                group.move(from: sourceIndexPath.row, to: destinationIndexPath.row)
+                group.children.move(from: sourceIndexPath.row, to: destinationIndexPath.row)
             }
 
             collectionView.performBatchUpdates({

@@ -3,7 +3,7 @@ import RealmSwift
 import XCTest
 
 private func dumpTabGroup(_ group: TabGroup) -> [String] {
-    return group.map { tab in
+    return group.children.map { tab in
         let s = tab.initialURL?.absoluteString ?? "(no initialURL)"
 
         if tab.id == group.activeTabId {
@@ -45,7 +45,7 @@ final class TabGroupTests: XCTestCase {
             return
         }
 
-        XCTAssertEqual(group.count, 2)
+        XCTAssertEqual(group.children.count, 2)
     }
 
     func testAddToEnd() throws {
@@ -90,7 +90,7 @@ final class TabGroupTests: XCTestCase {
                 .init(initialURL: URL(string: "https://example.com/second")!),
             ])
 
-            group.activeTabId = group[0].id
+            group.activeTabId = group.children[0].id
         }
 
         XCTAssertEqual(dumpTabGroup(group), [
@@ -123,7 +123,7 @@ final class TabGroupTests: XCTestCase {
                 .init(initialURL: URL(string: "https://example.com/second")!),
             ])
 
-            group.activeTabId = group[1].id
+            group.activeTabId = group.children[1].id
         }
 
         XCTAssertEqual(dumpTabGroup(group), [
@@ -157,7 +157,7 @@ final class TabGroupTests: XCTestCase {
                 .init(initialURL: URL(string: "https://example.com/third")!),
             ])
 
-            group.activeTabId = group[0].id
+            group.activeTabId = group.children[0].id
         }
 
         XCTAssertEqual(dumpTabGroup(group), [
@@ -167,7 +167,7 @@ final class TabGroupTests: XCTestCase {
         ])
 
         try realm.write {
-            group.move(from: 2, to: 0)
+            group.children.move(from: 2, to: 0)
         }
 
         XCTAssertEqual(dumpTabGroup(group), [
@@ -189,7 +189,7 @@ final class TabGroupTests: XCTestCase {
                 .init(initialURL: URL(string: "https://example.com/third")!),
             ])
 
-            group.activeTabId = group[1].id
+            group.activeTabId = group.children[1].id
         }
 
         XCTAssertEqual(dumpTabGroup(group), [

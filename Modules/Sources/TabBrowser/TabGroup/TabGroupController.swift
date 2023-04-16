@@ -126,7 +126,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
             }
         })
 
-        groupTokens.append(group.observeChildren { [weak self] change in
+        groupTokens.append(group.children.observe { [weak self] change in
             guard let self = self else { return }
 
             Task { @MainActor in
@@ -165,7 +165,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
             return
         }
 
-        let tab = group.activeTabIndex.map { group[$0] }
+        let tab = group.activeTabIndex.map { group.children[$0] }
 
         if activeVC?.tab?.id == tab?.id {
             return
@@ -209,7 +209,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
     private func pruneViewControllers() {
         guard let group = group else { return }
 
-        let prunedIds = Set(viewControllersByTabId.keys).subtracting(group.map(\.id))
+        let prunedIds = Set(viewControllersByTabId.keys).subtracting(group.children.map(\.id))
 
         for id in prunedIds {
             guard let vc = viewControllersByTabId[id] else { continue }
@@ -238,7 +238,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
         guard let group = group else { return }
 
         try! group.realm!.write {
-            group.activeTabId = group[index].id
+            group.activeTabId = group.children[index].id
         }
     }
 
