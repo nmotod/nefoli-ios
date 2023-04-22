@@ -5,9 +5,11 @@ import WebKit
 public class Tab: EmbeddedObject, CreatedDateStorable, PropertyIterable {
     public enum Property: String, CaseIterable {
         case id
-        case historyItems
         case initialURL
         case createdDate
+        case backList
+        case forwardList
+        case current
     }
 
     @Persisted public var id = UUID().uuidString
@@ -18,7 +20,7 @@ public class Tab: EmbeddedObject, CreatedDateStorable, PropertyIterable {
 
     @Persisted public private(set) var forwardList: List<BackForwardListItem>
 
-    @Persisted public private(set) var current: BackForwardListItem?
+    @Persisted public var current: BackForwardListItem?
 
     @Persisted public private(set) var createdDate: Date = .init()
 
