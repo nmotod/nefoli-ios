@@ -11,14 +11,12 @@ struct TabGroupManageView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(group.children) { tab in
-                    
+                ForEach(group.children) { _ in
                 }
-                .onMove { from, to in
-                    
+                .onMove { _, _ in
                 }
             }
-            
+
             List(group.children) { tab in
                 HStack(alignment: .center) {
                     Button(action: {
