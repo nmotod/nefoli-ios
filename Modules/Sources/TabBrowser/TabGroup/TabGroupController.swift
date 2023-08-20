@@ -29,6 +29,35 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
 
     override public var preferredStatusBarStyle: UIStatusBarStyle { Theme.preferredStatusBarStyle }
 
+    private lazy var drawGestureInteraction: DrawGestureInteraction = {
+        return DrawGestureInteraction(gestures: [
+            DrawGesture(
+                strokeDirections: [.down, .right],
+                title: NSLocalizedString("Close Tab", comment: ""),
+                handler: { _ in
+                }
+            ),
+            DrawGesture(
+                strokeDirections: [.down, .right, .up],
+                title: NSLocalizedString("Restore Tab", comment: ""),
+                handler: { _ in
+                }
+            ),
+            DrawGesture(
+                strokeDirections: [.right, .down, .left, .up],
+                title: NSLocalizedString("Reload Tab", comment: ""),
+                handler: { _ in
+                }
+            ),
+            DrawGesture(
+                strokeDirections: [.right, .down, .left, .up, .right],
+                title: NSLocalizedString("Reload Tab", comment: ""),
+                handler: { _ in
+                }
+            ),
+        ])
+    }()
+
     public init(group: TabGroup?, dependency: TabGroupControllerDependency) {
         self.group = group
         self.dependency = dependency
@@ -55,6 +84,8 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
         rootView.tabGroupView.group = group
 
         activeTabDidChange()
+
+        rootView.containerView.addInteraction(drawGestureInteraction)
     }
 
     override public func viewDidLayoutSubviews() {
