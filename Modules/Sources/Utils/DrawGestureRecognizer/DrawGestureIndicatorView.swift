@@ -1,8 +1,7 @@
+import SnapKit
 import UIKit
 
 public class DrawGestureIndicatorView: UIVisualEffectView {
-    private let size: CGFloat = 160
-
     private var stateLabel = UILabel()
 
     var recognizedGesture: DrawGesture? {
@@ -14,28 +13,12 @@ public class DrawGestureIndicatorView: UIVisualEffectView {
             }
 
             stateLabel.text = recognizedGesture?.title ?? ""
-
-            if oldValue == nil {
-                if newValue != nil {
-                    show()
-                }
-            } else {
-                if newValue == nil {
-                    hide()
-                }
-            }
         }
     }
 
-    let drawGestureRecognizer: DrawGestureRecognizer
-
     public init(recognizer: DrawGestureRecognizer) {
-        drawGestureRecognizer = recognizer
-
-        super.init(effect: UIBlurEffect(style: .systemMaterialDark))
+        super.init(effect: UIBlurEffect(style: .systemChromeMaterialDark))
         setup()
-
-        recognizer.addTarget(self, action: #selector(didRecognize(_:)))
     }
 
     @available(*, unavailable)
@@ -48,69 +31,27 @@ public class DrawGestureIndicatorView: UIVisualEffectView {
         layer.cornerRadius = 10
         backgroundColor = .clear
 
-        translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            widthAnchor.constraint(equalToConstant: size),
-            heightAnchor.constraint(equalToConstant: size),
-        ])
-
-        stateLabel.font = UIFont.systemFont(ofSize: 20)
-        stateLabel.textColor = .lightText
-        stateLabel.textAlignment = .center
+        stateLabel.font = UIFont.systemFont(ofSize: 30)
+        stateLabel.textColor = .white
         stateLabel.text = "(state)"
         contentView.addSubview(stateLabel)
 
-        stateLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            stateLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-            stateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            stateLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            stateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-        ])
-    }
-
-    @objc func didRecognize(_ recognizer: DrawGestureRecognizer) {
-        recognizedGesture = recognizer.recognizedGesture
-
-        switch recognizer.state {
-        case .ended:
-            hide(delay: 0.1)
-
-        case .failed: fallthrough
-        case .cancelled:
-            hide()
-
-        default:
-            break
+        stateLabel.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
         }
     }
 
     override public func didMoveToSuperview() {
         super.didMoveToSuperview()
 
-        guard let superview = superview else { return }
+        guard superview != nil else { return }
 
-        NSLayoutConstraint.activate([
-            centerXAnchor.constraint(equalTo: superview.centerXAnchor),
-            centerYAnchor.constraint(equalTo: superview.centerYAnchor),
-        ])
+        snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-100)
+        }
 
         isHidden = true
-    }
-
-    func show() {
-        alpha = 1
-        isHidden = false
-    }
-
-    func hide(delay: TimeInterval = 0) {
-        UIView.animate(withDuration: 0.2, delay: delay, options: [.curveEaseInOut], animations: {
-            self.alpha = 0
-
-        }, completion: { _ in
-            self.isHidden = true
-            self.recognizedGesture = nil
-        })
     }
 }
 
