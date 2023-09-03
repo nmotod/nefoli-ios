@@ -274,15 +274,19 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
     }
 
     func tabGroupViewRequestsAddNewTab(_: TabGroupView) {
-        guard let group = group else { return }
-
         let tab = Tab(initialURL: InternalURL.home.url)
 
-        try! group.realm!.write {
-            group.add(tab: tab, options: .init(
-                activate: true,
-                position: .end
-            ))
+        try! open(tab: tab, options: .init(
+            activate: true,
+            position: .end
+        ))
+    }
+
+    public func open(tab: Tab, options: TabGroup.AddingOptions) throws {
+        guard let group = group else { fatalError() }
+
+        try group.realm!.write {
+            group.add(tab: tab, options: options)
         }
     }
 }

@@ -45,7 +45,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         if !connectionOptions.urlContexts.isEmpty {
-//            handleOpenURL(urlContexts: connectionOptions.urlContexts)
+            handleOpenURL(urlContexts: connectionOptions.urlContexts)
+        }
+    }
+
+    func scene(_: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        handleOpenURL(urlContexts: URLContexts)
+    }
+
+    private func handleOpenURL(urlContexts: Set<UIOpenURLContext>) {
+        guard let tabGroupController = tabGroupController else {
+            return
+        }
+
+        let handler = OpenURLHandler(
+            tabGroupController: tabGroupController,
+            options: .init(activate: true, position: .end)
+        )
+
+        for context in urlContexts {
+            if let error = handler.handle(openURL: context.url) {
+                let alert = UIAlertController(
+                    title: NSLocalizedString("Cannot open URL", comment: ""),
+                    // TODO: message
+                    message: "\(String(describing: error)) \(context.url)",
+                    preferredStyle: .alert
+                )
+
+                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
+
+                tabGroupController.present(alert, animated: true)
+                break
+            }
         }
     }
 
