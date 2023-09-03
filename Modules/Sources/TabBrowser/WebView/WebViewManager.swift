@@ -58,6 +58,11 @@ public class WebViewManager {
             webView.allowsBackForwardNavigationGestures = true
             webView.scrollView.contentInsetAdjustmentBehavior = .always
 
+            if #available(iOS 16.4, *) {
+                // TODO: make it configurable
+                webView.isInspectable = true
+            }
+
             return webView
         }.value
 
