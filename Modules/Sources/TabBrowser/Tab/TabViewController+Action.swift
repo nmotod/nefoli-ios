@@ -8,6 +8,7 @@ extension TabViewController {
 
         case goBack
         case goForward
+        case reload
         case share
         case openInSafari
         case addBookmark
@@ -45,6 +46,19 @@ extension TabViewController {
                             isEnabledPublisher: tabVC?.canGoForwardPublisher
                         ) { _ in
                             tabVC?.webView?.goForward()
+                        }
+                    }
+                )
+
+            case .reload:
+                return buildDefinition(
+                    title: NSLocalizedString("Reload", comment: ""),
+                    image: UIImage(systemName: "arrow.clockwise"),
+                    builder: { definition, tabVC in
+                        weak var tabVC = tabVC
+
+                        return ExecutableAction(definition: definition) { _ in
+                            tabVC?.webView?.reload()
                         }
                     }
                 )

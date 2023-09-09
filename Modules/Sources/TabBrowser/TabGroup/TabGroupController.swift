@@ -30,11 +30,31 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
     override public var preferredStatusBarStyle: UIStatusBarStyle { Theme.preferredStatusBarStyle }
 
     private lazy var drawGestureInteraction: DrawGestureInteraction = {
+//        let settings: [([DrawGesture.Direction], any ActionProtocol)] = [
+//            ([.down, .right], TabGroupController.Action.closeActiveTab),
+//            ([.down, .right, .up], TabGroupController.Action.restoreClosedTab),
+//            ([.right, .down, .left, .up], TabViewController.Action.reload),
+//            ([.right, .down, .left, .up, .right], TabViewController.Action.reload),
+//        ]
+//
+//        settings.map { setting in
+//            let (directions, action) = setting
+//            let definition = action.definition.title
+//
+//            return DrawGesture(
+//                strokeDirections: directions,
+//                title: definition.title) { _ in
+//
+//                }
+//            )
+//        }
+
         return DrawGestureInteraction(gestures: [
             DrawGesture(
                 strokeDirections: [.down, .right],
                 title: NSLocalizedString("Close Tab", comment: ""),
-                handler: { _ in
+                handler: { [weak self] _ in
+                    self?.closeActiveTab()
                 }
             ),
             DrawGesture(
@@ -136,6 +156,20 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
         present(menuSheet, animated: true)
     }
 
+    func closeActiveTab() {
+        guard let group = group,
+              let index = group.activeTabIndex
+        else { return }
+
+        activeVC?.tab = nil
+
+        try! group.realm?.write(withoutNotifying: groupTokens) {
+            group.remove(at: index)
+        }
+
+        activeTabDidChange()
+    }
+
     private func groupDidSet() {
         groupTokens = []
 
@@ -198,7 +232,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
 
         let tab = group.activeTabIndex.map { group.children[$0] }
 
-        if activeVC?.tab?.id == tab?.id {
+        if let activeTabID = activeVC?.tab?.id, activeTabID == tab?.id {
             return
         }
 

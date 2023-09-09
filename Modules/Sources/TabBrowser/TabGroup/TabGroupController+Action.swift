@@ -13,6 +13,8 @@ extension TabGroupController {
         case showMenuSheet
         case tabs
         case settings
+        case closeActiveTab
+        case restoreClosedTab
 
         #if DEBUG
         case debugEditBookmark
@@ -85,6 +87,29 @@ extension TabGroupController {
                             let settingsController = SettingsController(dependency: controller.dependency)
 
                             (context.viewController ?? controller)?.present(settingsController, animated: true)
+                        }
+                    }
+                )
+
+            case .closeActiveTab:
+                return buildDefinition(
+                    title: NSLocalizedString("Close Tab", comment: ""),
+                    builder: { definition, controller in
+                        weak var controller = controller
+
+                        return ExecutableAction(definition: definition) { _ in
+                            controller?.closeActiveTab()
+                        }
+                    }
+                )
+
+            case .restoreClosedTab:
+                return buildDefinition(
+                    title: NSLocalizedString("Restore Tab", comment: ""),
+                    builder: { definition, controller in
+                        _ = controller
+
+                        return ExecutableAction(definition: definition) { _ in
                         }
                     }
                 )
