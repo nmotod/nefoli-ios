@@ -295,7 +295,8 @@ class TabGroupView: UIView,
     private func childrenDidChange(_ change: RealmCollectionChange<List<Tab>>) {
         switch change {
         case .initial:
-            reloadData()
+            // Do nothing to prevent errors in performBatchUpdates()
+            break
 
         case let .update(_, deletions, insertions, modifications):
             logger.debug("d=\(deletions),  i=\(insertions),  m=\(modifications)")

@@ -39,13 +39,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 splashWindow = nil
             }
 
+            if !connectionOptions.urlContexts.isEmpty {
+                handleOpenURL(urlContexts: connectionOptions.urlContexts)
+            }
+
             #if DEBUG
             executeDebugAction()
             #endif
-        }
-
-        if !connectionOptions.urlContexts.isEmpty {
-            handleOpenURL(urlContexts: connectionOptions.urlContexts)
         }
     }
 
