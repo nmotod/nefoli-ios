@@ -331,6 +331,15 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         rootView.progressBar.finish()
     }
 
+    func webView(_ webView: WKWebView, createWebViewWith _: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures _: WKWindowFeatures) -> WKWebView? {
+        // Requested new window.
+        if navigationAction.targetFrame == nil {
+            webView.load(navigationAction.request)
+        }
+
+        return nil
+    }
+
     private func confirmOpenExternalApp(url: URL) {
         let title = String(format: NSLocalizedString("Open the \"%@:\" link in an external app?", comment: ""), url.scheme ?? "")
 
