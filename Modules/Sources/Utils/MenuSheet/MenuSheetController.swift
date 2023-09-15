@@ -8,10 +8,10 @@ private let backgroundColor = Colors.backgroundDark.color
 public class MenuSheetController: UIViewController, UICollectionViewDelegate, UIAdaptivePresentationControllerDelegate {
     public let webpageMetadata: WebpageMetadata?
 
-    public let actionGroups: [[ExecutableAction]]
+    public let actionGroups: [[UIAction]]
 
-    private lazy var headerView: HeaderView = {
-        let v = HeaderView()
+    private lazy var headerView: MenuSheetHeaderView = {
+        let v = MenuSheetHeaderView()
         v.titleLabel.text = webpageMetadata?.title
         v.urlLabel.text = webpageMetadata?.url.absoluteString
 
@@ -32,7 +32,9 @@ public class MenuSheetController: UIViewController, UICollectionViewDelegate, UI
         return section
     })
 
-    private let cellRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, ExecutableAction> = .init { cell, _, action in
+    private let cellRegistration: UICollectionView.CellRegistration<MenuSheetActionCell, UIAction> = .init { cell, _, action in
+        cell.action = action
+        /*
         var content = cell.defaultContentConfiguration()
 
         content.text = action.title
@@ -47,10 +49,7 @@ public class MenuSheetController: UIViewController, UICollectionViewDelegate, UI
         content.imageProperties.tintColor = Colors.tint.color
 
         cell.contentConfiguration = content
-
-        var background = cell.defaultBackgroundConfiguration()
-        background.backgroundColor = Colors.background.color
-        cell.backgroundConfiguration = background
+         */
     }
 
     private lazy var collectionView: UICollectionView = {
@@ -62,8 +61,8 @@ public class MenuSheetController: UIViewController, UICollectionViewDelegate, UI
         return v
     }()
 
-    private lazy var dataSource: UICollectionViewDiffableDataSource<Int, ExecutableAction> = .init(collectionView: collectionView) { [weak self] collectionView, indexPath, itemIdentifier in
-        guard let self = self else { return nil }
+    private lazy var dataSource: UICollectionViewDiffableDataSource<Int, UIAction> = .init(collectionView: collectionView) { [weak self] collectionView, indexPath, itemIdentifier in
+        guard let self else { return nil }
 
         return collectionView.dequeueConfiguredReusableCell(using: self.cellRegistration, for: indexPath, item: itemIdentifier)
     }
@@ -72,7 +71,7 @@ public class MenuSheetController: UIViewController, UICollectionViewDelegate, UI
 
     public init(
         webpageMetadata: WebpageMetadata?,
-        actionGroups: [[ExecutableAction]]
+        actionGroups: [[UIAction]]
     ) {
         self.webpageMetadata = webpageMetadata
         self.actionGroups = actionGroups
@@ -119,21 +118,23 @@ public class MenuSheetController: UIViewController, UICollectionViewDelegate, UI
     // MARK: - Collection view delegate
 
     public func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let action = actionGroups[indexPath.section][indexPath.item]
+        /*
+         let action = actionGroups[indexPath.section][indexPath.item]
 
-        action.execute(.init(viewController: self))
+         action.execute(.init(viewController: self))
 
-        if let presentedViewController = presentedViewController {
-            if presentedViewController.presentationController?.delegate != nil {
-                print("\(type(of: self)) WARNING: presentedViewController.presentationController.delegate is already set")
+         if let presentedViewController = presentedViewController {
+             if presentedViewController.presentationController?.delegate != nil {
+                 print("\(type(of: self)) WARNING: presentedViewController.presentationController.delegate is already set")
 
-            } else {
-                presentedViewController.presentationController?.delegate = self
-            }
+             } else {
+                 presentedViewController.presentationController?.delegate = self
+             }
 
-        } else {
-            dismiss(animated: true)
-        }
+         } else {
+             dismiss(animated: true)
+         }
+          */
     }
 
     public func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {

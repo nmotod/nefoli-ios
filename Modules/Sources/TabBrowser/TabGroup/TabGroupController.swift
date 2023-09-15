@@ -1,3 +1,4 @@
+import CommandSystem
 import Database
 import Foundation
 import RealmSwift
@@ -33,8 +34,8 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
 //        let settings: [([DrawGesture.Direction], any ActionProtocol)] = [
 //            ([.down, .right], TabGroupController.Action.closeActiveTab),
 //            ([.down, .right, .up], TabGroupController.Action.restoreClosedTab),
-//            ([.right, .down, .left, .up], TabViewController.Action.reload),
-//            ([.right, .down, .left, .up, .right], TabViewController.Action.reload),
+//            ([.right, .down, .left, .up], TabAction.reload),
+//            ([.right, .down, .left, .up, .right], TabAction.reload),
 //        ]
 //
 //        settings.map { setting in
@@ -126,27 +127,27 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
     }
 
     func showMenuSheet() {
-        let actionTypeGroups: [[any ActionProtocol]] = [
+        let cmmandGroups: [[any CommandProtocol]] = [
             [
-                TabViewController.Action.goBack,
-                TabViewController.Action.goForward,
+                TabCommand.goBack,
+                TabCommand.goForward,
             ],
             [
-                TabGroupController.Action.bookmarks,
-                TabGroupController.Action.tabs,
+                TabGroupCommand.bookmarks,
+                TabGroupCommand.tabs,
             ],
             [
-                TabViewController.Action.share,
-                TabViewController.Action.openInSafari,
-                TabViewController.Action.addBookmark,
+                TabCommand.share,
+                TabCommand.openInSafari,
+                TabCommand.addBookmark,
             ],
             [
-                TabGroupController.Action.settings,
+                TabGroupCommand.settings,
             ],
         ]
 
-        let actionGroups = actionTypeGroups.map { types in
-            types.map { executableAction(action: $0) }.compactMap { $0 }
+        let actionGroups = cmmandGroups.map { types in
+            types.map { makeUIAction(for: $0) }.compactMap { $0 }
         }
 
         let menuSheet = MenuSheetController(
@@ -251,15 +252,13 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
                 make.edges.equalToSuperview()
             }
 
-            let actionTypes: [any ActionProtocol] = [
-                TabViewController.Action.goBack,
-                TabViewController.Action.goForward,
-                TabGroupController.Action.showMenuSheet,
-                TabGroupController.Action.bookmarks,
-                TabGroupController.Action.tabs,
-            ]
-
-            setToolbarItems(from: actionTypes.compactMap { executableAction(action: $0) })
+            setToolbarItems(from: [
+                TabCommand.goBack,
+                TabCommand.goForward,
+                TabGroupCommand.menuSheet,
+                TabGroupCommand.bookmarks,
+                TabGroupCommand.tabs,
+            ])
 
             newVC.didMove(toParent: self)
 
@@ -289,11 +288,16 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
         activeTabDidChange()
     }
 
-    private func setToolbarItems(from actions: [ExecutableAction]) {
+    private func setToolbarItems(from commands: [any CommandProtocol]) {
         guard let toolbar = rootView?.toolbar else { return }
 
-        toolbar.items = actions.flatMap { action -> [UIBarButtonItem] in
-            [action.barButtonItem, UIBarButtonItem.flexibleSpace()]
+        let items = commands.compactMap(makeBarButtonItem(for:))
+
+        toolbar.items = items.flatMap { item -> [UIBarButtonItem] in
+            [
+                item,
+                UIBarButtonItem.flexibleSpace(),
+            ]
         }.dropLast()
     }
 
@@ -322,5 +326,102 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
         try group.realm!.write {
             group.add(tab: tab, options: options)
         }
+    }
+
+    func showSettings(_ sender: Any?) {
+        let settingsController = SettingsController(dependency: dependency)
+
+        let vc = (sender as? UIResponder)?.nfl_findResponder(of: UIViewController.self) ?? self
+
+        vc.present(settingsController, animated: true)
+    }
+
+    func execute(command: TabGroupCommand, sender: Any?) {
+        switch command {
+        case .bookmarks:
+            ()
+
+        case .closeActiveTab:
+            closeActiveTab()
+
+        case .menuSheet:
+            showMenuSheet()
+
+        case .tabs:
+            ()
+
+        case .settings:
+            showSettings(sender)
+
+        case .restoreClosedTab:
+            ()
+
+        case .debugEditBookmark:
+            ()
+        }
+    }
+
+    public func executeAny(command: any CommandProtocol, sender: Any?) throws {
+        if let command = command as? TabGroupCommand {
+            execute(command: command, sender: sender)
+
+        } else if let command = command as? TabCommand {
+            activeVC?.execute(command: command, sender: sender)
+
+        } else {
+            throw CommandError.unsupported
+        }
+    }
+
+    func makeUIAction(for command: any CommandProtocol) -> UIAction? {
+        if let command = command as? TabGroupCommand {
+            return command.makeUIAction { [weak self] uiAction in
+                guard let self else { return }
+
+                self.execute(command: command, sender: uiAction.sender)
+            }
+
+        } else if let command = command as? TabCommand {
+            return command.makeUIAction { [weak self] uiAction in
+                guard let self else { return }
+
+                self.activeVC?.execute(command: command, sender: uiAction.sender)
+            }
+        }
+
+        return nil
+    }
+
+    private var goBackActionStateCancellable: Any?
+    private var goForwardActionStateCancellable: Any?
+
+    func makeBarButtonItem(for command: any CommandProtocol) -> UIBarButtonItem? {
+        guard let uiAction = makeUIAction(for: command) else {
+            return nil
+        }
+
+        let item = UIBarButtonItem(primaryAction: uiAction)
+
+        if let action = command as? TabCommand {
+            switch action {
+            case .goBack:
+                goBackActionStateCancellable = activeVC?.canGoBackPublisher.sink { [weak item] isEnabled in
+                    item?.isEnabled = isEnabled
+                }
+
+            case .goForward:
+                goForwardActionStateCancellable = activeVC?.canGoForwardPublisher.sink { [weak item] isEnabled in
+                    item?.isEnabled = isEnabled
+                }
+
+            default: ()
+            }
+        }
+
+        return item
+    }
+
+    public class func supportedCommands() -> [any CommandProtocol] {
+        return TabGroupCommand.allCases + TabCommand.allCases
     }
 }

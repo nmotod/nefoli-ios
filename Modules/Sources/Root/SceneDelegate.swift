@@ -44,7 +44,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
 
             #if DEBUG
-            executeDebugAction()
+            try! executeDebugAction()
             #endif
         }
     }
@@ -81,17 +81,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     #if DEBUG
-    private func executeDebugAction() {
+    private func executeDebugAction() throws {
         guard amIBeingDebugged(),
               let tabGroupController = tabGroupController,
-              let id = ProcessInfo.processInfo.environment["NFL_DEBUG_ACTION"],
-              let action = TabGroupController.supportedActions().first(where: { $0.identifier == id })
+              let id = ProcessInfo.processInfo.environment["NFL_DEBUG_COMMAND"],
+              let command = TabGroupController.supportedCommands().first(where: { $0.id == id })
         else {
             return
         }
 
-        let executable = tabGroupController.executableAction(action: action)
-        executable?.execute()
+        try tabGroupController.executeAny(command: command, sender: nil)
     }
     #endif
 }

@@ -29,6 +29,14 @@ let package = Package(
             name: "TabManageUI.Previews",
             targets: ["TabManageUI"]
         ),
+        .library(
+            name: "Utils.Previews",
+            targets: ["Utils"]
+        ),
+        .library(
+            name: "Theme.Previews",
+            targets: ["Theme"]
+        ),
     ],
     dependencies: [
         // .package(url: "https://github.com/mischa-hildebrand/AlignedCollectionViewFlowLayout", revision: "49330ef67177dba5c9e1a3efdd0df93d83f12ee7"),
@@ -75,6 +83,7 @@ let package = Package(
                 .target(name: "Bookmarks"),
                 .target(name: "SettingsUI"),
                 .target(name: "TabManageUI"),
+                .target(name: "CommandSystem"),
             ]
         ),
         .testTarget(
@@ -154,6 +163,10 @@ let package = Package(
                 .target(name: "Database"),
                 .target(name: "Theme"),
             ]
+        ),
+        .target(
+            name: "CommandSystem",
+            dependencies: []
         ),
     ]
 )

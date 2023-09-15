@@ -115,7 +115,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         }), for: .touchUpInside)
 
         rootView.addressBar.labelButton.addAction(.init(handler: { [weak self] _ in
-            self?.editAddress()
+            self?.editAddress(nil)
         }), for: .touchUpInside)
     }
 
@@ -213,20 +213,47 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
 
     // MARK: - Actions
 
-    func share(_ context: ExecutableAction.Context? = nil) {
+    func share(_ sender: Any?) {
         guard let webpageMetadata = webpageMetadata else { return }
 
+        let vc = (sender as? UIResponder)?.nfl_findResponder(of: UIViewController.self) ?? self
+
         let activityVC = UIActivityViewController(activityItems: [webpageMetadata], applicationActivities: [])
-        (context?.viewController ?? self).present(activityVC, animated: true)
+        vc.present(activityVC, animated: true)
     }
 
-    func editAddress(_ context: ExecutableAction.Context? = nil) {
-        context?.viewController?.dismiss(animated: true)
+    func editAddress(_ sender: Any?) {
+        (sender as? UIResponder)?.nfl_findResponder(of: UIViewController.self)?.dismiss(animated: true)
 
         let text = webView?.url?.absoluteString ?? tab?.initialURL?.absoluteString ?? ""
 
         let editVC = AddressEditViewController(initialText: text, delegate: self)
         present(editVC, animated: true)
+    }
+
+    func execute(command: TabCommand, sender: Any?) {
+        switch command {
+        case .goBack:
+            webView?.goBack()
+
+        case .goForward:
+            webView?.goForward()
+
+        case .reload:
+            webView?.reload()
+
+        case .share:
+            share(sender)
+
+        case .openInSafari:
+            ()
+
+        case .addBookmark:
+            ()
+
+        case .editAddress:
+            editAddress(sender)
+        }
     }
 
     // MARK: - Tab lifecycle
