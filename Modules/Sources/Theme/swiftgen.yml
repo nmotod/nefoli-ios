@@ -8,4 +8,5 @@ xcassets:
         forceProvidesNamespaces: false
         forceFileNameEnum: true
         publicAccess: true
+        bundle: BundleToken.bundle
       output: Asset-Generated.swift
