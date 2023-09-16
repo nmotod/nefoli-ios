@@ -27,7 +27,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
 
     private var viewControllersByTabId: [String: TabViewController] = [:]
 
-    override public var preferredStatusBarStyle: UIStatusBarStyle { Theme.preferredStatusBarStyle }
+    override public var preferredStatusBarStyle: UIStatusBarStyle { ThemeValues.preferredStatusBarStyle }
 
     private lazy var drawGestureInteraction: DrawGestureInteraction = {
 //        let settings: [([DrawGesture.Direction], any ActionProtocol)] = [

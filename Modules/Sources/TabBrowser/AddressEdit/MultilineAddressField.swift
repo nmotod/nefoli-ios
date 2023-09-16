@@ -33,7 +33,7 @@ class MultilineAddressField: UIView, UITextViewDelegate {
 
         textView.returnKeyType = .go
         textView.enablesReturnKeyAutomatically = true
-        textView.keyboardAppearance = Theme.keyboardAppearance
+        textView.keyboardAppearance = ThemeValues.keyboardAppearance
 
         textView.textContainer.lineBreakMode = .byCharWrapping
         textView.textContainerInset = textContainerInset
