@@ -98,6 +98,7 @@ let package = Package(
         .target(
             name: "Utils",
             dependencies: [
+                .product(name: "SnapKit", package: "SnapKit"),
                 .target(name: "Theme"),
             ]
         ),
