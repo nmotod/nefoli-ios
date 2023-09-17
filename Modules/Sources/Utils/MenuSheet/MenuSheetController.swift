@@ -34,22 +34,6 @@ public class MenuSheetController: UIViewController, UICollectionViewDelegate, UI
 
     private let cellRegistration: UICollectionView.CellRegistration<MenuSheetActionCell, UIAction> = .init { cell, _, action in
         cell.action = action
-        /*
-        var content = cell.defaultContentConfiguration()
-
-        content.text = action.title
-        content.textProperties.font = .systemFont(ofSize: 15)
-        content.textProperties.color = Colors.textNormal.color
-
-        content.image = action.image
-        content.imageProperties.preferredSymbolConfiguration = .init(
-            pointSize: 18,
-            weight: .regular
-        )
-        content.imageProperties.tintColor = Colors.tint.color
-
-        cell.contentConfiguration = content
-         */
     }
 
     private lazy var collectionView: UICollectionView = {
@@ -116,26 +100,6 @@ public class MenuSheetController: UIViewController, UICollectionViewDelegate, UI
     }
 
     // MARK: - Collection view delegate
-
-    public func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        /*
-         let action = actionGroups[indexPath.section][indexPath.item]
-
-         action.execute(.init(viewController: self))
-
-         if let presentedViewController = presentedViewController {
-             if presentedViewController.presentationController?.delegate != nil {
-                 print("\(type(of: self)) WARNING: presentedViewController.presentationController.delegate is already set")
-
-             } else {
-                 presentedViewController.presentationController?.delegate = self
-             }
-
-         } else {
-             dismiss(animated: true)
-         }
-          */
-    }
 
     public func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }

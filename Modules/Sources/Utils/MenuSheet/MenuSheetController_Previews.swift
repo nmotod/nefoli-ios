@@ -12,28 +12,28 @@ private struct MenuSheet: UIViewControllerRepresentable {
                 url: URL(string: "https://example.com/")!
             ),
             actionGroups: [
-                 [
-                     UIAction(
+                [
+                    UIAction(
                         title: "Bookmarks",
                         image: UIImage(systemName: "book"),
                         handler: { _ in }
-                     ),
-                     UIAction(
+                    ),
+                    UIAction(
                         title: "Bookmarks",
                         image: UIImage(
                             systemName: "square.on.square",
                             withConfiguration: UIImage.SymbolConfiguration(pointSize: 15)
                         ),
                         handler: { _ in }
-                     ),
-                 ],
-                 [
-                    UIAction(
-                       title: "Settings",
-                       image: UIImage(systemName: "gear"),
-                       handler: { _ in }
                     ),
-                 ],
+                ],
+                [
+                    UIAction(
+                        title: "Settings",
+                        image: UIImage(systemName: "gear"),
+                        handler: { _ in }
+                    ),
+                ],
             ]
         )
     }
