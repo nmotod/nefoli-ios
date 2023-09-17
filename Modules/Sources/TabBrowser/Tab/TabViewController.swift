@@ -8,7 +8,9 @@ import WebKit
 
 public typealias TabViewControllerDependency = UsesWebViewManager & UsesScreenshotManager & NewTabViewControllerDependency
 
-protocol TabViewControllerDelegate: AnyObject {}
+protocol TabViewControllerDelegate: AnyObject {
+    func tabVC(_ tabVC: TabViewController, searchWeb text: String)
+}
 
 class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, NewTabViewControllerDelegate, AddressEditViewControllerDelegate {
     private let dependency: TabViewControllerDependency
@@ -469,14 +471,28 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
     func addressEditVC(_: AddressEditViewController, didEnter text: String) {
         dismiss(animated: true)
 
-        if let url = URL(string: text) {
+        if let url = buildSearchURL(text: text) {
             webView?.load(URLRequest(url: url))
+        }
+    }
 
-        } else {
-            var urlComponents = URLComponents(string: "https://www.google.com/search")!
-            urlComponents.queryItems = [URLQueryItem(name: "q", value: text)]
+    // MARK: - Edit Menu
 
-            webView?.load(URLRequest(url: urlComponents.url!))
+    override func buildMenu(with builder: UIMenuBuilder) {
+        let menu = UIMenu(identifier: .nfl_custom, options: .displayInline, children: [
+            UIAction(title: NSLocalizedString("Search Web", comment: ""), handler: { [weak self] _ in
+                self?.searchSelectedText()
+            }),
+        ])
+
+        builder.insertSibling(menu, afterMenu: .standardEdit)
+    }
+
+    private func searchSelectedText() {
+        webView!.evaluateJavaScript("document.getSelection().toString();") { string, _ in
+            if let string = string as? String, !string.isEmpty {
+                self.delegate?.tabVC(self, searchWeb: string)
+            }
         }
     }
 }

@@ -398,4 +398,15 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
     public class func supportedCommands() -> [any CommandProtocol] {
         return TabGroupCommand.allCases + TabCommand.allCases
     }
+
+    // MARK: - Tab View Controller Delegate
+
+    func tabVC(_ tabVC: TabViewController, searchWeb text: String) {
+        guard let url = buildSearchURL(text: text) else {
+            return
+        }
+
+        let tab = Tab(initialURL: url)
+        try! open(tab: tab, options: .init(activate: true, position: .afterActive))
+    }
 }
