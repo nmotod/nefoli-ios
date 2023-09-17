@@ -31,52 +31,26 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
     override public var preferredStatusBarStyle: UIStatusBarStyle { ThemeValues.preferredStatusBarStyle }
 
     private lazy var drawGestureInteraction: DrawGestureInteraction = {
-//        let settings: [([DrawGesture.Direction], any ActionProtocol)] = [
-//            ([.down, .right], TabGroupController.Action.closeActiveTab),
-//            ([.down, .right, .up], TabGroupController.Action.restoreClosedTab),
-//            ([.right, .down, .left, .up], TabAction.reload),
-//            ([.right, .down, .left, .up, .right], TabAction.reload),
-//        ]
-//
-//        settings.map { setting in
-//            let (directions, action) = setting
-//            let definition = action.definition.title
-//
-//            return DrawGesture(
-//                strokeDirections: directions,
-//                title: definition.title) { _ in
-//
-//                }
-//            )
-//        }
+        let settings: [([DrawGesture.Direction], any CommandProtocol)] = [
+            ([.down, .right], TabGroupCommand.closeActiveTab),
+            ([.down, .right, .up], TabGroupCommand.restoreClosedTab),
+            ([.right, .down, .left, .up], TabCommand.reload),
+            ([.right, .down, .left, .up, .right], TabCommand.reload),
+        ]
 
-        return DrawGestureInteraction(gestures: [
-            DrawGesture(
-                strokeDirections: [.down, .right],
-                title: NSLocalizedString("Close Tab", comment: ""),
-                handler: { [weak self] _ in
-                    self?.closeActiveTab()
+        let gestures = settings.map { setting in
+            let (directions, command) = setting
+
+            return DrawGesture(
+                strokeDirections: directions,
+                title: command.title,
+                handler: { [weak self] gesture in
+                    try! self?.executeAny(command: command, sender: gesture)
                 }
-            ),
-            DrawGesture(
-                strokeDirections: [.down, .right, .up],
-                title: NSLocalizedString("Restore Tab", comment: ""),
-                handler: { _ in
-                }
-            ),
-            DrawGesture(
-                strokeDirections: [.right, .down, .left, .up],
-                title: NSLocalizedString("Reload Tab", comment: ""),
-                handler: { _ in
-                }
-            ),
-            DrawGesture(
-                strokeDirections: [.right, .down, .left, .up, .right],
-                title: NSLocalizedString("Reload Tab", comment: ""),
-                handler: { _ in
-                }
-            ),
-        ])
+            )
+        }
+
+        return DrawGestureInteraction(gestures: gestures)
     }()
 
     public init(group: TabGroup?, dependency: TabGroupControllerDependency) {
