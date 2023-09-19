@@ -25,6 +25,9 @@ public class MenuSheetController: UIViewController, UICollectionViewDelegate, UI
     private let collectionViewLayout: UICollectionViewCompositionalLayout = .init(sectionProvider: { _, layoutEnv in
         var listConfig = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
         listConfig.backgroundColor = backgroundColor
+        listConfig.showsSeparators = true
+        listConfig.separatorConfiguration = .init(listAppearance: .grouped)
+        listConfig.separatorConfiguration.color = Colors.tableSeparator.color
 
         let section = NSCollectionLayoutSection.list(using: listConfig, layoutEnvironment: layoutEnv)
         section.contentInsets.top = 15
