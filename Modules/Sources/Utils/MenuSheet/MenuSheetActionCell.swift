@@ -1,54 +1,33 @@
+import Combine
 import Foundation
 import SnapKit
 import Theme
 import UIKit
 
-class MenuSheetActionCell: UICollectionViewCell {
+class MenuSheetActionCell: UICollectionViewListCell {
     private let button = UIButton()
 
-    private let titleLable = UILabel()
-
-    private let imageView = UIImageView()
-
-    private var hStackView: UIStackView!
+    private var buttonStateSubscription: AnyCancellable?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        tintColor = Colors.tint.color
 
         var background = defaultBackgroundConfiguration()
         background.backgroundColor = Colors.background.color
         backgroundConfiguration = background
 
-        contentView.addSubview(button)
+        addSubview(button)
         button.snp.makeConstraints { make in
-            make.height.equalTo(44)
             make.edges.equalToSuperview()
         }
 
-        hStackView = UIStackView(arrangedSubviews: [imageView, titleLable])
-        hStackView.isUserInteractionEnabled = false
-        hStackView.axis = .horizontal
-        hStackView.distribution = .fill
-        hStackView.alignment = .center
-        hStackView.spacing = 16
-        button.addSubview(hStackView)
-        hStackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(UIEdgeInsets(
-                top: 0, left: 16, bottom: 0, right: 16
-            ))
+        buttonStateSubscription = Publishers.Merge(
+            button.publisher(for: \.isHighlighted),
+            button.publisher(for: \.isSelected)
+        )
+        .sink { [weak self] _ in
+            self?.didUpdateButtonState()
         }
-
-        imageView.preferredSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 18, weight: .light)
-        imageView.contentMode = .center
-        imageView.snp.makeConstraints { make in
-            make.width.equalTo(29)
-            make.height.equalTo(29)
-        }
-
-        titleLable.textColor = tintColor
-        titleLable.font = .systemFont(ofSize: 15)
     }
 
     @available(*, unavailable)
@@ -60,11 +39,36 @@ class MenuSheetActionCell: UICollectionViewCell {
         didSet {
             button.removeTarget(nil, action: nil, for: .allEvents)
 
-            imageView.image = action?.image
-            titleLable.text = action?.title
+            var content = defaultContentConfiguration()
+
+            content.text = action?.title
+            content.textProperties.font = .systemFont(ofSize: 15)
+            content.textProperties.color = Colors.textNormal.color
+
+            content.image = action?.image
+            content.imageProperties.preferredSymbolConfiguration = .init(
+                pointSize: 18,
+                weight: .regular
+            )
+            content.imageProperties.tintColor = Colors.tint.color
+
+            // The contentView will put at the frontmost
+            contentConfiguration = content
+            bringSubviewToFront(button)
 
             if let action {
                 button.addAction(action, for: .touchUpInside)
+            }
+        }
+    }
+
+    private func didUpdateButtonState() {
+        if button.isHighlighted || button.isSelected {
+            button.backgroundColor = .init(white: 1, alpha: 0.05)
+
+        } else {
+            UIView.animate(withDuration: 0.2) {
+                self.button.backgroundColor = nil
             }
         }
     }

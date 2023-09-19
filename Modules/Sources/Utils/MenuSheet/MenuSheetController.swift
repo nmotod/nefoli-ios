@@ -99,20 +99,6 @@ public class MenuSheetController: UIViewController, UICollectionViewDelegate, UI
         dataSource.apply(snapshot)
     }
 
-    // MARK: - Collection view delegate
-
-    public func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-
-        cell.contentView.backgroundColor = .init(white: 1, alpha: 0.05)
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-
-        cell.contentView.backgroundColor = nil
-    }
-
     // MARK: - UIAdaptivePresentationControllerDelegate
 
     public func presentationControllerDidDismiss(_: UIPresentationController) {
