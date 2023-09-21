@@ -1,10 +1,13 @@
 import Database
 import SwiftUI
+import Utils
 
 struct BookmarkManageView: View {
     var bookmarkManager: BookmarkManager
 
     var onOpen: (BookmarkItem) -> Void
+
+    @Environment(\.nfl_dismiss) var dismiss
 
     init(
         bookmarkManager: BookmarkManager,

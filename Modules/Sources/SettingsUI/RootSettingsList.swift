@@ -2,11 +2,12 @@ import Database
 import Foundation
 import SwiftUI
 import Theme
+import Utils
 
 public struct RootSettingsList: View {
     @ObservedRealmObject public var settings: Settings
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.nfl_dismiss) private var dismiss
 
     public var body: some View {
         List {

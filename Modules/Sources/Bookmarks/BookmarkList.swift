@@ -3,6 +3,7 @@ import Foundation
 import RealmSwift
 import SwiftUI
 import Theme
+import Utils
 
 struct BookmarkList: View {
     private class ItemEditingState: ObservableObject {
@@ -31,9 +32,9 @@ struct BookmarkList: View {
 
     var onOpen: (BookmarkItem) -> Void
 
-    @State var isPresentedNewFolderForm = false
+    @Environment(\.nfl_dismiss) var dismiss
 
-    @Environment(\.dismiss) private var dismiss
+    @State var isPresentedNewFolderForm = false
 
     var body: some View {
         SwiftUI.List {

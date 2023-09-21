@@ -3,13 +3,14 @@ import Database
 import Foundation
 import SwiftUI
 import Theme
+import Utils
 
 struct RootView: View {
     @ObservedRealmObject var settings: Settings
 
     var contentFilterManager: ContentFilterManager
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.nfl_dismiss) private var dismiss
 
     var body: some View {
         NavigationStack {

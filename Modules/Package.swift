@@ -122,6 +122,7 @@ let package = Package(
             dependencies: [
                 .target(name: "Database"),
                 .target(name: "Theme"),
+                .target(name: "Utils"),
             ]
         ),
         .testTarget(
