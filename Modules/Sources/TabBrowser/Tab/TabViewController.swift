@@ -237,31 +237,6 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         present(editVC, animated: true)
     }
 
-    func execute(command: TabCommand, sender: Any?) {
-        switch command {
-        case .goBack:
-            webView?.goBack()
-
-        case .goForward:
-            webView?.goForward()
-
-        case .reload:
-            webView?.reload()
-
-        case .share:
-            share(sender)
-
-        case .openInSafari:
-            ()
-
-        case .addBookmark:
-            ()
-
-        case .editAddress:
-            editAddress(sender)
-        }
-    }
-
     // MARK: - Tab lifecycle
 
     private func tabDidSet() {
