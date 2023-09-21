@@ -23,7 +23,7 @@ class TabGroupView: UIView,
 
 //    private var log = defaultLogger
 
-    private(set) var style: Style = .default
+    var style: Style { collectionViewLayout.style }
 
     var group: TabGroup? {
         didSet {
@@ -52,7 +52,7 @@ class TabGroupView: UIView,
 
     weak var delegate: TabGroupViewDelegate?
 
-    private let collectionViewLayout: Layout
+    private var collectionViewLayout: Layout
 
     private(set) lazy var collectionView: UICollectionView = {
         let v = UICollectionView(frame: bounds, collectionViewLayout: collectionViewLayout)
@@ -128,7 +128,7 @@ class TabGroupView: UIView,
 
     // MARK: - Initializing
 
-    init(frame: CGRect, dependency: TabGroupViewDependency) {
+    init(frame: CGRect, style: Style, dependency: TabGroupViewDependency) {
         self.dependency = dependency
         collectionViewLayout = .init(style: style)
         closeIndicator = .init(frame: .zero, style: style)
@@ -227,6 +227,7 @@ class TabGroupView: UIView,
     func setStyle(_ style: Style, animated: Bool) {
         let newLayout = Layout(style: style)
 
+        collectionViewLayout = newLayout
         collectionView.setCollectionViewLayout(newLayout, animated: animated)
     }
 

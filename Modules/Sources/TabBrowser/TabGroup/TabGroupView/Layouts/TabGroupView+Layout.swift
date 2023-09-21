@@ -7,7 +7,7 @@ protocol TabGroupViewLayoutDelegate: UICollectionViewDelegate {
 
 extension TabGroupView {
     class Layout: UICollectionViewLayout {
-        private(set) var style = Style.collapsed
+        let style: Style
 
         var dropDestinationIndexPath: IndexPath?
 
@@ -44,8 +44,9 @@ extension TabGroupView {
             super.init()
         }
 
+        @available(*, unavailable)
         required init?(coder: NSCoder) {
-            super.init(coder: coder)
+            fatalError("init(coder:) has not been implemented")
         }
 
         // MARK: - Override methods
