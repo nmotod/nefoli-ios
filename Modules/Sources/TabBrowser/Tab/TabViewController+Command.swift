@@ -15,8 +15,8 @@ extension TabViewController {
         case .share:
             share(sender)
 
-        case .openInSafari:
-            ()
+        case .openInDefaultApp:
+            openInDefaultApp()
 
         case .addBookmark:
             ()

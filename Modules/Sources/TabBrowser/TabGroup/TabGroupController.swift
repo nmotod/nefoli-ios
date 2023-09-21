@@ -113,7 +113,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
             ],
             [
                 TabCommand.share,
-                TabCommand.openInSafari,
+                TabCommand.openInDefaultApp,
                 TabCommand.addBookmark,
             ],
             [

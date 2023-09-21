@@ -237,6 +237,12 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         present(editVC, animated: true)
     }
 
+    func openInDefaultApp() {
+        guard let url = webView?.url else { return }
+        
+        UIApplication.shared.open(url)
+    }
+
     // MARK: - Tab lifecycle
 
     private func tabDidSet() {

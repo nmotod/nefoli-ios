@@ -9,7 +9,7 @@ enum TabCommand: String, CommandProtocol, CaseIterable {
     case goForward
     case reload
     case share
-    case openInSafari
+    case openInDefaultApp
     case addBookmark
     case editAddress
 
@@ -27,7 +27,7 @@ enum TabCommand: String, CommandProtocol, CaseIterable {
         case .share:
             return shareDefinition
 
-        case .openInSafari:
+        case .openInDefaultApp:
             return openInSafariDefinition
 
         case .addBookmark:
