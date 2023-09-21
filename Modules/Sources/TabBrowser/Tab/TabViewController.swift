@@ -217,11 +217,15 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
 
     func share(_ sender: Any?) {
         guard let webpageMetadata = webpageMetadata else { return }
-
-        let vc = (sender as? UIResponder)?.nfl_findResponder(of: UIViewController.self) ?? self
+        let sender = sender as? UIResponder
 
         let activityVC = UIActivityViewController(activityItems: [webpageMetadata], applicationActivities: [])
-        vc.present(activityVC, animated: true)
+
+        if let menuSheet = sender?.nfl_findResponder(of: MenuSheetController.self) {
+            menuSheet.show(activityVC, animated: true)
+        } else {
+            present(activityVC, animated: true)
+        }
     }
 
     func editAddress(_ sender: Any?) {

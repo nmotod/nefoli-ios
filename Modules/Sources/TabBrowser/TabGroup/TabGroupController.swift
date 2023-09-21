@@ -1,3 +1,4 @@
+import Bookmarks
 import CommandSystem
 import Database
 import Foundation
@@ -303,17 +304,36 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
     }
 
     func showSettings(_ sender: Any?) {
+        let sender = sender as? UIResponder
+
         let settingsController = SettingsController(dependency: dependency)
 
-        let vc = (sender as? UIResponder)?.nfl_findResponder(of: UIViewController.self) ?? self
+        if let menuSheet = sender?.nfl_findResponder(of: MenuSheetController.self) {
+            menuSheet.show(settingsController, detents: [.large()], animated: true)
+        } else {
+            present(settingsController, animated: true)
+        }
+    }
 
-        vc.present(settingsController, animated: true)
+    func showBookmarks(_ sender: Any?) {
+        let sender = sender as? UIResponder
+
+        let bookmarkController = BookmarkManageController(
+            bookmarkManager: dependency.bookmarkManager,
+            onOpen: { _ in }
+        )
+
+        if let menuSheet = sender?.nfl_findResponder(of: MenuSheetController.self) {
+            menuSheet.show(bookmarkController, detents: [.large()], animated: true)
+        } else {
+            present(bookmarkController, animated: true)
+        }
     }
 
     func execute(command: TabGroupCommand, sender: Any?) {
         switch command {
         case .bookmarks:
-            ()
+            showBookmarks(sender)
 
         case .closeActiveTab:
             closeActiveTab()
