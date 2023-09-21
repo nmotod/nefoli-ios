@@ -320,7 +320,12 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
 
         let bookmarkController = BookmarkManageController(
             bookmarkManager: dependency.bookmarkManager,
-            onOpen: { _ in }
+            onOpen: { [weak self] item in
+                guard let self, let url = item.url else { return }
+
+                let tab = Tab(initialURL: url)
+                try! self.open(tab: tab, options: .init(activate: true, position: .end))
+            }
         )
 
         if let menuSheet = sender?.nfl_findResponder(of: MenuSheetController.self) {
