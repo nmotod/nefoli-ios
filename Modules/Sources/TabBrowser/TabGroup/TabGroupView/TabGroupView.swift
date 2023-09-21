@@ -48,6 +48,10 @@ class TabGroupView: UIView,
         }
     }
 
+    override var intrinsicContentSize: CGSize {
+        return .init(width: UIView.noIntrinsicMetric, height: style.height)
+    }
+
     private var groupTokens = [NotificationToken]()
 
     weak var delegate: TabGroupViewDelegate?
@@ -229,6 +233,8 @@ class TabGroupView: UIView,
 
         collectionViewLayout = newLayout
         collectionView.setCollectionViewLayout(newLayout, animated: animated)
+
+        invalidateIntrinsicContentSize()
     }
 
     @objc private func addNewTab(_: Any) {

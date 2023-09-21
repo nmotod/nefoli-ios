@@ -28,7 +28,7 @@ extension TabGroupController {
         let containerView = UIView()
 
         init(frame: CGRect, dependency: TabGroupControllerDependency) {
-            tabGroupView = .init(frame: .zero, dependency: dependency)
+            tabGroupView = .init(frame: .zero, style: .default, dependency: dependency)
 
             super.init(frame: frame)
 
@@ -48,7 +48,6 @@ extension TabGroupController {
 
             tabGroupView.snp.makeConstraints { make in
                 make.left.right.bottom.equalToSuperview()
-                make.height.equalTo(90)
             }
 
             stickyToolbar.snp.makeConstraints { make in

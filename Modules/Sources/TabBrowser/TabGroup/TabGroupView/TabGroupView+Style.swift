@@ -2,6 +2,7 @@ import UIKit
 
 extension TabGroupView {
     struct Style: Equatable {
+        var height: CGFloat = 90
         var itemWidth: CGFloat = 70
         var headerWidth: CGFloat = 0
         var interitemSpacing: CGFloat = 2
