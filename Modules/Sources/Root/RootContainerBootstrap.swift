@@ -98,7 +98,7 @@ class RootContainerBootstrap {
             appBundleIdentifier: appBundleIdentifier,
             realm: db.realm,
             rootState: db.rootState,
-            bookmarkManager: BookmarkManager(
+            bookmarkStore: BookmarkStore(
                 bookmarksFolder: db.bookmarksFolder,
                 favoritesFolder: db.favoritesFolder
             ),

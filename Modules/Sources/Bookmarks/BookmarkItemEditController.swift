@@ -4,15 +4,15 @@ import UIKit
 
 public class BookmarkItemEditController: UIHostingController<AnyView> {
     public init(
-        bookmarkManager: BookmarkManager,
         editingItem: BookmarkItem,
+        bookmarkStore: BookmarkStore,
         completion _: @escaping (_ isDone: Bool) -> Void
     ) {
         super.init(rootView: AnyView(
             NavigationView {
                 BookmarkItemEditForm(
-                    bookmarkManager: bookmarkManager,
-                    editingItem: editingItem
+                    editingItem: editingItem,
+                    bookmarkStore: bookmarkStore
                 )
             }
         ))

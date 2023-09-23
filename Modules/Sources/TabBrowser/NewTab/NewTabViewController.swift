@@ -5,7 +5,7 @@ import Theme
 import UIKit
 import Utils
 
-public typealias NewTabViewControllerDependency = UsesBookmarkManager & NewTabViewControllerCellDependency
+public typealias NewTabViewControllerDependency = UsesBookmarkStore & NewTabViewControllerCellDependency
 
 protocol NewTabViewControllerDelegate: AnyObject {
     func newTabVC(_: NewTabViewController, openBookmark bookmark: BookmarkItem)
@@ -20,7 +20,7 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     let dependency: NewTabViewControllerDependency
 
-    private let bookmarkManager: BookmarkManager
+    private let bookmarkStore: BookmarkStore
 
     private let favoritesFolder: BookmarkItem
 
@@ -53,8 +53,8 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollec
     ) {
         self.delegate = delegate
         self.allowsForwardGesture = allowsForwardGesture
-        bookmarkManager = dependency.bookmarkManager
-        favoritesFolder = dependency.bookmarkManager.favoritesFolder
+        bookmarkStore = dependency.bookmarkStore
+        favoritesFolder = dependency.bookmarkStore.favoritesFolder
         self.dependency = dependency
 
         super.init(nibName: nil, bundle: nil)
@@ -156,7 +156,10 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
 
     private func editBookmarkItem(_ item: BookmarkItem) {
-        let controller = BookmarkItemEditController(bookmarkManager: bookmarkManager, editingItem: item) { _ in
+        let controller = BookmarkItemEditController(
+            editingItem: item,
+            bookmarkStore: bookmarkStore
+        ) { _ in
         }
 
         present(controller, animated: true)

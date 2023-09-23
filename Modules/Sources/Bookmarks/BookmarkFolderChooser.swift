@@ -14,23 +14,23 @@ struct BookmarkFolderChooser: View {
 
     @State private var selectedFolder: BookmarkItem
 
+    let bookmarkStore: BookmarkStore
+
     var onSelect: (BookmarkItem) -> Void
 
-    let bookmarkManager: BookmarkManager
-
     init(
-        bookmarkManager: BookmarkManager,
         selectedFolder: BookmarkItem,
         excludedFolderIDs: [BookmarkItem.ID],
+        bookmarkStore: BookmarkStore,
         onSelect: @escaping (BookmarkItem) -> Void
     ) {
         self.selectedFolder = selectedFolder
         self.onSelect = onSelect
-        self.bookmarkManager = bookmarkManager
+        self.bookmarkStore = bookmarkStore
 
         var rows = [FolderRow]()
 
-        bookmarkManager.recursiveEnumerateAllFolders { folder, depth in
+        bookmarkStore.recursiveEnumerateAllFolders { folder, depth in
             if excludedFolderIDs.contains(folder.id) {
                 return .ignore
             }
@@ -71,7 +71,7 @@ struct BookmarkFolderChooser: View {
 // struct BookmarkFolderChooser_Previews: PreviewProvider {
 //    static var previews: some View {
 //        NavigationView {
-//            let folder = Container.shared.bookmarkManager.bookmarksFolder
+//            let folder = Container.shared.bookmarkStore.bookmarksFolder
 //            BookmarkFolderChooser(selectedFolder: folder, excludedFolderIDs: []) { _ in
 //            }
 //        }

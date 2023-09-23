@@ -319,7 +319,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
         let sender = sender as? UIResponder
 
         let bookmarkController = BookmarkManageController(
-            bookmarkManager: dependency.bookmarkManager,
+            bookmarkStore: dependency.bookmarkStore,
             onOpen: { [weak self] item in
                 guard let self, let url = item.url else { return }
 

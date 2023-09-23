@@ -1,7 +1,7 @@
 import Database
 import Foundation
 
-public class BookmarkManager {
+public class BookmarkStore {
     public let bookmarksFolder: BookmarkItem
     public let favoritesFolder: BookmarkItem
 

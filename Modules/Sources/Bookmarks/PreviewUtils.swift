@@ -31,7 +31,7 @@ private func makeBookmark(
 enum PreviewUtils {
     static let realm = try! Realm(configuration: .init(inMemoryIdentifier: UUID().uuidString))
 
-    @MainActor static var bookmarkManager: BookmarkManager = {
+    @MainActor static var bookmarkStore: BookmarkStore = {
         let rootState = RootState()
         let bookmarksFolder = makeFolder(id: .bookmarks, title: "", children: [
             makeBookmark(id: nil, title: "Bookmark 1", urlString: "https://example.com/1"),
@@ -53,7 +53,7 @@ enum PreviewUtils {
             realm.add(rootState)
         }
 
-        return BookmarkManager(
+        return BookmarkStore(
             bookmarksFolder: bookmarksFolder,
             favoritesFolder: favoritesFolder
         )

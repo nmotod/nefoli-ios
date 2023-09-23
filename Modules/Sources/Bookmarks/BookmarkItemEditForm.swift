@@ -8,9 +8,9 @@ struct BookmarkItemEditForm: View {
         case url
     }
 
-    let bookmarkManager: BookmarkManager
-
     var editingItem: BookmarkItem
+
+    let bookmarkStore: BookmarkStore
 
     @State private var title: String
 
@@ -67,18 +67,18 @@ struct BookmarkItemEditForm: View {
     }
 
     init(
-        bookmarkManager: BookmarkManager,
-        editingItem: BookmarkItem
+        editingItem: BookmarkItem,
+        bookmarkStore: BookmarkStore
     ) {
-        self.bookmarkManager = bookmarkManager
         self.editingItem = editingItem
+        self.bookmarkStore = bookmarkStore
 
         // For some reason, when using @Environment(\.dismiss), State must be explicitly initialized.
         _title = State(initialValue: editingItem.localizedTitle)
         _urlString = State(initialValue: editingItem.url?.absoluteString ?? "")
         _parentFolder = State(initialValue: editingItem.parent
-            // ?? bookmarkManager.lastOpenedFolder
-            ?? bookmarkManager.favoritesFolder)
+            // ?? bookmarkStore.lastOpenedFolder
+            ?? bookmarkStore.favoritesFolder)
     }
 
     private func backgroundFor(field: Field) -> Color {
@@ -123,9 +123,9 @@ struct BookmarkItemEditForm: View {
             Section("Location") {
                 NavigationLink(destination: {
                     BookmarkFolderChooser(
-                        bookmarkManager: bookmarkManager,
                         selectedFolder: parentFolder,
                         excludedFolderIDs: [editingItem.id],
+                        bookmarkStore: bookmarkStore,
                         onSelect: {
                             selectedFolder in
 
@@ -185,7 +185,7 @@ struct BookmarkItemEditForm: View {
             return
         }
 
-        try bookmarkManager.bookmarksFolder.realm!.write {
+        try bookmarkStore.bookmarksFolder.realm!.write {
             let editingItem: BookmarkItem
 
             if self.editingItem.isFrozen {
@@ -214,5 +214,20 @@ struct BookmarkItemEditForm: View {
         }
 
         dismiss()
+    }
+}
+
+struct BookmarkItemEditForm_Previews: PreviewProvider {
+    static var previews: some View {
+        let item = BookmarkItem(value: [
+            //            "url": "https://example.com",
+        ])
+
+        NavigationStack {
+            BookmarkItemEditForm(
+                editingItem: item,
+                bookmarkStore: PreviewUtils.bookmarkStore
+            )
+        }
     }
 }

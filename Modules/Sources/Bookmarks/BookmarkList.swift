@@ -22,15 +22,15 @@ struct BookmarkList: View {
         }
     }
 
+    @ObservedRealmObject var folder: BookmarkItem
+
+    let bookmarkStore: BookmarkStore
+
+    var onOpen: (BookmarkItem) -> Void
+
     @StateObject private var itemEditingState = ItemEditingState()
 
     @State private var editMode: EditMode = .inactive
-
-    var bookmarkManager: BookmarkManager
-
-    @ObservedRealmObject var folder: BookmarkItem
-
-    var onOpen: (BookmarkItem) -> Void
 
     @Environment(\.nfl_dismiss) var dismiss
 
@@ -41,12 +41,12 @@ struct BookmarkList: View {
             if folder.id == .bookmarks {
                 NavigationLink(destination: {
                     BookmarkList(
-                        bookmarkManager: bookmarkManager,
-                        folder: bookmarkManager.favoritesFolder,
+                        folder: bookmarkStore.favoritesFolder,
+                        bookmarkStore: bookmarkStore,
                         onOpen: onOpen
                     )
                 }) {
-                    BookmarkListItem(item: bookmarkManager.favoritesFolder)
+                    BookmarkListItem(item: bookmarkStore.favoritesFolder)
                 }
                 .listRowBackground(Colors.backgroundDark.swiftUIColor)
             }
@@ -69,8 +69,8 @@ struct BookmarkList: View {
                         if item.isFolder {
                             NavigationLink(destination: {
                                 BookmarkList(
-                                    bookmarkManager: bookmarkManager,
                                     folder: item,
+                                    bookmarkStore: bookmarkStore,
                                     onOpen: onOpen
                                 )
                             }) {
@@ -119,12 +119,12 @@ struct BookmarkList: View {
                 .sheet(isPresented: $isPresentedNewFolderForm) {
                     NavigationView {
                         BookmarkItemEditForm(
-                            bookmarkManager: bookmarkManager,
                             editingItem: {
                                 let folder = BookmarkItem()
                                 folder.kind = .folder
                                 return folder
-                            }()
+                            }(),
+                            bookmarkStore: bookmarkStore
                         )
                     }
                 }
@@ -153,8 +153,8 @@ struct BookmarkList: View {
         .sheet(isPresented: $itemEditingState.isEditing) {
             NavigationView {
                 BookmarkItemEditForm(
-                    bookmarkManager: bookmarkManager,
-                    editingItem: itemEditingState.item!
+                    editingItem: itemEditingState.item!,
+                    bookmarkStore: bookmarkStore
                 )
             }
         }

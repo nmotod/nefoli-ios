@@ -5,14 +5,14 @@ import Utils
 
 public class BookmarkManageController: UIHostingController<AnyView> {
     public init(
-        bookmarkManager: BookmarkManager,
+        bookmarkStore: BookmarkStore,
         onOpen: @escaping (BookmarkItem) -> Void
     ) {
         weak var weakSelf: BookmarkManageController?
 
         super.init(rootView: AnyView(
             BookmarkManageView(
-                bookmarkManager: bookmarkManager,
+                bookmarkStore: bookmarkStore,
                 onOpen: onOpen
             )
             .environment(\.nfl_dismiss) {
