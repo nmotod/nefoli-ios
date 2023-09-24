@@ -56,6 +56,7 @@ public class DatabaseBootstrap {
             || rootState.bookmarksFolder == nil
             || rootState.favoritesFolder == nil
             || rootState.settings == nil
+            || rootState.groups.isEmpty
         {
             try realm.write {
                 if rootState.realm == nil {
@@ -72,6 +73,10 @@ public class DatabaseBootstrap {
 
                 if rootState.settings == nil {
                     rootState.settings = settings
+                }
+
+                if rootState.groups.isEmpty {
+                    rootState.groups.append(TabGroup())
                 }
             }
         }
