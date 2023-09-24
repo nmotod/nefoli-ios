@@ -37,13 +37,13 @@ public class DatabaseBootstrap {
         if let aFolder = rootState.bookmarksFolder {
             bookmarksFolder = aFolder
         } else {
-            bookmarksFolder = .init()
+            bookmarksFolder = .init(id: .bookmarks)
         }
 
         if let aFolder = rootState.favoritesFolder {
             favoritesFolder = aFolder
         } else {
-            favoritesFolder = .init()
+            favoritesFolder = .init(id: .favorites)
         }
 
         if let aSettings = rootState.settings {

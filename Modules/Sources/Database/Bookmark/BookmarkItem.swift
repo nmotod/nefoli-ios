@@ -45,4 +45,23 @@ public class BookmarkItem: Object, CreatedDateStorable, Identifiable {
     @Persisted(originProperty: "children") var parents: LinkingObjects<BookmarkItem>
 
     public var parent: BookmarkItem? { parents.first }
+
+    override public init() {
+        super.init()
+    }
+
+    public convenience init(id: BookmarkItemID? = nil) {
+        self.init()
+
+        if let id {
+            self.id = id
+            
+            switch id {
+            case .bookmarks, .favorites:
+                self.kind = .folder
+                
+            case .regular: ()
+            }
+        }
+    }
 }

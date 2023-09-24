@@ -2,7 +2,7 @@ import Foundation
 import os.log
 import RealmSwift
 
-let schemaVersion: UInt64 = 15
+let schemaVersion: UInt64 = 17
 
 func doMigrate(_ migration: Migration, oldSchemaVersion: UInt64) {
     let log = Logger(category: "migration")
@@ -25,6 +25,19 @@ func doMigrate(_ migration: Migration, oldSchemaVersion: UInt64) {
             favoritesFolder["kind"] = BookmarkItem.Kind.folder.rawValue
 
             let bookmarksFolder = newObject!["bookmarksFolder"] as! MigrationObject
+            bookmarksFolder["kind"] = BookmarkItem.Kind.folder.rawValue
+        }
+    }
+
+    // fix special bookmark folders ID
+    if oldSchemaVersion < 17 {
+        migration.enumerateObjects(ofType: "RootState") { _, newObject in
+            let favoritesFolder = newObject!["favoritesFolder"] as! MigrationObject
+            favoritesFolder["id"] = BookmarkItemID.favorites.persistableValue
+            favoritesFolder["kind"] = BookmarkItem.Kind.folder.rawValue
+
+            let bookmarksFolder = newObject!["bookmarksFolder"] as! MigrationObject
+            bookmarksFolder["id"] = BookmarkItemID.bookmarks.persistableValue
             bookmarksFolder["kind"] = BookmarkItem.Kind.folder.rawValue
         }
     }
