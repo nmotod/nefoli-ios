@@ -35,30 +35,32 @@ class MenuSheetActionCell: UICollectionViewListCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    var action: UIAction? {
-        didSet {
-            button.removeTarget(nil, action: nil, for: .allEvents)
+    func setup(action: UIAction?, afterAction: UIAction?) {
+        button.removeTarget(nil, action: nil, for: .allEvents)
 
-            var content = defaultContentConfiguration()
+        var content = defaultContentConfiguration()
 
-            content.text = action?.title
-            content.textProperties.font = .systemFont(ofSize: 15)
-            content.textProperties.color = Colors.textNormal.color
+        content.text = action?.title
+        content.textProperties.font = .systemFont(ofSize: 15)
+        content.textProperties.color = Colors.textNormal.color
 
-            content.image = action?.image
-            content.imageProperties.preferredSymbolConfiguration = .init(
-                pointSize: 18,
-                weight: .regular
-            )
-            content.imageProperties.tintColor = Colors.tint.color
+        content.image = action?.image
+        content.imageProperties.preferredSymbolConfiguration = .init(
+            pointSize: 18,
+            weight: .regular
+        )
+        content.imageProperties.tintColor = Colors.tint.color
 
-            // The contentView will put at the frontmost
-            contentConfiguration = content
-            bringSubviewToFront(button)
+        // The contentView will put at the frontmost
+        contentConfiguration = content
+        bringSubviewToFront(button)
 
-            if let action {
-                button.addAction(action, for: .touchUpInside)
-            }
+        if let action {
+            button.addAction(action, for: .touchUpInside)
+        }
+
+        if let afterAction {
+            button.addAction(afterAction, for: .touchUpInside)
         }
     }
 

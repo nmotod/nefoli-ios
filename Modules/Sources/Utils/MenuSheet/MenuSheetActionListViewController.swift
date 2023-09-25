@@ -35,8 +35,10 @@ public class MenuSheetActionListViewController: UIViewController, UICollectionVi
         return section
     })
 
-    private let cellRegistration: UICollectionView.CellRegistration<MenuSheetActionCell, UIAction> = .init { cell, _, action in
-        cell.action = action
+    private lazy var cellRegistration: UICollectionView.CellRegistration<MenuSheetActionCell, UIAction> = .init { cell, _, action in
+        cell.setup(action: action, afterAction: .init(handler: { [weak self] _ in
+            self?.dismissIfPossible()
+        }))
     }
 
     private lazy var collectionView: UICollectionView = {
@@ -81,6 +83,7 @@ public class MenuSheetActionListViewController: UIViewController, UICollectionVi
     override public func viewDidLoad() {
         super.viewDidLoad()
 
+        _ = cellRegistration
         _ = dataSource
 
         let vStack = UIStackView(arrangedSubviews: [
@@ -106,5 +109,13 @@ public class MenuSheetActionListViewController: UIViewController, UICollectionVi
 
     public func presentationControllerDidDismiss(_: UIPresentationController) {
         dismiss(animated: true)
+    }
+
+    // MARK: -
+
+    private func dismissIfPossible() {
+        if presentedViewController == nil {
+            dismiss(animated: true)
+        }
     }
 }
