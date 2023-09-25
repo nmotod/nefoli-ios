@@ -1,3 +1,5 @@
+output_dir: ${DERIVED_SOURCES_DIR}
+
 xcassets:
   inputs:
     - Resources/Colors.xcassets
