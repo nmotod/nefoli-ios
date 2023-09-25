@@ -158,9 +158,11 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollec
     private func editBookmarkItem(_ item: BookmarkItem) {
         let controller = BookmarkEditController(
             editingItem: item,
-            bookmarkStore: bookmarkStore
-        ) { _ in
-        }
+            bookmarkStore: bookmarkStore,
+            onDismiss: { [weak self] in
+                self?.dismiss(animated: true)
+            }
+        )
 
         present(controller, animated: true)
     }

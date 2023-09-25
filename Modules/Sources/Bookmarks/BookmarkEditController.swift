@@ -1,12 +1,13 @@
 import Database
 import SwiftUI
 import UIKit
+import Utils
 
 public class BookmarkEditController: UIHostingController<AnyView> {
     public init(
         editingItem: BookmarkItem,
         bookmarkStore: BookmarkStore,
-        completion _: @escaping (_ isDone: Bool) -> Void
+        onDismiss: @escaping () -> Void
     ) {
         super.init(rootView: AnyView(
             NavigationView {
@@ -15,6 +16,7 @@ public class BookmarkEditController: UIHostingController<AnyView> {
                     bookmarkStore: bookmarkStore
                 )
             }
+            .environment(\.nfl_dismiss, onDismiss)
         ))
     }
 

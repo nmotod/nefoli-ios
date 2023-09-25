@@ -1,6 +1,7 @@
 import Database
 import SwiftUI
 import Theme
+import Utils
 
 struct BookmarkEditForm: View {
     enum Field: Hashable {
@@ -9,6 +10,10 @@ struct BookmarkEditForm: View {
     }
 
     var editingItem: BookmarkItem
+
+    private let initialTitle: String
+    private let initialUrlString: String
+    private let initialParentFolder: BookmarkItem
 
     let bookmarkStore: BookmarkStore
 
@@ -22,7 +27,7 @@ struct BookmarkEditForm: View {
 
     @FocusState private var focusedField: Field?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.nfl_dismiss) private var dismiss
 
     private var canSubmit: Bool {
         if title.isEmpty {
@@ -43,25 +48,30 @@ struct BookmarkEditForm: View {
     }
 
     private var isChanged: Bool {
-        return title != editingItem.title
-            || parentFolder.id != editingItem.parent?.id
-            || (editingItem.isBookmark && url != editingItem.url)
+        if title != initialTitle {
+            return true
+        } else if parentFolder.id != initialParentFolder.id {
+            return true
+        } else if editingItem.isBookmark && urlString != initialUrlString {
+            return true
+        }
+        return false
     }
 
     private var formTitle: String {
         switch editingItem.kind {
         case .bookmark:
             if editingItem.localizedTitle.isEmpty {
-                return "New Bookmark"
+                return String(localized: "New Bookmark")
             } else {
-                return "Edit Bookmark"
+                return String(localized: "Edit Bookmark")
             }
 
         case .folder:
             if editingItem.localizedTitle.isEmpty {
-                return "New Folder"
+                return String(localized: "New Folder")
             } else {
-                return "Edit Folder"
+                return String(localized: "Edit Folder")
             }
         }
     }
@@ -72,13 +82,15 @@ struct BookmarkEditForm: View {
     ) {
         self.editingItem = editingItem
         self.bookmarkStore = bookmarkStore
+        initialTitle = editingItem.localizedTitle
+        initialUrlString = editingItem.url?.absoluteString ?? ""
+        // TODO: remember lastOpenedFolder
+        initialParentFolder = editingItem.parent
+            ?? bookmarkStore.favoritesFolder
 
-        // For some reason, when using @Environment(\.dismiss), State must be explicitly initialized.
-        _title = State(initialValue: editingItem.localizedTitle)
-        _urlString = State(initialValue: editingItem.url?.absoluteString ?? "")
-        _parentFolder = State(initialValue: editingItem.parent
-            // ?? bookmarkStore.lastOpenedFolder
-            ?? bookmarkStore.favoritesFolder)
+        _title = State(initialValue: initialTitle)
+        _urlString = State(initialValue: initialUrlString)
+        _parentFolder = State(initialValue: initialParentFolder)
     }
 
     private func backgroundFor(field: Field) -> Color {
@@ -91,32 +103,18 @@ struct BookmarkEditForm: View {
 
     var body: some View {
         Form {
-            Section("Title") {
-                TextField("Title", text: $title)
-                    // .submitLabel(.done)
-                    // .onSubmit {
-                    //     try! saveAndDone()
-                    // }
+            Section {
+                MultilineTextField("Title", text: $title)
                     .focused($focusedField, equals: .title)
                     .listRowBackground(backgroundFor(field: .title))
-            }
+                    .submitLabel(.return)
 
-            if editingItem.isBookmark {
-                Section("URL") {
-                    TextEditor(text: Binding(
-                        get: { urlString },
-                        set: { newValue in
-                            if newValue.contains("\n") {
-                                urlString = newValue.replacingOccurrences(of: "\n", with: "")
-                            } else {
-                                urlString = newValue
-                            }
-                        }
-                    ))
-                    .submitLabel(.done)
-                    .keyboardType(.URL)
-                    .focused($focusedField, equals: .url)
-                    .listRowBackground(backgroundFor(field: .url))
+                if editingItem.isBookmark {
+                    MultilineTextField("URL", text: $urlString)
+                        .listRowBackground(backgroundFor(field: .url))
+                        .focused($focusedField, equals: .url)
+                        .keyboardType(.URL)
+                        .submitLabel(.return)
                 }
             }
 
@@ -170,9 +168,6 @@ struct BookmarkEditForm: View {
             }
         }
         .interactiveDismissDisabled(isChanged)
-//        .introspectTableView { tableView in
-//            tableView.backgroundColor = Colors.background.color
-//        }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                 focusedField = .title
@@ -219,15 +214,14 @@ struct BookmarkEditForm: View {
 
 struct BookmarkItemEditForm_Previews: PreviewProvider {
     static var previews: some View {
-        let item = BookmarkItem(value: [
-            //            "url": "https://example.com",
-        ])
+        let item = BookmarkItem()
 
         NavigationStack {
             BookmarkEditForm(
                 editingItem: item,
                 bookmarkStore: PreviewUtils.bookmarkStore
             )
+            .environment(\.nfl_dismiss) {}
         }
     }
 }

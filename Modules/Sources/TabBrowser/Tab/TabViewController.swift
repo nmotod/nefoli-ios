@@ -1,3 +1,4 @@
+import Bookmarks
 import Combine
 import Database
 import Foundation
@@ -239,8 +240,32 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
 
     func openInDefaultApp() {
         guard let url = webView?.url else { return }
-        
+
         UIApplication.shared.open(url)
+    }
+
+    func addBookmark(_ sender: Any?) {
+        let sender = sender as? UIResponder
+
+        let item = BookmarkItem()
+        item.kind = .bookmark
+        item.title = webView?.title ?? ""
+        item.url = webView?.url
+
+        let editController = BookmarkEditController(
+            editingItem: item,
+            bookmarkStore: dependency.bookmarkStore,
+            onDismiss: { [weak self] in
+                // Dismiss the menu sheet together
+                self?.dismiss(animated: true)
+            }
+        )
+
+        if let menuSheet = sender?.nfl_findResponder(of: MenuSheetController.self) {
+            menuSheet.show(editController, animated: true)
+        } else {
+            present(editController, animated: true)
+        }
     }
 
     // MARK: - Tab lifecycle

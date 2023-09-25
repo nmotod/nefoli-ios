@@ -55,11 +55,11 @@ public class BookmarkItem: Object, CreatedDateStorable, Identifiable {
 
         if let id {
             self.id = id
-            
+
             switch id {
             case .bookmarks, .favorites:
-                self.kind = .folder
-                
+                kind = .folder
+
             case .regular: ()
             }
         }

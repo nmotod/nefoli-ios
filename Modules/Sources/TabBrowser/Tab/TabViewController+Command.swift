@@ -19,7 +19,7 @@ extension TabViewController {
             openInDefaultApp()
 
         case .addBookmark:
-            ()
+            addBookmark(sender)
 
         case .editAddress:
             editAddress(sender)
