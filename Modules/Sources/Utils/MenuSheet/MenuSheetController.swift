@@ -5,7 +5,7 @@ import UIKit
 
 private let backgroundColor = Colors.backgroundDark.color
 
-public class MenuSheetController: UINavigationController {
+public class MenuSheetController: UIViewController, UICollectionViewDelegate, UIAdaptivePresentationControllerDelegate {
     public let webpageMetadata: WebpageMetadata?
 
     public let actionGroups: [[UIAction]]
@@ -19,10 +19,7 @@ public class MenuSheetController: UINavigationController {
         self.webpageMetadata = webpageMetadata
         self.actionGroups = actionGroups
 
-        let listVC = MenuSheetActionListViewController(webpageMetadata: webpageMetadata, actionGroups: actionGroups)
-        super.init(rootViewController: listVC)
-
-        isNavigationBarHidden = true
+        super.init(nibName: nil, bundle: nil)
 
         sheetPresentationController?.detents = [
             .medium(),
@@ -35,15 +32,95 @@ public class MenuSheetController: UINavigationController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // TODO: remove detents
     public func show(_ childViewController: UIViewController, detents: [UISheetPresentationController.Detent]? = nil, animated: Bool) {
-        if let detents {
-            sheetPresentationController!.animateChanges {
-                sheetPresentationController!.detents = detents
-            }
+        present(childViewController, animated: true)
+    }
+
+    private lazy var headerView: MenuSheetHeaderView = {
+        let v = MenuSheetHeaderView()
+        v.titleLabel.text = webpageMetadata?.title
+        v.urlLabel.text = webpageMetadata?.url.absoluteString
+
+        v.onClose = { [weak self] in
+            self?.dismiss(animated: true)
         }
 
-        Task {
-            setViewControllers([childViewController], animated: animated)
+        return v
+    }()
+
+    private let collectionViewLayout: UICollectionViewCompositionalLayout = .init(sectionProvider: { _, layoutEnv in
+        var listConfig = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
+        listConfig.backgroundColor = backgroundColor
+        listConfig.showsSeparators = true
+        listConfig.separatorConfiguration = .init(listAppearance: .grouped)
+        listConfig.separatorConfiguration.color = Colors.tableSeparator.color
+
+        let section = NSCollectionLayoutSection.list(using: listConfig, layoutEnvironment: layoutEnv)
+        section.contentInsets.top = 15
+        section.contentInsets.bottom = 7
+        return section
+    })
+
+    private lazy var cellRegistration: UICollectionView.CellRegistration<MenuSheetActionCell, UIAction> = .init { cell, _, action in
+        cell.setup(action: action, afterAction: .init(handler: { [weak self] _ in
+            self?.dismissIfPossible()
+        }))
+    }
+
+    private lazy var collectionView: UICollectionView = {
+        let v = UICollectionView(
+            frame: UIScreen.main.bounds,
+            collectionViewLayout: collectionViewLayout
+        )
+        v.delegate = self
+        return v
+    }()
+
+    private lazy var dataSource: UICollectionViewDiffableDataSource<Int, UIAction> = .init(collectionView: collectionView) { [weak self] collectionView, indexPath, itemIdentifier in
+        guard let self else { return nil }
+
+        return collectionView.dequeueConfiguredReusableCell(using: self.cellRegistration, for: indexPath, item: itemIdentifier)
+    }
+
+    // MARK: - View lifecycle
+
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+
+        _ = cellRegistration
+        _ = dataSource
+
+        let vStack = UIStackView(arrangedSubviews: [
+            headerView,
+            collectionView,
+        ])
+        vStack.axis = .vertical
+        view = vStack
+
+        vStack.backgroundColor = backgroundColor
+
+        var snapshot = dataSource.snapshot()
+        snapshot.appendSections(Array(0 ..< (actionGroups.count)))
+
+        for (sectionIndex, actions) in actionGroups.enumerated() {
+            snapshot.appendItems(actions, toSection: sectionIndex)
+        }
+
+        dataSource.apply(snapshot)
+    }
+
+    // MARK: - UIAdaptivePresentationControllerDelegate
+
+    public func presentationControllerDidDismiss(_: UIPresentationController) {
+        dismiss(animated: true)
+    }
+
+    // MARK: -
+
+    private func dismissIfPossible() {
+        if presentedViewController == nil {
+            dismiss(animated: true)
         }
     }
 }
