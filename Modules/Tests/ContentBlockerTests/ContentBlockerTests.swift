@@ -31,8 +31,8 @@ private func decodeOneBlockerFilters(data: Data) throws -> [ContentFilterSetting
         }
 
         return ContentFilterSetting(
-            sourceID: dict["id"] as? String,
-            name: dict["name"] as? String
+            name: dict["name"] as! String,
+            sourceID: dict["id"] as? String
         )
     }
 }

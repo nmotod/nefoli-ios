@@ -18,7 +18,7 @@ final class BookmarkIconManager_PathTests: XCTestCase {
 
         XCTAssertEqual(
             // echo -n 'https://example.com/' | sha256sum
-            "file:///tmp/icons/" + item.id,
+            "file:///tmp/icons/" + item.id.persistableValue,
             cacheURL.absoluteString,
             "file name is SHA256 lower-case hex string"
         )
