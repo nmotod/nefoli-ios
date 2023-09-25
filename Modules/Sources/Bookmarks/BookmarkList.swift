@@ -118,7 +118,7 @@ struct BookmarkList: View {
                 })
                 .sheet(isPresented: $isPresentedNewFolderForm) {
                     NavigationView {
-                        BookmarkItemEditForm(
+                        BookmarkEditForm(
                             editingItem: {
                                 let folder = BookmarkItem()
                                 folder.kind = .folder
@@ -152,7 +152,7 @@ struct BookmarkList: View {
         .environment(\.editMode, $editMode)
         .sheet(isPresented: $itemEditingState.isEditing) {
             NavigationView {
-                BookmarkItemEditForm(
+                BookmarkEditForm(
                     editingItem: itemEditingState.item!,
                     bookmarkStore: bookmarkStore
                 )

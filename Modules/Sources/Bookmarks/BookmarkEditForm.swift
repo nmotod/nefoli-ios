@@ -2,7 +2,7 @@ import Database
 import SwiftUI
 import Theme
 
-struct BookmarkItemEditForm: View {
+struct BookmarkEditForm: View {
     enum Field: Hashable {
         case title
         case url
@@ -224,7 +224,7 @@ struct BookmarkItemEditForm_Previews: PreviewProvider {
         ])
 
         NavigationStack {
-            BookmarkItemEditForm(
+            BookmarkEditForm(
                 editingItem: item,
                 bookmarkStore: PreviewUtils.bookmarkStore
             )

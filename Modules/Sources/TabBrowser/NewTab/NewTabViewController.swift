@@ -156,7 +156,7 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
 
     private func editBookmarkItem(_ item: BookmarkItem) {
-        let controller = BookmarkItemEditController(
+        let controller = BookmarkEditController(
             editingItem: item,
             bookmarkStore: bookmarkStore
         ) { _ in

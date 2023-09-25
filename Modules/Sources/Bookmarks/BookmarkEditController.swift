@@ -2,7 +2,7 @@ import Database
 import SwiftUI
 import UIKit
 
-public class BookmarkItemEditController: UIHostingController<AnyView> {
+public class BookmarkEditController: UIHostingController<AnyView> {
     public init(
         editingItem: BookmarkItem,
         bookmarkStore: BookmarkStore,
@@ -10,7 +10,7 @@ public class BookmarkItemEditController: UIHostingController<AnyView> {
     ) {
         super.init(rootView: AnyView(
             NavigationView {
-                BookmarkItemEditForm(
+                BookmarkEditForm(
                     editingItem: editingItem,
                     bookmarkStore: bookmarkStore
                 )
