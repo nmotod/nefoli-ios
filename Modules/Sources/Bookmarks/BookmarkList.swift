@@ -39,21 +39,18 @@ struct BookmarkList: View {
     var body: some View {
         SwiftUI.List {
             if folder.id == .bookmarks {
-                NavigationLink(destination: {
-                    BookmarkList(
-                        folder: bookmarkStore.favoritesFolder,
-                        bookmarkStore: bookmarkStore,
-                        onOpen: onOpen
-                    )
-                }) {
+                NavigationLink(value: bookmarkStore.favoritesFolder) {
                     BookmarkListItem(item: bookmarkStore.favoritesFolder)
                 }
                 .listRowBackground(Colors.backgroundDark.swiftUIColor)
-            }
 
-            if folder.children.isEmpty {
+            } else if folder.children.isEmpty {
                 Text("No Bookmarks")
-                    .listRowBackground(Colors.background.swiftUIColor)
+                    .opacity(0.5)
+                    .font(.system(size: 14))
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top, 20)
+                    .listRowBackground(Colors.backgroundDark.swiftUIColor)
             }
 
             ForEach(folder.children) { (item: BookmarkItem) in
@@ -67,13 +64,7 @@ struct BookmarkList: View {
 
                     } else {
                         if item.isFolder {
-                            NavigationLink(destination: {
-                                BookmarkList(
-                                    folder: item,
-                                    bookmarkStore: bookmarkStore,
-                                    onOpen: onOpen
-                                )
-                            }) {
+                            NavigationLink(value: item) {
                                 BookmarkListItem(item: item)
                             }
                         } else {
@@ -101,8 +92,6 @@ struct BookmarkList: View {
         .background(Colors.backgroundDark.swiftUIColor)
         .foregroundColor(Colors.textNormal.swiftUIColor)
         .navigationTitle(folder.localizedTitle)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbarColorScheme(.dark)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 if editMode != .active {
@@ -124,7 +113,10 @@ struct BookmarkList: View {
                                 folder.kind = .folder
                                 return folder
                             }(),
-                            bookmarkStore: bookmarkStore
+                            bookmarkStore: bookmarkStore,
+                            onDismiss: {
+                                isPresentedNewFolderForm = false
+                            }
                         )
                     }
                 }
@@ -154,7 +146,10 @@ struct BookmarkList: View {
             NavigationView {
                 BookmarkEditForm(
                     editingItem: itemEditingState.item!,
-                    bookmarkStore: bookmarkStore
+                    bookmarkStore: bookmarkStore,
+                    onDismiss: {
+                        itemEditingState.done()
+                    }
                 )
             }
         }

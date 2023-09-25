@@ -1,7 +1,6 @@
 import Database
 import SwiftUI
 import Theme
-import Utils
 
 struct BookmarkEditForm: View {
     enum Field: Hashable {
@@ -11,11 +10,13 @@ struct BookmarkEditForm: View {
 
     var editingItem: BookmarkItem
 
+    let bookmarkStore: BookmarkStore
+
+    var onDismiss: () -> Void
+
     private let initialTitle: String
     private let initialUrlString: String
     private let initialParentFolder: BookmarkItem
-
-    let bookmarkStore: BookmarkStore
 
     @State private var title: String
 
@@ -26,8 +27,6 @@ struct BookmarkEditForm: View {
     @State private var parentFolder: BookmarkItem
 
     @FocusState private var focusedField: Field?
-
-    @Environment(\.nfl_dismiss) private var dismiss
 
     private var canSubmit: Bool {
         if title.isEmpty {
@@ -78,10 +77,13 @@ struct BookmarkEditForm: View {
 
     init(
         editingItem: BookmarkItem,
-        bookmarkStore: BookmarkStore
+        bookmarkStore: BookmarkStore,
+        onDismiss: @escaping () -> Void
     ) {
         self.editingItem = editingItem
         self.bookmarkStore = bookmarkStore
+        self.onDismiss = onDismiss
+
         initialTitle = editingItem.localizedTitle
         initialUrlString = editingItem.url?.absoluteString ?? ""
         // TODO: remember lastOpenedFolder
@@ -156,7 +158,7 @@ struct BookmarkEditForm: View {
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel", action: {
-                    dismiss()
+                    onDismiss()
                 })
             }
 
@@ -208,7 +210,7 @@ struct BookmarkEditForm: View {
             }
         }
 
-        dismiss()
+        onDismiss()
     }
 }
 
@@ -219,9 +221,9 @@ struct BookmarkItemEditForm_Previews: PreviewProvider {
         NavigationStack {
             BookmarkEditForm(
                 editingItem: item,
-                bookmarkStore: PreviewUtils.bookmarkStore
+                bookmarkStore: PreviewUtils.bookmarkStore,
+                onDismiss: {}
             )
-            .environment(\.nfl_dismiss) {}
         }
     }
 }

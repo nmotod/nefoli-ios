@@ -1,7 +1,6 @@
 import Database
 import SwiftUI
 import UIKit
-import Utils
 
 public class BookmarkEditController: UIHostingController<AnyView> {
     public init(
@@ -13,10 +12,10 @@ public class BookmarkEditController: UIHostingController<AnyView> {
             NavigationView {
                 BookmarkEditForm(
                     editingItem: editingItem,
-                    bookmarkStore: bookmarkStore
+                    bookmarkStore: bookmarkStore,
+                    onDismiss: onDismiss
                 )
             }
-            .environment(\.nfl_dismiss, onDismiss)
         ))
     }
 
