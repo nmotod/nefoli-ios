@@ -1,5 +1,6 @@
 import Database
 import Foundation
+import RealmSwift
 import WebKit
 
 public protocol UsesContentFilterManager {
