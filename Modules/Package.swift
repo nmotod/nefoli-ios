@@ -45,7 +45,7 @@ let package = Package(
         //        .package(url: "https://github.com/apple/swift-format", branch: "main"),
 
         .package(url: "https://github.com/SnapKit/SnapKit", revision: "5.6.0"),
-        .package(url: "https://github.com/SwiftGen/SwiftGenPlugin", from: "6.6.0"),
+        .package(url: "https://github.com/SwiftGen/SwiftGenPlugin", from: "6.6.2"),
         .package(url: "https://github.com/realm/realm-swift.git", from: "10.33.0"),
         .package(url: "https://github.com/krzysztofzablocki/Difference.git", from: "1.0.2"),
     ],
