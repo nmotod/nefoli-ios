@@ -325,6 +325,9 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
 
                 let tab = Tab(initialURL: url)
                 try! self.open(tab: tab, options: .init(activate: true, position: .end))
+            },
+            onDismiss: { [weak self] in
+                self?.dismiss(animated: true)
             }
         )
 

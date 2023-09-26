@@ -6,21 +6,16 @@ import Utils
 public class BookmarkManageController: UIHostingController<AnyView> {
     public init(
         bookmarkStore: BookmarkStore,
-        onOpen: @escaping (BookmarkItem) -> Void
+        onOpen: @escaping (BookmarkItem) -> Void,
+        onDismiss: @escaping () -> Void
     ) {
-        weak var weakSelf: BookmarkManageController?
-
         super.init(rootView: AnyView(
             BookmarkManageView(
                 bookmarkStore: bookmarkStore,
                 onOpen: onOpen
             )
-            .environment(\.nfl_dismiss) {
-                weakSelf?.dismiss(animated: true)
-            }
+            .environment(\.nfl_dismiss, onDismiss)
         ))
-
-        weakSelf = self
     }
 
     @available(*, unavailable)
