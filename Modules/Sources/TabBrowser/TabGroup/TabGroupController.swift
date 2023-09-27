@@ -309,7 +309,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
         let settingsController = SettingsController(dependency: dependency)
 
         if let menuSheet = sender?.nfl_findResponder(of: MenuSheetController.self) {
-            menuSheet.show(settingsController, detents: [.large()], animated: true)
+            menuSheet.show(settingsController, animated: true)
         } else {
             present(settingsController, animated: true)
         }
@@ -332,7 +332,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
         )
 
         if let menuSheet = sender?.nfl_findResponder(of: MenuSheetController.self) {
-            menuSheet.show(bookmarkController, detents: [.large()], animated: true)
+            menuSheet.show(bookmarkController, animated: true)
         } else {
             present(bookmarkController, animated: true)
         }

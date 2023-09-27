@@ -118,7 +118,7 @@ public class MenuSheetController: UIViewController, UICollectionViewDelegate, UI
     private var isShowCalled = false
 
     // TODO: remove detents
-    public func show(_ childViewController: UIViewController, detents: [UISheetPresentationController.Detent]? = nil, animated: Bool) {
+    public func show(_ childViewController: UIViewController, animated: Bool) {
         isShowCalled = true
 
         // to detect interactive dismissal
