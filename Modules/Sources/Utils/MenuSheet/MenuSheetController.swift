@@ -32,11 +32,6 @@ public class MenuSheetController: UIViewController, UICollectionViewDelegate, UI
         fatalError("init(coder:) has not been implemented")
     }
 
-    // TODO: remove detents
-    public func show(_ childViewController: UIViewController, detents: [UISheetPresentationController.Detent]? = nil, animated: Bool) {
-        present(childViewController, animated: true)
-    }
-
     private lazy var headerView: MenuSheetHeaderView = {
         let v = MenuSheetHeaderView()
         v.titleLabel.text = webpageMetadata?.title
@@ -118,8 +113,22 @@ public class MenuSheetController: UIViewController, UICollectionViewDelegate, UI
 
     // MARK: -
 
+    /// Remember whether show() has been called
+    /// presentingViewController cannot be used for UIActivtyVC (in iOS 17.0.1)
+    private var isShowCalled = false
+
+    // TODO: remove detents
+    public func show(_ childViewController: UIViewController, detents: [UISheetPresentationController.Detent]? = nil, animated: Bool) {
+        isShowCalled = true
+
+        // to detect interactive dismissal
+        childViewController.presentationController?.delegate = self
+
+        present(childViewController, animated: true)
+    }
+
     private func dismissIfPossible() {
-        if presentedViewController == nil {
+        if !isShowCalled {
             dismiss(animated: true)
         }
     }
