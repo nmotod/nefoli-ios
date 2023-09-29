@@ -34,7 +34,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
 
     private let webViewContainerController = UIViewController()
 
-    private(set) var webView: WKWebView?
+    private var webView: WKWebView?
 
     private var webViewKVObservations: [NSKeyValueObservation] = []
 
@@ -268,6 +268,21 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         }
     }
 
+<<<<<<< HEAD
+=======
+    func goBack(_ sender: Any?) {
+        webView?.goBack()
+    }
+
+    func goForward(_ sender: Any?) {
+        webView?.goForward()
+    }
+
+    func reload(_ sender: Any?) {
+        webView?.reload()
+    }
+
+>>>>>>> 4a7ecac (refactor(tab): change webView to private)
     // MARK: - Tab lifecycle
 
     private func tabDidSet() {

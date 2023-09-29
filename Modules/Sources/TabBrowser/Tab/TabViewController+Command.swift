@@ -4,13 +4,13 @@ extension TabViewController {
     func execute(command: TabCommand, sender: Any?) {
         switch command {
         case .goBack:
-            webView?.goBack()
+            goBack(sender)
 
         case .goForward:
-            webView?.goForward()
+            goForward(sender)
 
         case .reload:
-            webView?.reload()
+            reload(sender)
 
         case .share:
             share(sender)
