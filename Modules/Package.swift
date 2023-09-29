@@ -10,7 +10,7 @@ let package = Package(
     name: "Modules",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v16),
+        .iOS("17.0.0"),
     ],
     products: [
         .library(
@@ -36,6 +36,10 @@ let package = Package(
         .library(
             name: "Theme.Previews",
             targets: ["Theme"]
+        ),
+        .library(
+            name: "TabBrowser.Previews",
+            targets: ["TabBrowser"]
         ),
     ],
     dependencies: [

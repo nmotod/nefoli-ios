@@ -7,19 +7,11 @@ extension TabGroupController {
     class RootView: UIView {
         let bottomBarBackgroundView = UIVisualEffectView(effect: Effects.barBackground)
 
-        let toolbar: UIToolbar = {
-            let appearance = UIToolbarAppearance()
-            appearance.backgroundEffect = nil
-            appearance.shadowColor = nil
+        let omnibar = Omnibar()
 
-            // A non-empty frame should be specified to prevent auto layout warning.
-            let toolbar = UIToolbar(frame: .init(x: 0, y: 0, width: 300, height: 44))
+        var addressBar: AddressBar { omnibar.addressBar }
 
-            toolbar.standardAppearance = appearance
-            toolbar.tintColor = Colors.tint.color
-
-            return toolbar
-        }()
+        var progressBar: ProgressBar { omnibar.progressBar }
 
         let stickyToolbar = StickyContainerView(position: .bottom)
 
@@ -37,8 +29,8 @@ extension TabGroupController {
                 make.edges.equalToSuperview()
             }
 
-            stickyToolbar.contentView.addSubview(toolbar)
-            toolbar.snp.makeConstraints { make in
+            stickyToolbar.contentView.addSubview(omnibar)
+            omnibar.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
 
@@ -53,12 +45,12 @@ extension TabGroupController {
             stickyToolbar.snp.makeConstraints { make in
                 make.left.right.equalToSuperview()
                 make.bottom.equalTo(tabGroupView.snp.top)
-                make.height.equalTo(44)
+                make.height.equalTo(60)
             }
 
             bottomBarBackgroundView.snp.makeConstraints { make in
                 make.left.right.bottom.equalToSuperview()
-                make.top.equalTo(toolbar.snp.top)
+                make.top.equalTo(omnibar.snp.top)
             }
         }
 

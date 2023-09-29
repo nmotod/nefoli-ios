@@ -76,6 +76,14 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
         view = rootView
         self.rootView = rootView
 
+        rootView.addressBar.addressButton.addAction(.init { [weak self] action in
+            self?.activeVC?.editAddress(action.sender)
+        }, for: .touchUpInside)
+
+        rootView.addressBar.reloadButton.addAction(.init { [weak self] action in
+            self?.activeVC?.reload(action.sender)
+        }, for: .touchUpInside)
+
         rootView.tabGroupView.delegate = self
         rootView.tabGroupView.group = group
 
@@ -227,13 +235,20 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
                 make.edges.equalToSuperview()
             }
 
-            setToolbarItems(from: [
-                TabCommand.goBack,
-                TabCommand.goForward,
-                TabGroupCommand.menuSheet,
-                TabGroupCommand.bookmarks,
-                TabGroupCommand.tabs,
-            ])
+            rootView.addressBar.contentConfiguration = newVC.addressBarContentConfiguration
+
+            rootView.progressBar.progressProvider = newVC.progressProvider
+
+            if newVC.isLoading {
+                rootView.progressBar.start()
+            } else {
+                rootView.progressBar.finish()
+            }
+
+            rootView.omnibar.setButtons(
+                left: makeButton(for: TabCommand.goBack),
+                right: makeButton(for: TabGroupCommand.menuSheet)
+            )
 
             newVC.didMove(toParent: self)
 
@@ -261,19 +276,6 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
         }
 
         activeTabDidChange()
-    }
-
-    private func setToolbarItems(from commands: [any CommandProtocol]) {
-        guard let toolbar = rootView?.toolbar else { return }
-
-        let items = commands.compactMap(makeBarButtonItem(for:))
-
-        toolbar.items = items.flatMap { item -> [UIBarButtonItem] in
-            [
-                item,
-                UIBarButtonItem.flexibleSpace(),
-            ]
-        }.dropLast()
     }
 
     // MARK: - TabGroupView
@@ -341,41 +343,68 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
     private var goBackActionStateCancellable: Any?
     private var goForwardActionStateCancellable: Any?
 
-    func makeBarButtonItem(for command: any CommandProtocol) -> UIBarButtonItem? {
+    // TODO: support long press
+    func makeButton(for command: any CommandProtocol) -> UIButton? {
         guard let uiAction = makeUIAction(for: command) else {
             return nil
         }
 
-        let item = UIBarButtonItem(primaryAction: uiAction)
+        uiAction.title = ""
+
+        let button = UIButton(primaryAction: uiAction)
+        button.tintColor = Colors.tint.color
+        button.snp.makeConstraints { make in
+            make.width.equalTo(44)
+        }
 
         if let action = command as? TabCommand {
             switch action {
             case .goBack:
-                // TODO: make subclass of UIBarButtonItem that can have a cancallable
-                goBackActionStateCancellable = activeVC?.canGoBackPublisher.sink { [weak item] isEnabled in
-                    item?.isEnabled = isEnabled
+                // TODO: make subclass of UIButton that can have a cancallable
+                goBackActionStateCancellable = activeVC?.canGoBackPublisher.sink { [weak button] isEnabled in
+                    button?.isEnabled = isEnabled
                 }
 
             case .goForward:
-                goForwardActionStateCancellable = activeVC?.canGoForwardPublisher.sink { [weak item] isEnabled in
-                    item?.isEnabled = isEnabled
+                goForwardActionStateCancellable = activeVC?.canGoForwardPublisher.sink { [weak button] isEnabled in
+                    button?.isEnabled = isEnabled
                 }
 
             default: ()
             }
         }
 
-        return item
+        return button
     }
 
     // MARK: - Tab View Controller Delegate
 
     func tabVC(_ tabVC: TabViewController, searchWeb text: String) {
-        guard let url = buildSearchURL(text: text) else {
+        guard tabVC == activeVC,
+              let url = buildSearchURL(text: text)
+        else {
             return
         }
 
         let tab = Tab(initialURL: url)
         try! open(tab: tab, options: .init(activate: true, position: .afterActive))
+    }
+
+    func tabVCDidChangeAddressBarContent(_ tabVC: TabViewController) {
+        guard tabVC == activeVC else { return }
+
+        rootView?.omnibar.addressBar.contentConfiguration = tabVC.addressBarContentConfiguration
+    }
+
+    func tabVCDidStartLoading(_ tabVC: TabViewController) {
+        guard tabVC == activeVC else { return }
+
+        rootView?.progressBar.start()
+    }
+
+    func tabVCDidFinishLoading(_ tabVC: TabViewController) {
+        guard tabVC == activeVC else { return }
+
+        rootView?.progressBar.finish()
     }
 }

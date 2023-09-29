@@ -19,7 +19,7 @@ extension NewTabViewController {
 
         private let backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterialDark))
 
-        private let addressBar = AddressBar(frame: .init(x: 0, y: 0, width: 300, height: 60))
+//        private let addressBar = AddressBar(frame: .init(x: 0, y: 0, width: 300, height: 60))
 
         private let addressBarBox = UIView()
 
@@ -49,16 +49,16 @@ extension NewTabViewController {
         /// - 1.0 : Non-sticky (hero header is on screen)
         var percentExpansion: CGFloat = 0 {
             didSet {
-                backgroundView.isHidden = (percentExpansion > 0)
-
-                addressBarHeightConstraint.update(offset: clamp(min: 50, max: 60, percent: percentExpansion))
-                addressBarAlignLeftConstraint.update(offset: clamp(min: 0, max: 10, percent: percentExpansion))
-                addressBarAlignRightConstraint.update(offset: -clamp(min: 0, max: 10, percent: percentExpansion))
-
-                let labelScale = clamp(min: 1.1, max: 1, percent: percentExpansion)
-                addressBar.labelButton.titleLabel?.transform = .init(scaleX: labelScale, y: labelScale)
-
-                heroImageBox.alpha = percentExpansion
+//                backgroundView.isHidden = (percentExpansion > 0)
+//
+//                addressBarHeightConstraint.update(offset: clamp(min: 50, max: 60, percent: percentExpansion))
+//                addressBarAlignLeftConstraint.update(offset: clamp(min: 0, max: 10, percent: percentExpansion))
+//                addressBarAlignRightConstraint.update(offset: -clamp(min: 0, max: 10, percent: percentExpansion))
+//
+////                let labelScale = clamp(min: 1.1, max: 1, percent: percentExpansion)
+////                addressBar.labelButton.titleLabel?.transform = .init(scaleX: labelScale, y: labelScale)
+//
+//                heroImageBox.alpha = percentExpansion
             }
         }
 
@@ -75,7 +75,7 @@ extension NewTabViewController {
         private func setup() {
             addSubview(backgroundView)
             addSubview(addressBarBox)
-            addressBarBox.addSubview(addressBar)
+//            addressBarBox.addSubview(addressBar)
             addSubview(heroImageBox)
             addSubview(topToolbar)
 
@@ -90,16 +90,16 @@ extension NewTabViewController {
                 make.height.equalTo(50)
             }
 
-            addressBar.snp.makeConstraints { make in
-                addressBarAlignLeftConstraint = make.left.equalToSuperview().constraint
-                addressBarAlignRightConstraint = make.right.equalToSuperview().constraint
-                make.centerY.equalToSuperview()
-                addressBarHeightConstraint = make.height.equalTo(50).constraint
-            }
-
-            addressBar.labelButton.addTarget(self, action: #selector(editAddress(_:)), for: .touchUpInside)
-            addressBar.labelButton.isPlaceholder = true
-            addressBar.labelButton.addressText = NSLocalizedString("Search or enter address", comment: "")
+//            addressBar.snp.makeConstraints { make in
+//                addressBarAlignLeftConstraint = make.left.equalToSuperview().constraint
+//                addressBarAlignRightConstraint = make.right.equalToSuperview().constraint
+//                make.centerY.equalToSuperview()
+//                addressBarHeightConstraint = make.height.equalTo(50).constraint
+//            }
+//
+//            addressBar.labelButton.addTarget(self, action: #selector(editAddress(_:)), for: .touchUpInside)
+//            addressBar.labelButton.isPlaceholder = true
+//            addressBar.labelButton.addressText = NSLocalizedString("Search or enter address", comment: "")
 
             // Hero image
             heroImageBox.snp.makeConstraints { make in

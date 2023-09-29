@@ -1,136 +1,174 @@
-import Database
-import RealmSwift
+import Foundation
 import Theme
 import UIKit
 
 class AddressBar: UIView {
-    static let defaultHeight: CGFloat = 50
+    struct ContentConfiguration {
+        var url: URL?
+        var isSecure: Bool = false
 
-    let labelButton = AddressBarLabelButton()
-
-    var contentOpacity: CGFloat = 1 {
-        didSet {
-            labelButton.alpha = contentOpacity
-            reloadButton.alpha = contentOpacity
+        var hasInternalURL: Bool {
+            guard let url else { return false }
+            return InternalURL.isInternalURL(url)
         }
     }
 
-    var addressText: String {
-        get { labelButton.addressText }
-        set { labelButton.addressText = newValue }
+    var contentConfiguration: ContentConfiguration? {
+        didSet {
+            updateContent()
+        }
     }
 
-    var isSecure: Bool {
-        get { labelButton.isSecure }
-        set { labelButton.isSecure = newValue }
-    }
+    let addressButton: AddressButton
 
     let reloadButton: UIButton = {
         var config = UIButton.Configuration.plain()
         config.buttonSize = .small
         config.image = UIImage(systemName: "arrow.clockwise")
-        config.contentInsets = .init(top: 0, leading: 0, bottom: 4, trailing: 10)
+        config.preferredSymbolConfigurationForImage = .init(pointSize: 13)
 
         let button = UIButton(configuration: config, primaryAction: nil)
         button.tintColor = Colors.tint.color
         return button
     }()
 
-    /// A margin between addressBar.top and safeArea.top
-    var topMarginConstraint: Constraint?
+    init(
+        frame: CGRect,
+        borderInsets: UIEdgeInsets
+    ) {
+        addressButton = AddressButton(frame: frame, borderInsets: borderInsets)
 
-    var maxHeight: CGFloat { frame.height }
-
-    var currentHeight: CGFloat {
-        get {
-            return maxHeight + marginTop
-        }
-
-        set {
-            let newHeight = newValue
-
-            marginTop = newHeight - maxHeight
-
-            if newHeight < maxHeight {
-                // Stick out to outside top.
-                let visibility = newHeight / maxHeight
-                contentOpacity = max(0, min(visibility, 1))
-            } else {
-                contentOpacity = 1
-            }
-        }
-    }
-
-    var marginTop: CGFloat = 0 {
-        didSet {
-            topMarginConstraint?.update(offset: marginTop)
-
-            if marginTop < 0 {
-                // Stick out to outside top.
-                let visibility = (frame.height + marginTop) / frame.height
-                contentOpacity = max(0, min(visibility, 1))
-            } else {
-                contentOpacity = 1
-            }
-        }
-    }
-
-    var tab: Tab? {
-        didSet {
-            if tab == oldValue {
-                return
-            }
-
-            updateUI()
-        }
-    }
-
-    override init(frame: CGRect = CGRect(x: 0, y: 0, width: 300, height: 50)) {
         super.init(frame: frame)
 
-        addSubview(labelButton)
-        labelButton.snp.makeConstraints { make in
+        addSubview(addressButton)
+        addressButton.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
 
         addSubview(reloadButton)
-
         reloadButton.snp.makeConstraints { make in
             make.top.right.bottom.equalToSuperview()
-            make.width.equalTo(50)
+            make.width.equalTo(44)
         }
+
+        updateContent()
     }
 
     @available(*, unavailable)
-    required init?(coder _: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func didChangeTab(_ change: ObjectChange<Tab>) {
-        switch change {
-        case .change:
-            updateUI()
+    private func updateContent() {
+        addressButton.contentConfiguration = contentConfiguration
 
-        case .deleted:
-            tab = nil
-
-        case .error: ()
-        }
-    }
-
-    private func updateUI() {
-        let title: String
-
-        if let url = tab?.current?.url ?? tab?.initialURL {
-            title = url.host ?? url.absoluteString
+        if let contentConfiguration, !contentConfiguration.hasInternalURL {
+            reloadButton.isHidden = false
         } else {
-            title = ""
+            reloadButton.isHidden = true
         }
-
-        addressText = title
     }
 
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIView.noIntrinsicMetric, height: Self.defaultHeight)
+    class AddressButton: UIButton {
+        let borderInsets: UIEdgeInsets
+
+        override var isHighlighted: Bool {
+            didSet {
+                borderLayer.backgroundColor = isHighlighted
+                    ? Colors.addressBarLabelBackgroundHighlighted.color.cgColor
+                    : Colors.addressBarLabelBackgroundNormal.color.cgColor
+            }
+        }
+
+        var contentConfiguration: ContentConfiguration? {
+            didSet {
+                guard let contentConfiguration,
+                      !contentConfiguration.hasInternalURL
+                else {
+                    contentView.isHidden = true
+                    placeholderLabel.isHidden = false
+                    return
+                }
+
+                contentView.isHidden = false
+                placeholderLabel.isHidden = true
+
+                label.text = contentConfiguration.url?.host
+                secureIconView.isHidden = !contentConfiguration.isSecure
+            }
+        }
+
+        private let borderLayer: CALayer = {
+            let layer = CALayer()
+            layer.backgroundColor = Colors.addressBarLabelBackgroundNormal.color.cgColor
+            layer.masksToBounds = true
+            return layer
+        }()
+
+        private let label: UILabel = {
+            let label = UILabel()
+            label.font = .systemFont(ofSize: 14)
+            label.textColor = Colors.label.color
+            label.textAlignment = .center
+            label.lineBreakMode = .byTruncatingMiddle
+            return label
+        }()
+
+        private let secureIconView: UIImageView = {
+            let secureIconView = UIImageView(image: UIImage(systemName: "lock.fill"))
+            secureIconView.preferredSymbolConfiguration = .init(pointSize: 10)
+            secureIconView.tintColor = Colors.addressBarLabelTextNormal.color
+            secureIconView.contentMode = .center
+            return secureIconView
+        }()
+
+        private lazy var contentView: UIStackView = {
+            let contentView = UIStackView(arrangedSubviews: [secureIconView, label])
+            contentView.isUserInteractionEnabled = false
+            contentView.spacing = 5
+            return contentView
+        }()
+
+        private let placeholderLabel: UILabel = {
+            let label = UILabel()
+            label.isUserInteractionEnabled = false
+            label.font = .systemFont(ofSize: 14)
+            label.textColor = Colors.addressBarLabelPlaceholder.color
+            label.text = String(localized: "Search or enter address")
+            label.isHidden = true
+            return label
+        }()
+
+        init(frame: CGRect, borderInsets: UIEdgeInsets) {
+            self.borderInsets = borderInsets
+
+            super.init(frame: frame)
+
+            layer.addSublayer(borderLayer)
+
+            addSubview(placeholderLabel)
+            placeholderLabel.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.width.lessThanOrEqualToSuperview()
+            }
+
+            addSubview(contentView)
+            contentView.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+                make.width.lessThanOrEqualToSuperview().inset(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 55))
+            }
+        }
+
+        @available(*, unavailable)
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+
+        override func layoutSublayers(of layer: CALayer) {
+            super.layoutSublayers(of: layer)
+
+            borderLayer.frame = bounds.inset(by: borderInsets)
+            borderLayer.cornerRadius = borderLayer.bounds.height / 2
+        }
     }
 }

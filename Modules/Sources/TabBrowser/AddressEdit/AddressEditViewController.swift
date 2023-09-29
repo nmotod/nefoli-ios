@@ -7,17 +7,27 @@ protocol AddressEditViewControllerDelegate: AnyObject {
 }
 
 class AddressEditViewController: UIViewController, AddressEditViewControllerRootViewHandler {
-    let initialText: String
+    let initialURL: URL?
+
+    private var initialText: String {
+        guard let initialURL,
+              !InternalURL.isInternalURL(initialURL)
+        else {
+            return ""
+        }
+
+        return initialURL.absoluteString
+    }
 
     weak var delegate: AddressEditViewControllerDelegate?
 
     private var rootView: RootView!
 
     init(
-        initialText: String,
+        initialURL: URL?,
         delegate: AddressEditViewControllerDelegate
     ) {
-        self.initialText = initialText
+        self.initialURL = initialURL
         self.delegate = delegate
 
         super.init(nibName: nil, bundle: nil)

@@ -25,4 +25,8 @@ enum InternalURL: String {
     var url: URL {
         return URL(string: Self.scheme + "://" + Self.host + path)!
     }
+
+    static func isInternalURL(_ url: URL) -> Bool {
+        return InternalURL(url: url) != nil
+    }
 }

@@ -31,7 +31,7 @@ class WebViewStickyInteraction: NSObject, UIScrollViewDelegate {
 
     init(
         webView: WKWebView,
-        topBar: StickyContainerView,
+        topBar: StickyContainerView?,
         bottomBar: StickyContainerView? = nil
     ) {
         self.webView = webView
@@ -46,19 +46,23 @@ class WebViewStickyInteraction: NSObject, UIScrollViewDelegate {
     }
 
     func update(isInteractive: Bool) {
-        guard let webView = webView,
-              let topBar = topBar,
-              let bottomBar = bottomBar
-        else {
+        guard let webView = webView else {
             return
         }
 
+        if topBar == nil && bottomBar == nil {
+            return
+        }
+
+        let topBarMaxHeight = topBar?.maximumHeight ?? 0
+        let bottomBarMaxHeight = bottomBar?.maximumHeight ?? 0
+
         let scrollView = webView.scrollView
-        let maxBarHeight = max(topBar.maximumHeight, bottomBar.maximumHeight)
+        let maxBarHeight = max(topBarMaxHeight, bottomBarMaxHeight)
         let offsetTop = scrollView.adjustedContentInset.top + scrollView.contentOffset.y
 
         let offsetBottom = scrollView.contentSize.height - scrollView.bounds.height - scrollView.contentOffset.y + scrollView.adjustedContentInset.bottom
-        let isReachedBottom = offsetBottom < bottomBar.maximumHeight
+        let isReachedBottom = offsetBottom < bottomBarMaxHeight
 
         var percentHidden: CGFloat = 0
         var stickyInsets = webView.safeAreaInsets
@@ -79,18 +83,20 @@ class WebViewStickyInteraction: NSObject, UIScrollViewDelegate {
 //        """)
 
         if isReachedBottom {
-            percentHidden = max(0, min(offsetBottom / bottomBar.maximumHeight, 1))
+            if bottomBarMaxHeight > 0 {
+                percentHidden = max(0, min(offsetBottom / bottomBarMaxHeight, 1))
+            }
 
         } else {
             let maxHiddenHeight = max(0, min(offsetTop - offsetTopBase, maxBarHeight))
             percentHidden = maxHiddenHeight / maxBarHeight
         }
 
-        topBar.percentHidden = percentHidden
-        stickyInsets.top -= topBar.hiddenHeight
+        topBar?.percentHidden = percentHidden
+        stickyInsets.top -= topBar?.hiddenHeight ?? 0
 
-        bottomBar.percentHidden = percentHidden
-        stickyInsets.bottom -= bottomBar.hiddenHeight
+        bottomBar?.percentHidden = percentHidden
+        stickyInsets.bottom -= bottomBar?.hiddenHeight ?? 0
 
         webView.nfl_stickyInsets = stickyInsets
 

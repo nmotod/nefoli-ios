@@ -11,6 +11,12 @@ public typealias TabViewControllerDependency = UsesWebViewManager & UsesScreensh
 
 protocol TabViewControllerDelegate: AnyObject {
     func tabVC(_ tabVC: TabViewController, searchWeb text: String)
+
+    func tabVCDidChangeAddressBarContent(_ tabVC: TabViewController)
+
+    func tabVCDidStartLoading(_ tabVC: TabViewController)
+
+    func tabVCDidFinishLoading(_ tabVC: TabViewController)
 }
 
 class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, NewTabViewControllerDelegate, AddressEditViewControllerDelegate {
@@ -80,6 +86,14 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         }
     }
 
+    var isLoading: Bool { webView?.isLoading ?? false }
+
+    var progressProvider: ProgressBar.ProgressProvider {
+        return { [weak self] in
+            self?.webView?.estimatedProgress ?? 0
+        }
+    }
+
     init(
         tab: Tab,
         delegate: TabViewControllerDelegate?,
@@ -112,14 +126,6 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         view = rootView
 
         rootView.addGestureRecognizer(linkLongPressGestureRecognizer)
-
-        rootView.addressBar.reloadButton.addAction(UIAction(handler: { [weak self] _ in
-            self?.webView?.reload()
-        }), for: .touchUpInside)
-
-        rootView.addressBar.labelButton.addAction(.init(handler: { [weak self] _ in
-            self?.editAddress(nil)
-        }), for: .touchUpInside)
     }
 
     override func viewDidLoad() {
@@ -136,7 +142,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
 
             stickyInteraction = WebViewStickyInteraction(
                 webView: webView,
-                topBar: rootView.stickyAddressBar,
+                topBar: nil,
                 bottomBar: stickyBottomBar
             )
             webView.scrollView.delegate = stickyInteraction
@@ -183,10 +189,6 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
                 },
             ]
 
-            self.rootView.progressBar.progressProvider = { [weak webView] in
-                webView?.estimatedProgress ?? 0
-            }
-
             rootView.insertSubview(webView, at: 0)
             webView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
@@ -205,7 +207,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        webViewContainerController.additionalSafeAreaInsets.top = rootView.addressBar.frame.height
+//        webViewContainerController.additionalSafeAreaInsets.top = rootView.addressBar.frame.height
     }
 
     override func viewSafeAreaInsetsDidChange() {
@@ -232,9 +234,9 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
     func editAddress(_ sender: Any?) {
         (sender as? UIResponder)?.nfl_findResponder(of: UIViewController.self)?.dismiss(animated: true)
 
-        let text = webView?.url?.absoluteString ?? tab?.initialURL?.absoluteString ?? ""
+        let url = webView?.url ?? tab?.initialURL
 
-        let editVC = AddressEditViewController(initialText: text, delegate: self)
+        let editVC = AddressEditViewController(initialURL: url, delegate: self)
         present(editVC, animated: true)
     }
 
@@ -268,8 +270,6 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         }
     }
 
-<<<<<<< HEAD
-=======
     func goBack(_ sender: Any?) {
         webView?.goBack()
     }
@@ -282,7 +282,6 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         webView?.reload()
     }
 
->>>>>>> 4a7ecac (refactor(tab): change webView to private)
     // MARK: - Tab lifecycle
 
     private func tabDidSet() {
@@ -362,12 +361,15 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
 
     func webView(_: WKWebView, didStartProvisionalNavigation _: WKNavigation!) {
         stickyInteraction?.showStickyBars(animated: true)
-        rootView.progressBar.start()
+
+        delegate?.tabVCDidStartLoading(self)
 
         stickyInteraction?.update(isInteractive: false)
     }
 
-    func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {}
+    func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
+        delegate?.tabVCDidFinishLoading(self)
+    }
 
     func webView(_ webView: WKWebView, didCommit _: WKNavigation!) {
         guard let tab = tab else { return }
@@ -376,13 +378,13 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
             tab.updateBackForwardList(wkBackForwardList: webView.backForwardList)
         }
 
-        rootView.progressBar.finish()
+        delegate?.tabVCDidFinishLoading(self)
 
         screenshotManager.updateScreenshot(sources: [tab], webView: webView)
     }
 
     func webView(_: WKWebView, didFail _: WKNavigation!, withError _: Error) {
-        rootView.progressBar.finish()
+        delegate?.tabVCDidFinishLoading(self)
     }
 
     func webView(_ webView: WKWebView, createWebViewWith _: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures _: WKWindowFeatures) -> WKWebView? {
@@ -419,11 +421,19 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
 
     private var newTabVC: NewTabViewController?
 
-    private func addressDidChange() {
-        guard let webView = webView else { return }
+    var addressBarContentConfiguration: AddressBar.ContentConfiguration? {
+        guard let webView,
+              let url = webView.url
+        else { return nil }
 
-        rootView.addressBar.addressText = webView.url?.host ?? ""
-        rootView.addressBar.isSecure = webView.hasOnlySecureContent
+        var content = AddressBar.ContentConfiguration()
+        content.url = url
+        content.isSecure = webView.hasOnlySecureContent
+        return content
+    }
+
+    private func addressDidChange() {
+        delegate?.tabVCDidChangeAddressBarContent(self)
     }
 
     private func titleOrURLDidChange() {
