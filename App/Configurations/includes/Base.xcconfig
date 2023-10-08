@@ -7,6 +7,12 @@ SDKROOT = iphoneos
 SUPPORTED_PLATFORMS = iphonesimulator iphoneos
 
 //
+// Build Options
+//
+// FIXME: SwiftFormat fails when sandboxing is enabled
+//ENABLE_USER_SCRIPT_SANDBOXING = YES
+
+//
 // Deployment
 //
 

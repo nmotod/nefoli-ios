@@ -1,8 +1,11 @@
+import FirebaseCore
 import Foundation
 import UIKit
 
 public class AppDelegate: UIResponder, UIApplicationDelegate {
     public func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        FirebaseApp.configure()
+
         return true
     }
 

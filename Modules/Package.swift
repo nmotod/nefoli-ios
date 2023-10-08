@@ -52,6 +52,7 @@ let package = Package(
         .package(url: "https://github.com/SwiftGen/SwiftGenPlugin", from: "6.6.2"),
         .package(url: "https://github.com/realm/realm-swift.git", from: "10.33.0"),
         .package(url: "https://github.com/krzysztofzablocki/Difference.git", from: "1.0.2"),
+        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "10.16.0"),
     ],
     targets: [
         .target(
@@ -60,6 +61,7 @@ let package = Package(
                 // .product(name: "AlignedCollectionViewFlowLayout", package: "AlignedCollectionViewFlowLayout"),
                 // .product(name: "SnapKit", package: "SnapKit"),
                 // .product(name: "Introspect", package: "SwiftUI-Introspect"),
+                .product(name: "FirebaseCrashlytics", package: "firebase-ios-sdk"),
                 .target(name: "Database"),
                 .target(name: "TabBrowser"),
             ]

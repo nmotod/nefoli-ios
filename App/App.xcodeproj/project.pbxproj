@@ -23,6 +23,8 @@
 		2C8563E4297D0B340003D442 /* OpenInExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C51AA9C296FBD9200FA0963 /* OpenInExtension.m */; };
 		2C8563ED297D0C970003D442 /* OpenIn.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2C51AA70296FB34100FA0963 /* OpenIn.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2C8563F1297D0D960003D442 /* OpenIn-dev.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2C8563EB297D0B340003D442 /* OpenIn-dev.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2CA7AB0B2AD136760017E6D3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CA7AB092AD136760017E6D3 /* GoogleService-Info.plist */; };
+		2CA7AB112AD161960017E6D3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CA7AB102AD161960017E6D3 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +127,8 @@
 		2C51AAA0296FC09D00FA0963 /* prod.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = prod.xcconfig; sourceTree = "<group>"; };
 		2C8563DF297D09E20003D442 /* nefoli.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nefoli.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C8563EB297D0B340003D442 /* OpenIn-dev.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "OpenIn-dev.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CA7AB092AD136760017E6D3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2CA7AB102AD161960017E6D3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +189,7 @@
 		2C367EA5294DC3590077380E /* nefoli */ = {
 			isa = PBXGroup;
 			children = (
+				2CA7AB0D2AD161030017E6D3 /* Resources */,
 				2C367EA6294DC3590077380E /* main.swift */,
 				2C367EAF294DC35A0077380E /* Assets.xcassets */,
 				2C367EB1294DC35A0077380E /* LaunchScreen.storyboard */,
@@ -259,6 +264,31 @@
 			path = includes;
 			sourceTree = "<group>";
 		};
+		2CA7AB0D2AD161030017E6D3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2CA7AB0E2AD161080017E6D3 /* dev */,
+				2CA7AB0F2AD1610A0017E6D3 /* prod */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		2CA7AB0E2AD161080017E6D3 /* dev */ = {
+			isa = PBXGroup;
+			children = (
+				2CA7AB092AD136760017E6D3 /* GoogleService-Info.plist */,
+			);
+			path = dev;
+			sourceTree = "<group>";
+		};
+		2CA7AB0F2AD1610A0017E6D3 /* prod */ = {
+			isa = PBXGroup;
+			children = (
+				2CA7AB102AD161960017E6D3 /* GoogleService-Info.plist */,
+			);
+			path = prod;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -272,6 +302,7 @@
 				2C367EA1294DC3590077380E /* Resources */,
 				2C367EDF294EE95D0077380E /* Embed Frameworks */,
 				2C8563F4297D0D960003D442 /* Embed Foundation Extensions */,
+				2CA7AB0C2AD137510017E6D3 /* [Crashlytics] Upload dSYM */,
 			);
 			buildRules = (
 			);
@@ -313,6 +344,7 @@
 				2C8563D3297D09E20003D442 /* Resources */,
 				2C8563D7297D09E20003D442 /* Embed Frameworks */,
 				2C8563F0297D0C980003D442 /* Embed Foundation Extensions */,
+				2CA7AB122AD162300017E6D3 /* [Crashlytics] Upload dSYM */,
 			);
 			buildRules = (
 			);
@@ -391,6 +423,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C367EB3294DC35A0077380E /* LaunchScreen.storyboard in Resources */,
+				2CA7AB0B2AD136760017E6D3 /* GoogleService-Info.plist in Resources */,
 				2C367EB0294DC35A0077380E /* Assets.xcassets in Resources */,
 				2C367EC9294ED2B00077380E /* infoPlist.strings in Resources */,
 			);
@@ -409,6 +442,7 @@
 			files = (
 				2C8563D4297D09E20003D442 /* LaunchScreen.storyboard in Resources */,
 				2C8563D5297D09E20003D442 /* Assets.xcassets in Resources */,
+				2CA7AB112AD161960017E6D3 /* GoogleService-Info.plist in Resources */,
 				2C8563D6297D09E20003D442 /* infoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -460,6 +494,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# @see https://github.com/nicklockwood/SwiftFormat/blob/0.50.6/README.md#xcode-build-phase\ncd ../BuildTools\n\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\n# Lint while project\nswift run swiftformat --lint --lenient \"$SRCROOT/..\"\n";
+		};
+		2CA7AB0C2AD137510017E6D3 /* [Crashlytics] Upload dSYM */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "[Crashlytics] Upload dSYM";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n\n";
+		};
+		2CA7AB122AD162300017E6D3 /* [Crashlytics] Upload dSYM */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "[Crashlytics] Upload dSYM";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -556,7 +632,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "nefoli-dev";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				MARKETING_VERSION = 1.0;
 			};
@@ -570,7 +647,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "nefoli-dev";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				MARKETING_VERSION = 1.0;
 			};
