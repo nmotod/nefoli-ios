@@ -452,7 +452,6 @@
 			baseConfigurationReference = 2C51AA52296D497C00FA0963 /* nefoli-prod.Debug.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = "";
 				INFOPLIST_KEY_CFBundleDisplayName = nefoli;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -469,7 +468,6 @@
 			baseConfigurationReference = 2C51AA38296D484B00FA0963 /* nefoli-dev.Debug.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = "";
 				INFOPLIST_KEY_CFBundleDisplayName = nefoli;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -486,7 +484,6 @@
 			baseConfigurationReference = 2C51AA55296D4CE600FA0963 /* nefoli-prod.Release.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = "";
 				INFOPLIST_KEY_CFBundleDisplayName = nefoli;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -511,7 +508,6 @@
 			baseConfigurationReference = 2C51AA54296D4CDB00FA0963 /* nefoli-dev.Release.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = "";
 				INFOPLIST_KEY_CFBundleDisplayName = nefoli;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
