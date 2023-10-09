@@ -1,5 +1,5 @@
 import SwiftUI
-import Theme
+import ThemeSystem
 import UIKit
 
 protocol NewTabHeroHeaderViewDelegate: AnyObject {

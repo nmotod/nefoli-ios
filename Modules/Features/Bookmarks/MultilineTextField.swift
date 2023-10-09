@@ -1,6 +1,6 @@
 import Foundation
 import SwiftUI
-import Theme
+import ThemeSystem
 
 struct MultilineTextField: View {
     var titleKey: LocalizedStringKey

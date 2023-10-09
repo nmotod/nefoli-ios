@@ -1,7 +1,7 @@
 import Combine
 import Foundation
 import SnapKit
-import Theme
+import ThemeSystem
 import UIKit
 
 class MenuSheetActionCell: UICollectionViewListCell {

@@ -1,5 +1,5 @@
 import SnapKit
-import Theme
+import ThemeSystem
 import UIKit
 
 class ProgressBar: UIView {

@@ -1,6 +1,6 @@
 import CommandSystem
 import Foundation
-import Theme
+import ThemeSystem
 import UIKit
 
 class Omnibar: UIStackView {

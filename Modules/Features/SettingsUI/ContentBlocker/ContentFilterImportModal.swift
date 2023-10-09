@@ -2,7 +2,7 @@ import ContentBlocker
 import Database
 import Foundation
 import SwiftUI
-import Theme
+import ThemeSystem
 
 struct ContentFilterImportModal: View {
     enum FormState {

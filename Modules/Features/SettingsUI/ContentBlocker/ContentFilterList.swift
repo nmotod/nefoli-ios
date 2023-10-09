@@ -2,7 +2,7 @@ import ContentBlocker
 import Database
 import RealmSwift
 import SwiftUI
-import Theme
+import ThemeSystem
 
 struct ContentFilterList: View {
     let contentFilterManager: ContentFilterManager

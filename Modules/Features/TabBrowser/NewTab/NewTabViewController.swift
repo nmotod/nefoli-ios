@@ -1,7 +1,7 @@
 import Bookmarks
 import Database
 import Foundation
-import Theme
+import ThemeSystem
 import UIKit
 import Utils
 

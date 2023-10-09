@@ -2,7 +2,7 @@ import ContentBlocker
 import Database
 import Foundation
 import SwiftUI
-import Theme
+import ThemeSystem
 import Utils
 
 struct RootView: View {

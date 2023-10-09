@@ -1,6 +1,6 @@
 import Database
 import SwiftUI
-import Theme
+import ThemeSystem
 
 struct BookmarkListItem: View {
     var item: BookmarkItem

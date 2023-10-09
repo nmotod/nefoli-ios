@@ -1,5 +1,5 @@
 import Foundation
-import Theme
+import ThemeSystem
 import UIKit
 
 class AddressBar: UIView {

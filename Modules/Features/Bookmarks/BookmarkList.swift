@@ -2,7 +2,7 @@ import Database
 import Foundation
 import RealmSwift
 import SwiftUI
-import Theme
+import ThemeSystem
 import Utils
 
 struct BookmarkList: View {

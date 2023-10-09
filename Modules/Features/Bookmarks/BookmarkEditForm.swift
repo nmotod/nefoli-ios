@@ -1,6 +1,6 @@
 import Database
 import SwiftUI
-import Theme
+import ThemeSystem
 
 struct BookmarkEditForm: View {
     enum Field: Hashable {

@@ -1,7 +1,7 @@
 import ContentBlocker
 import Foundation
 import SwiftUI
-import Theme
+import ThemeSystem
 
 struct ContentFilterImportConfirmForm: View {
     enum FormState {

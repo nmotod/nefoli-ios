@@ -52,7 +52,7 @@ defineModule(.Components, .target(
 ))
 
 defineModule(.Components, .target(
-    name: "Theme",
+    name: "ThemeSystem",
     exclude: [
         "swiftgen.yml",
     ],
@@ -62,14 +62,14 @@ defineModule(.Components, .target(
     plugins: [
         .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin"),
     ]
-), previews: true)
+), tests: false, previews: true)
 
 defineModule(.Features, .target(
     name: "TabBrowser",
     dependencies: [
         .product(name: "SnapKit", package: "SnapKit"),
         .target(name: "Database"),
-        .target(name: "Theme"),
+        .target(name: "ThemeSystem"),
         .target(name: "Utils"),
         .target(name: "Bookmarks"),
         .target(name: "SettingsUI"),
@@ -82,7 +82,7 @@ defineModule(.Features, .target(
     name: "Bookmarks",
     dependencies: [
         .target(name: "Database"),
-        .target(name: "Theme"),
+        .target(name: "ThemeSystem"),
         .target(name: "Utils"),
     ]
 ), previews: true)
@@ -91,7 +91,7 @@ defineModule(.Features, .target(
     name: "SettingsUI",
     dependencies: [
         .target(name: "Database"),
-        .target(name: "Theme"),
+        .target(name: "ThemeSystem"),
         .target(name: "Utils"),
         .target(name: "ContentBlocker"),
     ]
@@ -108,7 +108,7 @@ defineModule(.Features, .target(
     name: "TabManageUI",
     dependencies: [
         .target(name: "Database"),
-        .target(name: "Theme"),
+        .target(name: "ThemeSystem"),
     ]
 ), previews: true)
 
@@ -116,7 +116,7 @@ defineModule(.Utils, .target(
     name: "Utils",
     dependencies: [
         .product(name: "SnapKit", package: "SnapKit"),
-        .target(name: "Theme"),
+        .target(name: "ThemeSystem"),
     ]
 ), previews: true)
 

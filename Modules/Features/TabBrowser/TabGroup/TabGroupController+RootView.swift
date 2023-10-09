@@ -1,6 +1,6 @@
 import Database
 import Foundation
-import Theme
+import ThemeSystem
 import UIKit
 
 extension TabGroupController {

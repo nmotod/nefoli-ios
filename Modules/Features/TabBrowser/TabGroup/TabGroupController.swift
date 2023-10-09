@@ -4,7 +4,7 @@ import Database
 import Foundation
 import RealmSwift
 import SettingsUI
-import Theme
+import ThemeSystem
 import UIKit
 import Utils
 

@@ -1,7 +1,7 @@
 import Database
 import Foundation
 import SwiftUI
-import Theme
+import ThemeSystem
 
 extension Tab: Identifiable {}
 
