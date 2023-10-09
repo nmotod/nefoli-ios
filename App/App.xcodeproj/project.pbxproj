@@ -122,10 +122,6 @@
 			children = (
 				2CA7AB0D2AD161030017E6D3 /* Resources */,
 				2C367EA6294DC3590077380E /* main.swift */,
-				2C367EAF294DC35A0077380E /* Assets.xcassets */,
-				2C367EB1294DC35A0077380E /* LaunchScreen.storyboard */,
-				2C367EB4294DC35A0077380E /* Info.plist */,
-				2C367ECB294ED2B00077380E /* infoPlist.strings */,
 			);
 			path = nefoli;
 			sourceTree = "<group>";
@@ -149,6 +145,14 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		2C3AD5EF2AD3CC5F00B04536 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2C51AA77296FB34100FA0963 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		2C51AA2C296D451200FA0963 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,10 +172,10 @@
 		2C51AA71296FB34100FA0963 /* OpenIn */ = {
 			isa = PBXGroup;
 			children = (
+				2C3AD5EF2AD3CC5F00B04536 /* Resources */,
 				2C51AA9B296FBD9200FA0963 /* ActionRequestHandler.swift */,
 				2C51AA9A296FBD9200FA0963 /* OpenInExtension.h */,
 				2C51AA9C296FBD9200FA0963 /* OpenInExtension.m */,
-				2C51AA77296FB34100FA0963 /* Info.plist */,
 				2C51AA99296FBD9100FA0963 /* OpenIn-Bridging-Header.h */,
 			);
 			path = OpenIn;
@@ -198,6 +202,10 @@
 		2CA7AB0D2AD161030017E6D3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2C367EAF294DC35A0077380E /* Assets.xcassets */,
+				2C367EB1294DC35A0077380E /* LaunchScreen.storyboard */,
+				2C367EB4294DC35A0077380E /* Info.plist */,
+				2C367ECB294ED2B00077380E /* infoPlist.strings */,
 				2CA7AB0E2AD161080017E6D3 /* dev */,
 				2CA7AB0F2AD1610A0017E6D3 /* prod */,
 			);

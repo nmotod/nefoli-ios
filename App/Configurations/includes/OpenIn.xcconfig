@@ -1,4 +1,4 @@
-INFOPLIST_FILE = Sources/OpenIn/Info.plist
+INFOPLIST_FILE = Sources/OpenIn/Resources/Info.plist
 LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @executable_path/../../Frameworks
 SKIP_INSTALL = YES
 SWIFT_OBJC_BRIDGING_HEADER = Sources/OpenIn/OpenIn-Bridging-Header.h
