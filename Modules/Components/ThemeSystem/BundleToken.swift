@@ -3,7 +3,7 @@ import Foundation
 class BundleToken {
     // https://forums.swift.org/t/unable-to-find-bundle-in-package-target-tests-when-package-depends-on-another-package-containing-resources-accessed-via-bundle-module/43974/5
     static var bundle: Bundle = {
-        let bundleName = "Modules_Theme"
+        let bundleName = "Modules_ThemeSystem"
 
         let candidates = [
             /* Bundle should be present here when the package is linked into an App. */
@@ -20,7 +20,7 @@ class BundleToken {
             Bundle(for: BundleToken.self).resourceURL?.deletingLastPathComponent().deletingLastPathComponent(),
         ]
 
-        for (i, candidate) in candidates.enumerated() {
+        for candidate in candidates {
             let bundlePath = candidate?.appendingPathComponent(bundleName + ".bundle")
             if let bundle = bundlePath.flatMap(Bundle.init(url:)) {
                 return bundle
