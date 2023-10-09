@@ -1,4 +1,4 @@
-import Root
+import AppEntryPoint
 import UIKit
 
 UIApplicationMain(

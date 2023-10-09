@@ -10,8 +10,8 @@ var package = Package(
     ],
     products: [
         .library(
-            name: "Root",
-            targets: ["Root"]
+            name: "AppEntryPoint",
+            targets: ["AppEntryPoint"]
         ),
         // `products` will be added via defineModule()
     ],
@@ -26,13 +26,14 @@ var package = Package(
 )
 
 enum ModuleCategory: String {
+    case EntryPoints
     case Components
     case Features
     case Utils
 }
 
-defineModule(.Components, .target(
-    name: "Root",
+defineModule(.EntryPoints, .target(
+    name: "AppEntryPoint",
     dependencies: [
         // .product(name: "AlignedCollectionViewFlowLayout", package: "AlignedCollectionViewFlowLayout"),
         // .product(name: "SnapKit", package: "SnapKit"),
@@ -41,7 +42,7 @@ defineModule(.Components, .target(
         .target(name: "Database"),
         .target(name: "TabBrowser"),
     ]
-))
+), tests: false)
 
 defineModule(.Components, .target(
     name: "Database",

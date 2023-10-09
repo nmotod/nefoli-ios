@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C3094712AD4039F0080BB06 /* AppEntryPoint in Frameworks */ = {isa = PBXBuildFile; productRef = 2C3094702AD4039F0080BB06 /* AppEntryPoint */; };
 		2C3AD5C82AD3AAB100B04536 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C367EA6294DC3590077380E /* main.swift */; };
-		2C3AD5CA2AD3AAB100B04536 /* Root in Frameworks */ = {isa = PBXBuildFile; productRef = 2C3AD5C52AD3AAB100B04536 /* Root */; };
 		2C3AD5CC2AD3AAB100B04536 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C367EB1294DC35A0077380E /* LaunchScreen.storyboard */; };
 		2C3AD5CD2AD3AAB100B04536 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C367EAF294DC35A0077380E /* Assets.xcassets */; };
 		2C3AD5CF2AD3AAB100B04536 /* infoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C367ECB294ED2B00077380E /* infoPlist.strings */; };
@@ -96,7 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C3AD5CA2AD3AAB100B04536 /* Root in Frameworks */,
+				2C3094712AD4039F0080BB06 /* AppEntryPoint in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,7 +263,7 @@
 			);
 			name = nefoli;
 			packageProductDependencies = (
-				2C3AD5C52AD3AAB100B04536 /* Root */,
+				2C3094702AD4039F0080BB06 /* AppEntryPoint */,
 			);
 			productName = "nefoli-iOS";
 			productReference = 2C3AD5D82AD3AAB100B04536 /* nefoli.app */;
@@ -627,9 +627,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		2C3AD5C52AD3AAB100B04536 /* Root */ = {
+		2C3094702AD4039F0080BB06 /* AppEntryPoint */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Root;
+			productName = AppEntryPoint;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
