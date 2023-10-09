@@ -530,4 +530,14 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
             }
         }
     }
+
+    func executeCustom(command: CustomCommand, sender: Any?) {
+        switch command {
+        case let .script(id, title, script):
+            let world = WKContentWorld.world(name: id)
+            webView?.evaluateJavaScript(script, in: nil, in: world) { result in
+                print("custom script '\(title)' result:", result)
+            }
+        }
+    }
 }

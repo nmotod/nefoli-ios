@@ -39,27 +39,19 @@ extension TabGroupController {
         } else if let command = command as? TabCommand {
             activeVC?.execute(command: command, sender: sender)
 
+        } else if let command = command as? CustomCommand {
+            activeVC?.executeCustom(command: command, sender: sender)
+
         } else {
             throw CommandError.unsupported
         }
     }
 
     func makeUIAction(for command: any CommandProtocol) -> UIAction? {
-        if let command = command as? TabGroupCommand {
-            return command.makeUIAction { [weak self] uiAction in
-                guard let self else { return }
+        return command.makeUIAction { [weak self] uiAction in
+            guard let self else { return }
 
-                self.execute(command: command, sender: uiAction.sender)
-            }
-
-        } else if let command = command as? TabCommand {
-            return command.makeUIAction { [weak self] uiAction in
-                guard let self else { return }
-
-                self.activeVC?.execute(command: command, sender: uiAction.sender)
-            }
+            try! self.executeAny(command: command, sender: uiAction.sender)
         }
-
-        return nil
     }
 }
