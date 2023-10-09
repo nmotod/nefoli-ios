@@ -14,7 +14,18 @@
 		2C3AD5CF2AD3AAB100B04536 /* infoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C367ECB294ED2B00077380E /* infoPlist.strings */; };
 		2C3AD5E22AD3ADF000B04536 /* ActionRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51AA9B296FBD9200FA0963 /* ActionRequestHandler.swift */; };
 		2C3AD5E32AD3ADF000B04536 /* OpenInExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C51AA9C296FBD9200FA0963 /* OpenInExtension.m */; };
+		2C3AD5F32AD3CDF800B04536 /* OpenIn.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2C3AD5EB2AD3ADF000B04536 /* OpenIn.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2C3AD5F42AD3CDF800B04536 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C367E9B294DC3590077380E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2C3AD5E02AD3ADF000B04536;
+			remoteInfo = OpenIn;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		2C3AD5D02AD3AAB100B04536 /* Embed Frameworks */ = {
@@ -27,12 +38,13 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2C3AD5D12AD3AAB100B04536 /* Embed Foundation Extensions */ = {
+		2C3AD5F62AD3CDF800B04536 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				2C3AD5F32AD3CDF800B04536 /* OpenIn.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -241,12 +253,13 @@
 				2C3AD5CB2AD3AAB100B04536 /* Resources */,
 				2C3AD5EE2AD3B04B00B04536 /* Copy Bundle Resources (Conditional) */,
 				2C3AD5D02AD3AAB100B04536 /* Embed Frameworks */,
-				2C3AD5D12AD3AAB100B04536 /* Embed Foundation Extensions */,
+				2C3AD5F62AD3CDF800B04536 /* Embed Foundation Extensions */,
 				2C3AD5D32AD3AAB100B04536 /* [Crashlytics] Upload dSYM */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				2C3AD5F52AD3CDF800B04536 /* PBXTargetDependency */,
 			);
 			name = nefoli;
 			packageProductDependencies = (
@@ -409,6 +422,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2C3AD5F52AD3CDF800B04536 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2C3AD5E02AD3ADF000B04536 /* OpenIn */;
+			targetProxy = 2C3AD5F42AD3CDF800B04536 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2C367EB1294DC35A0077380E /* LaunchScreen.storyboard */ = {
