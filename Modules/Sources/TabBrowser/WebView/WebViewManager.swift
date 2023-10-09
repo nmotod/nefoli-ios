@@ -51,6 +51,10 @@ public class WebViewManager {
             // Ignore <meta name="viewport" content="user-scalable=no">
             configuration.ignoresViewportScaleLimits = true
 
+            // Disable autoplay on all media types
+            // (only .audio by default in iOS 17.0)
+            configuration.mediaTypesRequiringUserActionForPlayback = .all
+
             configuration.setURLSchemeHandler(internalURLSchemeHandler, forURLScheme: InternalURL.scheme)
 
             let webView = WKWebView(frame: frame, configuration: configuration)
