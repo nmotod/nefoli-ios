@@ -112,8 +112,12 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
     func showMenuSheet() {
         let cmmandGroups: [[any CommandProtocol]] = [
             [
-                TabCommand.goBack,
-                TabCommand.goForward,
+                CustomCommand.script(id: "fix-viewport-fit", title: "Fix viewport-fit", script: #"""
+                let meta = document.querySelector('meta[name="viewport"]');
+                if (meta && meta.content.includes('viewport-fit=cover')) {
+                  meta.content = meta.content.split(/\s*,\s*/).filter(s => s != 'viewport-fit=cover').join(',');
+                }
+                """#),
             ],
             [
                 TabGroupCommand.bookmarks,
