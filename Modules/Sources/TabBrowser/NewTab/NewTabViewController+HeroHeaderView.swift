@@ -55,8 +55,8 @@ extension NewTabViewController {
 //                addressBarAlignLeftConstraint.update(offset: clamp(min: 0, max: 10, percent: percentExpansion))
 //                addressBarAlignRightConstraint.update(offset: -clamp(min: 0, max: 10, percent: percentExpansion))
 //
-////                let labelScale = clamp(min: 1.1, max: 1, percent: percentExpansion)
-////                addressBar.labelButton.titleLabel?.transform = .init(scaleX: labelScale, y: labelScale)
+//                let labelScale = clamp(min: 1.1, max: 1, percent: percentExpansion)
+//                addressBar.labelButton.titleLabel?.transform = .init(scaleX: labelScale, y: labelScale)
 //
 //                heroImageBox.alpha = percentExpansion
             }
