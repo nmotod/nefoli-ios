@@ -65,6 +65,40 @@ defineModule(.Components, .target(
     ]
 ), tests: false, previews: true)
 
+defineModule(.Components, .target(
+    name: "Bookmarks",
+    dependencies: [
+        .target(name: "Database"),
+        .target(name: "ThemeSystem"),
+        .target(name: "Utils"),
+    ]
+), previews: true)
+
+defineModule(.Components, .target(
+    name: "SettingsUI",
+    dependencies: [
+        .target(name: "Database"),
+        .target(name: "ThemeSystem"),
+        .target(name: "Utils"),
+        .target(name: "ContentBlocker"),
+    ]
+), previews: true)
+
+defineModule(.Components, .target(
+    name: "ContentBlocker",
+    dependencies: [
+        .target(name: "Database"),
+    ]
+))
+
+defineModule(.Components, .target(
+    name: "TabManageUI",
+    dependencies: [
+        .target(name: "Database"),
+        .target(name: "ThemeSystem"),
+    ]
+), previews: true)
+
 defineModule(.Features, .target(
     name: "TabBrowser",
     dependencies: [
@@ -76,40 +110,6 @@ defineModule(.Features, .target(
         .target(name: "SettingsUI"),
         .target(name: "TabManageUI"),
         .target(name: "CommandSystem"),
-    ]
-), previews: true)
-
-defineModule(.Features, .target(
-    name: "Bookmarks",
-    dependencies: [
-        .target(name: "Database"),
-        .target(name: "ThemeSystem"),
-        .target(name: "Utils"),
-    ]
-), previews: true)
-
-defineModule(.Features, .target(
-    name: "SettingsUI",
-    dependencies: [
-        .target(name: "Database"),
-        .target(name: "ThemeSystem"),
-        .target(name: "Utils"),
-        .target(name: "ContentBlocker"),
-    ]
-), previews: true)
-
-defineModule(.Features, .target(
-    name: "ContentBlocker",
-    dependencies: [
-        .target(name: "Database"),
-    ]
-))
-
-defineModule(.Features, .target(
-    name: "TabManageUI",
-    dependencies: [
-        .target(name: "Database"),
-        .target(name: "ThemeSystem"),
     ]
 ), previews: true)
 
