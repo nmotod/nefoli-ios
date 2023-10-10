@@ -138,7 +138,7 @@ func defineModule(_ category: ModuleCategory, _ target: Target, tests: Bool = tr
                 .target(name: target.name),
                 .product(name: "Difference", package: "Difference"),
             ],
-            path: "\(category)/\(target.name)Tests"
+            path: "\(category)Tests/\(target.name)Tests"
         ))
     }
 
