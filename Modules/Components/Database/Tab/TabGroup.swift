@@ -1,7 +1,7 @@
 import Foundation
 import RealmSwift
 
-public class TabGroup: EmbeddedObject, Identifiable, CreatedDateStorable, PropertyIterable {
+public class TabGroup: Object, Identifiable, CreatedDateStorable, PropertyIterable {
     public enum Property: String, CaseIterable {
         case id
         case children
@@ -9,7 +9,7 @@ public class TabGroup: EmbeddedObject, Identifiable, CreatedDateStorable, Proper
         case createdDate
     }
 
-    @Persisted public private(set) var id: String = UUID().uuidString
+    @Persisted(primaryKey: true) public private(set) var id: String = UUID().uuidString
 
     @Persisted public private(set) var children: List<Tab>
 

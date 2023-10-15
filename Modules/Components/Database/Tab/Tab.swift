@@ -2,7 +2,7 @@ import Foundation
 import RealmSwift
 import WebKit
 
-public class Tab: EmbeddedObject, CreatedDateStorable, PropertyIterable {
+public class Tab: Object, CreatedDateStorable, PropertyIterable {
     public enum Property: String, CaseIterable {
         case id
         case initialURL
@@ -12,7 +12,7 @@ public class Tab: EmbeddedObject, CreatedDateStorable, PropertyIterable {
         case current
     }
 
-    @Persisted public var id = UUID().uuidString
+    @Persisted(primaryKey: true) public var id = UUID().uuidString
 
     @Persisted public var initialURL: URL?
 
