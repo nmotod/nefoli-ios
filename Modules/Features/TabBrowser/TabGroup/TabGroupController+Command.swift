@@ -25,7 +25,7 @@ extension TabGroupController {
             showSettings(sender)
 
         case .restoreClosedTab:
-            ()
+            restoreClosedTab(sender)
 
         case .debugEditBookmark:
             ()

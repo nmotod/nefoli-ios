@@ -1,7 +1,14 @@
 import Foundation
 
 extension TabGroup {
-    public func remove(at index: Int) {
+    public func close(at index: Int, store: TabStore) {
+        let tab = children[index]
+        remove(at: index)
+
+        store.closedTabs.append(tab)
+    }
+
+    func remove(at index: Int) {
         let oldActiveTabIndex = activeTabIndex
 
         children.remove(at: index)

@@ -4,6 +4,8 @@ import Utils
 
 protocol TabGroupViewDelegate: AnyObject {
     func tabGroupViewRequestsAddNewTab(_: TabGroupView)
+
+    func tabGroupView(_: TabGroupView, requestsCloseTabAt index: Int)
 }
 
 public typealias TabGroupViewDependency = TabGroupViewCellDependency
@@ -186,13 +188,7 @@ class TabGroupView: UIView,
 
         if recognizer.state == .ended, recognizer.recognizedGesture != nil {
             hideCloseIndicator()
-
-            guard let group = group else { return }
-
-            try! group.realm!.write {
-                group.remove(at: closeRecognizingIndexPath.item)
-            }
-
+            delegate?.tabGroupView(self, requestsCloseTabAt: closeRecognizingIndexPath.item)
             return
         }
 

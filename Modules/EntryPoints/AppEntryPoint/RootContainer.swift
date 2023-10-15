@@ -15,4 +15,5 @@ struct RootContainer: TabGroupControllerDependency {
     var bookmarkIconManager: BookmarkIconManager
     var settings: Settings
     var contentFilterManager: ContentFilterManager
+    var tabStore: TabStore
 }

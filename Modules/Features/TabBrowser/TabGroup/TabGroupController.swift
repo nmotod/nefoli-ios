@@ -8,12 +8,14 @@ import ThemeSystem
 import UIKit
 import Utils
 
-public typealias TabGroupControllerDependency = UsesSettings & TabGroupViewDependency & TabViewControllerDependency & SettingsControllerDependency
+public typealias TabGroupControllerDependency = UsesSettings & UsesTabStore & TabGroupViewDependency & TabViewControllerDependency & SettingsControllerDependency
 
-public class TabGroupController: UIViewController, TabGroupViewDelegate, TabViewControllerDelegate, UsesSettings {
+public class TabGroupController: UIViewController, TabGroupViewDelegate, TabViewControllerDelegate, UsesSettings, UsesTabStore {
     let dependency: TabGroupControllerDependency
 
     public let settings: Settings
+
+    public let tabStore: TabStore
 
     private var rootView: RootView?
 
@@ -58,6 +60,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
         self.group = group
         self.dependency = dependency
         settings = dependency.settings
+        tabStore = dependency.tabStore
 
         super.init(nibName: nil, bundle: nil)
 
@@ -145,14 +148,37 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
     }
 
     func closeActiveTab() {
-        guard let group = group,
-              let index = group.activeTabIndex
-        else { return }
+        guard let index = group?.activeTabIndex else { return }
 
-        activeVC?.tab = nil
+        closeTab(at: index)
+    }
+
+    func closeTab(at index: Int) {
+        guard let group = group else { return }
+
+        let willCloseActiveTab = index == group.activeTabIndex
+
+        if willCloseActiveTab {
+            activeVC?.tab = nil
+        }
 
         try! group.realm?.write(withoutNotifying: groupTokens) {
-            group.remove(at: index)
+            group.close(at: index, store: tabStore)
+        }
+
+        if willCloseActiveTab {
+            activeTabDidChange()
+        }
+    }
+
+    func restoreClosedTab(_ sender: Any?) {
+        guard let group = group,
+              let last = tabStore.closedTabs.last
+        else { return }
+
+        try! group.realm!.write(withoutNotifying: groupTokens) {
+            tabStore.closedTabs.removeLast()
+            group.add(tab: last, options: .init(activate: true, position: .afterActive))
         }
 
         activeTabDidChange()
@@ -299,6 +325,10 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
             activate: true,
             position: .end
         ))
+    }
+
+    func tabGroupView(_: TabGroupView, requestsCloseTabAt index: Int) {
+        closeTab(at: index)
     }
 
     public func open(tab: Tab, options: TabGroup.AddingOptions) throws {

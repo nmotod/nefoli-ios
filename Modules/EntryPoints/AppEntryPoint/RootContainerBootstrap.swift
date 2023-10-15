@@ -109,7 +109,8 @@ class RootContainerBootstrap {
             ),
             bookmarkIconManager: bookmarkIconManager,
             settings: db.settings,
-            contentFilterManager: contentFilterManager
+            contentFilterManager: contentFilterManager,
+            tabStore: db.rootState
         )
     }
 }
