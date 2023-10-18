@@ -2,7 +2,7 @@ import Foundation
 import os.log
 import RealmSwift
 
-let schemaVersion: UInt64 = 17
+let schemaVersion: UInt64 = 18
 
 func doMigrate(_ migration: Migration, oldSchemaVersion: UInt64) {
     let log = Logger(category: "migration")
@@ -41,4 +41,6 @@ func doMigrate(_ migration: Migration, oldSchemaVersion: UInt64) {
             bookmarksFolder["kind"] = BookmarkItem.Kind.folder.rawValue
         }
     }
+    
+    // v18 does not require manual migration
 }

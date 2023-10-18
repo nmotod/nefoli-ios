@@ -10,17 +10,12 @@ public class DatabaseBootstrap {
         self.seedLoader = seedLoader
     }
 
-    public var database: Database {
+    public var database: DatabaseContainer {
         get async throws { try await bootstrapTask.value }
     }
 
-    private lazy var bootstrapTask = Task { @MainActor () throws -> Database in
-        let configuration = Realm.Configuration(
-            schemaVersion: schemaVersion,
-            migrationBlock: doMigrate(_:oldSchemaVersion:)
-        )
-
-        let realm = try Realm(configuration: configuration)
+    private lazy var bootstrapTask = Task { @MainActor () throws -> DatabaseContainer in
+        let realm = try Realm(configuration: makeConfiguration())
 
         let rootState: RootState
         let bookmarksFolder: BookmarkItem
@@ -81,7 +76,7 @@ public class DatabaseBootstrap {
             }
         }
 
-        return Database(
+        return DatabaseContainer(
             realm: realm,
             rootState: rootState,
             bookmarksFolder: bookmarksFolder,

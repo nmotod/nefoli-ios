@@ -1,7 +1,7 @@
 import Foundation
 import RealmSwift
 
-public class Database {
+public class DatabaseContainer {
     public let realm: Realm
     public let rootState: RootState
     public let bookmarksFolder: BookmarkItem

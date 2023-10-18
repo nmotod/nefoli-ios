@@ -32,6 +32,8 @@ enum ModuleCategory: String {
     case Utils
 }
 
+let noTests: (Target) -> Target? = { _ in nil }
+
 defineModule(.EntryPoints, .target(
     name: "AppEntryPoint",
     dependencies: [
@@ -42,7 +44,7 @@ defineModule(.EntryPoints, .target(
         .target(name: "Database"),
         .target(name: "TabBrowser"),
     ]
-), tests: false)
+), test: noTests)
 
 defineModule(.Components, .target(
     name: "Database",
@@ -50,6 +52,23 @@ defineModule(.Components, .target(
         .product(name: "Realm", package: "realm-swift"),
         .product(name: "RealmSwift", package: "realm-swift"),
     ]
+), test: { (target: Target) in
+    var target = target
+    target.resources = [.process("Resources")]
+    return target
+})
+
+defineModule(.Components, .executableTarget(
+    name: "Database_v17",
+    dependencies: [
+        .product(name: "Realm", package: "realm-swift"),
+        .product(name: "RealmSwift", package: "realm-swift"),
+    ]
+), test: noTests)
+
+package.products.append(.executable(
+    name: "db-fixture-gen-v17",
+    targets: ["Database_v17"]
 ))
 
 defineModule(.Components, .target(
@@ -63,7 +82,7 @@ defineModule(.Components, .target(
     plugins: [
         .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin"),
     ]
-), tests: false, previews: true)
+), test: noTests, previews: true)
 
 defineModule(.Components, .target(
     name: "Bookmarks",
@@ -124,22 +143,44 @@ defineModule(.Utils, .target(
 defineModule(.Utils, .target(
     name: "CommandSystem",
     dependencies: []
-), tests: false)
+), test: noTests)
 
-func defineModule(_ category: ModuleCategory, _ target: Target, tests: Bool = true, previews: Bool = false) {
+func defineModule(
+    _ category: ModuleCategory,
+    _ target: Target,
+    test: ((Target) -> Target?)? = nil,
+    previews: Bool = false
+) {
     target.path = "\(category)/\(target.name)"
 
     package.targets.append(target)
 
-    if tests {
-        package.targets.append(.testTarget(
-            name: "\(target.name)Tests",
-            dependencies: [
-                .target(name: target.name),
-                .product(name: "Difference", package: "Difference"),
-            ],
-            path: "\(category)Tests/\(target.name)Tests"
-        ))
+//    if tests {
+//        package.targets.append(.testTarget(
+//            name: "\(target.name)Tests",
+//            dependencies: [
+//                .target(name: target.name),
+//                .product(name: "Difference", package: "Difference"),
+//            ] + testDependencies,
+//            path: "\(category)Tests/\(target.name)Tests"
+//        ))
+//    }
+
+    var testTarget: Target? = .testTarget(
+        name: "\(target.name)Tests",
+        dependencies: [
+            .target(name: target.name),
+            .product(name: "Difference", package: "Difference"),
+        ],
+        path: "\(category)Tests/\(target.name)Tests"
+    )
+
+    if let test {
+        testTarget = test(testTarget!)
+    }
+
+    if let testTarget {
+        package.targets.append(testTarget)
     }
 
     if previews {
