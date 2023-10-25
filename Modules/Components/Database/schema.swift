@@ -41,6 +41,6 @@ func doMigrate(_ migration: Migration, oldSchemaVersion: UInt64) {
             bookmarksFolder["kind"] = BookmarkItem.Kind.folder.rawValue
         }
     }
-    
+
     // v18 does not require manual migration
 }
