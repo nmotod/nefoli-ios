@@ -2,12 +2,12 @@ import CommandSystem
 import Foundation
 import UIKit
 
-extension TabGroupController {
+extension TabBrowserController {
     public class func supportedCommands() -> [any CommandProtocol] {
-        return TabGroupCommand.allCases + TabCommand.allCases
+        return TabBrowserCommand.allCases + TabCommand.allCases
     }
 
-    func execute(command: TabGroupCommand, sender: Any?) {
+    func execute(command: TabBrowserCommand, sender: Any?) {
         switch command {
         case .bookmarks:
             showBookmarks(sender)
@@ -33,7 +33,7 @@ extension TabGroupController {
     }
 
     public func executeAny(command: any CommandProtocol, sender: Any?) throws {
-        if let command = command as? TabGroupCommand {
+        if let command = command as? TabBrowserCommand {
             execute(command: command, sender: sender)
 
         } else if let command = command as? TabCommand {

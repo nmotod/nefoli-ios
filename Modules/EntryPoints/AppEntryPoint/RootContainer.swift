@@ -5,7 +5,7 @@ import Foundation
 import RealmSwift
 import TabBrowser
 
-struct RootContainer: TabGroupControllerDependency {
+struct RootContainer: TabBrowserControllerDependency {
     var appBundleIdentifier: String
     var realm: Realm
     var rootState: RootState

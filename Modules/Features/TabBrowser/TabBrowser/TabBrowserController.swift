@@ -8,10 +8,10 @@ import ThemeSystem
 import UIKit
 import Utils
 
-public typealias TabGroupControllerDependency = UsesSettings & UsesTabStore & TabGroupViewDependency & TabViewControllerDependency & SettingsControllerDependency
+public typealias TabBrowserControllerDependency = UsesSettings & UsesTabStore & TabGroupViewDependency & TabViewControllerDependency & SettingsControllerDependency
 
-public class TabGroupController: UIViewController, TabGroupViewDelegate, TabViewControllerDelegate, UsesSettings, UsesTabStore {
-    let dependency: TabGroupControllerDependency
+public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabViewControllerDelegate, UsesSettings, UsesTabStore {
+    let dependency: TabBrowserControllerDependency
 
     public let settings: Settings
 
@@ -35,8 +35,8 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
 
     private lazy var drawGestureInteraction: DrawGestureInteraction = {
         let settings: [([DrawGesture.Direction], any CommandProtocol)] = [
-            ([.down, .right], TabGroupCommand.closeActiveTab),
-            ([.down, .right, .up], TabGroupCommand.restoreClosedTab),
+            ([.down, .right], TabBrowserCommand.closeActiveTab),
+            ([.down, .right, .up], TabBrowserCommand.restoreClosedTab),
             ([.right, .down, .left, .up], TabCommand.reload),
             ([.right, .down, .left, .up, .right], TabCommand.reload),
         ]
@@ -56,7 +56,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
         return DrawGestureInteraction(gestures: gestures)
     }()
 
-    public init(group: TabGroup?, dependency: TabGroupControllerDependency) {
+    public init(group: TabGroup?, dependency: TabBrowserControllerDependency) {
         self.group = group
         self.dependency = dependency
         settings = dependency.settings
@@ -123,8 +123,8 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
                 """#),
             ],
             [
-                TabGroupCommand.bookmarks,
-                TabGroupCommand.tabs,
+                TabBrowserCommand.bookmarks,
+                TabBrowserCommand.tabs,
             ],
             [
                 TabCommand.share,
@@ -132,7 +132,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
                 TabCommand.addBookmark,
             ],
             [
-                TabGroupCommand.settings,
+                TabBrowserCommand.settings,
             ],
         ]
 
@@ -277,7 +277,7 @@ public class TabGroupController: UIViewController, TabGroupViewDelegate, TabView
 
             rootView.omnibar.setButtons(
                 left: makeButton(for: TabCommand.goBack),
-                right: makeButton(for: TabGroupCommand.menuSheet)
+                right: makeButton(for: TabBrowserCommand.menuSheet)
             )
 
             newVC.didMove(toParent: self)

@@ -17,11 +17,11 @@ enum OpenURLAction: String {
 
 /// http://x-callback-url.com/specifications/
 class OpenURLHandler {
-    let tabGroupController: TabGroupController
+    let tabBrowserController: TabBrowserController
     let options: TabGroup.AddingOptions
 
-    init(tabGroupController: TabGroupController, options: TabGroup.AddingOptions) {
-        self.tabGroupController = tabGroupController
+    init(tabBrowserController: TabBrowserController, options: TabGroup.AddingOptions) {
+        self.tabBrowserController = tabBrowserController
         self.options = options
     }
 
@@ -62,7 +62,7 @@ class OpenURLHandler {
         }
 
         let tab = Tab(initialURL: url)
-        try! tabGroupController.open(tab: tab, options: options)
+        try! tabBrowserController.open(tab: tab, options: options)
         return nil
     }
 
@@ -80,7 +80,7 @@ class OpenURLHandler {
         urlComponents.queryItems = queryItems
 
         let tab = Tab(initialURL: urlComponents.url!)
-        try! tabGroupController.open(tab: tab, options: options)
+        try! tabBrowserController.open(tab: tab, options: options)
         return nil
     }
 }

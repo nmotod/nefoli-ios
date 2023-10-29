@@ -115,7 +115,7 @@ class Omnibar: UIStackView {
 
         omnibar.setButtons(
             left: makeButton(for: TabCommand.goBack),
-            right: makeButton(for: TabGroupCommand.menuSheet)
+            right: makeButton(for: TabBrowserCommand.menuSheet)
         )
 
         bgView.contentView.addSubview(omnibar)

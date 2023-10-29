@@ -6,7 +6,7 @@ import Utils
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
-    var tabGroupController: TabGroupController?
+    var tabBrowserController: TabBrowserController?
 
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -28,8 +28,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
             let g1 = container.rootState.groups.first
 
-            let controller = TabGroupController(group: g1, dependency: container)
-            self.tabGroupController = controller
+            let controller = TabBrowserController(group: g1, dependency: container)
+            self.tabBrowserController = controller
 
             window.rootViewController = controller
 
@@ -54,12 +54,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func handleOpenURL(urlContexts: Set<UIOpenURLContext>) {
-        guard let tabGroupController = tabGroupController else {
+        guard let tabBrowserController else {
             return
         }
 
         let handler = OpenURLHandler(
-            tabGroupController: tabGroupController,
+            tabBrowserController: tabBrowserController,
             options: .init(activate: true, position: .end)
         )
 
@@ -74,7 +74,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
                 alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
 
-                tabGroupController.present(alert, animated: true)
+                tabBrowserController.present(alert, animated: true)
                 break
             }
         }
@@ -83,9 +83,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     #if DEBUG
     private func executeDebugAction() throws {
         guard amIBeingDebugged(),
-              let tabGroupController = tabGroupController,
+              let tabGroupController = tabBrowserController,
               let id = ProcessInfo.processInfo.environment["NFL_DEBUG_COMMAND"],
-              let command = TabGroupController.supportedCommands().first(where: { $0.id == id })
+              let command = TabBrowserController.supportedCommands().first(where: { $0.id == id })
         else {
             return
         }

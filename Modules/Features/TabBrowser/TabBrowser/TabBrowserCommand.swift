@@ -2,8 +2,8 @@ import CommandSystem
 import Foundation
 import UIKit
 
-enum TabGroupCommand: String, CaseIterable, CommandProtocol {
-    static var idPrefix = "tabGroup"
+enum TabBrowserCommand: String, CaseIterable, CommandProtocol {
+    static var idPrefix = "tabBrowser"
 
     case bookmarks
     case menuSheet

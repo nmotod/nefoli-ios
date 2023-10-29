@@ -3,7 +3,7 @@ import Foundation
 import ThemeSystem
 import UIKit
 
-extension TabGroupController {
+extension TabBrowserController {
     class RootView: UIView {
         let bottomBarBackgroundView = UIVisualEffectView(effect: Effects.barBackground)
 
@@ -19,7 +19,7 @@ extension TabGroupController {
 
         let containerView = UIView()
 
-        init(frame: CGRect, dependency: TabGroupControllerDependency) {
+        init(frame: CGRect, dependency: TabBrowserControllerDependency) {
             tabGroupView = .init(frame: .zero, style: .default, dependency: dependency)
 
             super.init(frame: frame)
