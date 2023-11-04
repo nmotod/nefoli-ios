@@ -1,8 +1,8 @@
-import CommandSystem
+import ActionSystem
 import Foundation
 import UIKit
 
-enum TabBrowserCommand: String, CaseIterable, CommandProtocol {
+enum TabBrowserActionType: String, CaseIterable, ActionTypeProtocol {
     static var idPrefix = "tabBrowser"
 
     case bookmarks
@@ -16,7 +16,7 @@ enum TabBrowserCommand: String, CaseIterable, CommandProtocol {
     case debugEditBookmark
     #endif
 
-    var definition: CommandDefinition {
+    var definition: ActionTypeDefinition {
         switch self {
         case .bookmarks:
             return bookmarksDefinition
@@ -44,17 +44,17 @@ enum TabBrowserCommand: String, CaseIterable, CommandProtocol {
     }
 }
 
-private let bookmarksDefinition = CommandDefinition(
+private let bookmarksDefinition = ActionTypeDefinition(
     title: NSLocalizedString("Bookmarks", comment: ""),
     image: UIImage(systemName: "book")
 )
 
-private let showMenuSheetDefinition = CommandDefinition(
+private let showMenuSheetDefinition = ActionTypeDefinition(
     title: NSLocalizedString("Show Menu", comment: ""),
     image: UIImage(systemName: "ellipsis")
 )
 
-private let tabsDefinition = CommandDefinition(
+private let tabsDefinition = ActionTypeDefinition(
     title: NSLocalizedString("List Tabs", comment: ""),
     image: UIImage(
         systemName: "square.on.square"
@@ -63,21 +63,21 @@ private let tabsDefinition = CommandDefinition(
     )
 )
 
-private let settingsDefinition = CommandDefinition(
+private let settingsDefinition = ActionTypeDefinition(
     title: NSLocalizedString("Settings", comment: ""),
     image: UIImage(systemName: "gear")
 )
 
-private let closeActiveTabDefinition = CommandDefinition(
+private let closeActiveTabDefinition = ActionTypeDefinition(
     title: NSLocalizedString("Close Tab", comment: "")
 )
 
-private let restoreClosedTabDefinition = CommandDefinition(
+private let restoreClosedTabDefinition = ActionTypeDefinition(
     title: NSLocalizedString("Restore Tab", comment: "")
 )
 
 #if DEBUG
-private let debugEditBookmarkDefinition = CommandDefinition(
+private let debugEditBookmarkDefinition = ActionTypeDefinition(
     title: "[Debug] Edit Bookmark"
 )
 #endif

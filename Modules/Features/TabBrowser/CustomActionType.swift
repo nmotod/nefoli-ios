@@ -1,17 +1,17 @@
-import CommandSystem
+import ActionSystem
 import Foundation
 import UIKit
 
-enum CustomCommand: CommandProtocol {
+enum CustomActionType: ActionTypeProtocol {
     static var idPrefix = "custom"
 
-    // TODO: store script in DB, and chnage command to just a reference
+    // TODO: store script in DB, and chnage action to just a reference
     case script(id: String, title: String, script: String)
 
-    var definition: CommandSystem.CommandDefinition {
+    var definition: ActionTypeDefinition {
         switch self {
         case let .script(_, title, _):
-            return CommandDefinition(
+            return ActionTypeDefinition(
                 title: title,
                 image: UIImage(systemName: "play.circle")
             )
@@ -26,7 +26,7 @@ enum CustomCommand: CommandProtocol {
     }
 }
 
-private let scriptDefinition = CommandDefinition(
+private let scriptDefinition = ActionTypeDefinition(
     title: "Script",
     image: UIImage(systemName: "play.circle")
 )

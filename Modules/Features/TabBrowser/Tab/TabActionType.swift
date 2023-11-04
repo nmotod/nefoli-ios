@@ -1,8 +1,8 @@
-import CommandSystem
+import ActionSystem
 import Foundation
 import UIKit
 
-enum TabCommand: String, CommandProtocol, CaseIterable {
+enum TabActionType: String, ActionTypeProtocol, CaseIterable {
     static let idPrefix = "tab"
 
     case goBack
@@ -13,7 +13,7 @@ enum TabCommand: String, CommandProtocol, CaseIterable {
     case addBookmark
     case editAddress
 
-    var definition: CommandDefinition {
+    var definition: ActionTypeDefinition {
         switch self {
         case .goBack:
             return goBackDefinition
@@ -39,37 +39,37 @@ enum TabCommand: String, CommandProtocol, CaseIterable {
     }
 }
 
-private let goBackDefinition = CommandDefinition(
+private let goBackDefinition = ActionTypeDefinition(
     title: NSLocalizedString("Back", comment: ""),
     image: UIImage(systemName: "chevron.left")
 )
 
-private let goForwardDefinition = CommandDefinition(
+private let goForwardDefinition = ActionTypeDefinition(
     title: NSLocalizedString("Froward", comment: ""),
     image: UIImage(systemName: "chevron.right")
 )
 
-private let reloadDefinition = CommandDefinition(
+private let reloadDefinition = ActionTypeDefinition(
     title: NSLocalizedString("Reload", comment: ""),
     image: UIImage(systemName: "arrow.clockwise")
 )
 
-private let shareDefinition = CommandDefinition(
+private let shareDefinition = ActionTypeDefinition(
     title: NSLocalizedString("Share...", comment: ""),
     image: UIImage(systemName: "square.and.arrow.up")
 )
 
-private let openInSafariDefinition = CommandDefinition(
+private let openInSafariDefinition = ActionTypeDefinition(
     title: NSLocalizedString("Open in Safari", comment: ""),
     image: UIImage(systemName: "safari")
 )
 
-private let addBookmarkDefinition = CommandDefinition(
+private let addBookmarkDefinition = ActionTypeDefinition(
     title: NSLocalizedString("Add Bookmark", comment: ""),
     image: UIImage(systemName: "book")
 )
 
-private let editAddressDefinition = CommandDefinition(
+private let editAddressDefinition = ActionTypeDefinition(
     title: NSLocalizedString("Search", comment: ""),
     image: UIImage(systemName: "magnifyingglass")
 )

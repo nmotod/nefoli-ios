@@ -84,13 +84,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func executeDebugAction() throws {
         guard amIBeingDebugged(),
               let tabGroupController = tabBrowserController,
-              let id = ProcessInfo.processInfo.environment["NFL_DEBUG_COMMAND"],
-              let command = TabBrowserController.supportedCommands().first(where: { $0.id == id })
+              let id = ProcessInfo.processInfo.environment["NFL_DEBUG_ACTION"],
+              let actionType = TabBrowserController.supportedActionTypes().first(where: { $0.id == id })
         else {
             return
         }
 
-        try tabGroupController.executeAny(command: command, sender: nil)
+        try tabGroupController.dispatchAnyAction(type: actionType, sender: nil)
     }
     #endif
 }

@@ -1,5 +1,5 @@
 import Bookmarks
-import CommandSystem
+import ActionSystem
 import Database
 import Foundation
 import RealmSwift
@@ -34,21 +34,21 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
     override public var preferredStatusBarStyle: UIStatusBarStyle { ThemeValues.preferredStatusBarStyle }
 
     private lazy var drawGestureInteraction: DrawGestureInteraction = {
-        let settings: [([DrawGesture.Direction], any CommandProtocol)] = [
-            ([.down, .right], TabBrowserCommand.closeActiveTab),
-            ([.down, .right, .up], TabBrowserCommand.restoreClosedTab),
-            ([.right, .down, .left, .up], TabCommand.reload),
-            ([.right, .down, .left, .up, .right], TabCommand.reload),
+        let settings: [([DrawGesture.Direction], any ActionTypeProtocol)] = [
+            ([.down, .right], TabBrowserActionType.closeActiveTab),
+            ([.down, .right, .up], TabBrowserActionType.restoreClosedTab),
+            ([.right, .down, .left, .up], TabActionType.reload),
+            ([.right, .down, .left, .up, .right], TabActionType.reload),
         ]
 
         let gestures = settings.map { setting in
-            let (directions, command) = setting
+            let (directions, actionType) = setting
 
             return DrawGesture(
                 strokeDirections: directions,
-                title: command.title,
+                title: actionType.title,
                 handler: { [weak self] gesture in
-                    try! self?.executeAny(command: command, sender: gesture)
+                    try! self?.dispatchAnyAction(type: actionType, sender: gesture)
                 }
             )
         }
@@ -113,9 +113,9 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
     }
 
     func showMenuSheet() {
-        let cmmandGroups: [[any CommandProtocol]] = [
+        let cmmandGroups: [[any ActionTypeProtocol]] = [
             [
-                CustomCommand.script(id: "fix-viewport-fit", title: "Fix viewport-fit", script: #"""
+                CustomActionType.script(id: "fix-viewport-fit", title: "Fix viewport-fit", script: #"""
                 let meta = document.querySelector('meta[name="viewport"]');
                 if (meta && meta.content.includes('viewport-fit=cover')) {
                   meta.content = meta.content.split(/\s*,\s*/).filter(s => s != 'viewport-fit=cover').join(',');
@@ -123,21 +123,21 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
                 """#),
             ],
             [
-                TabBrowserCommand.bookmarks,
-                TabBrowserCommand.tabs,
+                TabBrowserActionType.bookmarks,
+                TabBrowserActionType.tabs,
             ],
             [
-                TabCommand.share,
-                TabCommand.openInDefaultApp,
-                TabCommand.addBookmark,
+                TabActionType.share,
+                TabActionType.openInDefaultApp,
+                TabActionType.addBookmark,
             ],
             [
-                TabBrowserCommand.settings,
+                TabBrowserActionType.settings,
             ],
         ]
 
         let actionGroups = cmmandGroups.map { types in
-            types.map { makeUIAction(for: $0) }.compactMap { $0 }
+            types.map { makeUIAction(type: $0) }.compactMap { $0 }
         }
 
         let menuSheet = MenuSheetController(
@@ -276,8 +276,8 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
             }
 
             rootView.omnibar.setButtons(
-                left: makeButton(for: TabCommand.goBack),
-                right: makeButton(for: TabBrowserCommand.menuSheet)
+                left: makeButton(actionType: TabActionType.goBack),
+                right: makeButton(actionType: TabBrowserActionType.menuSheet)
             )
 
             newVC.didMove(toParent: self)
@@ -378,8 +378,8 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
     private var goForwardActionStateCancellable: Any?
 
     // TODO: support long press
-    func makeButton(for command: any CommandProtocol) -> UIButton? {
-        guard let uiAction = makeUIAction(for: command) else {
+    func makeButton(actionType: any ActionTypeProtocol) -> UIButton? {
+        guard let uiAction = makeUIAction(type: actionType) else {
             return nil
         }
 
@@ -391,7 +391,7 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
             make.width.equalTo(44)
         }
 
-        if let action = command as? TabCommand {
+        if let action = actionType as? TabActionType {
             switch action {
             case .goBack:
                 // TODO: make subclass of UIButton that can have a cancallable

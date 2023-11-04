@@ -1,4 +1,4 @@
-import CommandSystem
+import ActionSystem
 import Foundation
 import ThemeSystem
 import UIKit
@@ -90,8 +90,8 @@ class Omnibar: UIStackView {
 
     return vStackView
 
-    func makeButton(for command: any CommandProtocol) -> UIButton {
-        let button = UIButton(primaryAction: UIAction(image: command.image) { _ in })
+    func makeButton(actionType: any ActionTypeProtocol) -> UIButton {
+        let button = UIButton(primaryAction: UIAction(image: actionType.image) { _ in })
         button.tintColor = Colors.tint.color
         button.snp.makeConstraints { make in
             make.width.equalTo(44)
@@ -114,8 +114,8 @@ class Omnibar: UIStackView {
         let omnibar = Omnibar()
 
         omnibar.setButtons(
-            left: makeButton(for: TabCommand.goBack),
-            right: makeButton(for: TabBrowserCommand.menuSheet)
+            left: makeButton(actionType: TabActionType.goBack),
+            right: makeButton(actionType: TabBrowserActionType.menuSheet)
         )
 
         bgView.contentView.addSubview(omnibar)

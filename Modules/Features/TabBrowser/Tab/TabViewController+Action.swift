@@ -1,8 +1,8 @@
 import Foundation
 
 extension TabViewController {
-    func execute(command: TabCommand, sender: Any?) {
-        switch command {
+    func performAction(type actionType: TabActionType, sender: Any?) {
+        switch actionType {
         case .goBack:
             goBack(sender)
 
