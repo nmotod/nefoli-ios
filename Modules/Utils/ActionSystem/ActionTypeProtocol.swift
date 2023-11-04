@@ -1,10 +1,10 @@
 import Foundation
 import UIKit
 
-public protocol CommandProtocol: Identifiable where ID == String {
+public protocol ActionTypeProtocol: Identifiable where ID == String {
     static var idPrefix: String { get }
 
-    var definition: CommandDefinition { get }
+    var definition: ActionTypeDefinition { get }
 
     var title: String { get }
 
@@ -17,7 +17,7 @@ public protocol CommandProtocol: Identifiable where ID == String {
     func makeUIAction(handler: @escaping UIActionHandler) -> UIAction
 }
 
-extension CommandProtocol {
+extension ActionTypeProtocol {
     public var title: String {
         return definition.title
     }
@@ -45,7 +45,7 @@ extension CommandProtocol {
     }
 }
 
-extension CommandProtocol where Self: RawRepresentable, RawValue == String {
+extension ActionTypeProtocol where Self: RawRepresentable, RawValue == String {
     public var id: String {
         return "\(type(of: self).idPrefix).\(rawValue)"
     }

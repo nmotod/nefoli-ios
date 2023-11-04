@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-public struct CommandDefinition {
+public struct ActionTypeDefinition {
     public var title: String
 
     public var subtitle: String?

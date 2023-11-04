@@ -128,7 +128,7 @@ defineModule(.Features, .target(
         .target(name: "Bookmarks"),
         .target(name: "SettingsUI"),
         .target(name: "TabManageUI"),
-        .target(name: "CommandSystem"),
+        .target(name: "ActionSystem"),
     ]
 ), previews: true)
 
@@ -141,7 +141,7 @@ defineModule(.Utils, .target(
 ), previews: true)
 
 defineModule(.Utils, .target(
-    name: "CommandSystem",
+    name: "ActionSystem",
     dependencies: []
 ), test: noTests)
 
