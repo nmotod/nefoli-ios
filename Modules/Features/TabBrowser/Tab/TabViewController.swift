@@ -189,10 +189,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
                 },
             ]
 
-            rootView.insertSubview(webView, at: 0)
-            webView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
+            rootView.showWebView(webView)
 
             if let url = tab?.current?.url ?? tab?.initialURL {
                 _ = webView.load(URLRequest(url: url))
