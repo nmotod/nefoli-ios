@@ -141,7 +141,7 @@ class WebViewStickyInteraction: NSObject, UIScrollViewDelegate {
 
         update(isInteractive: animated)
 
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .allowUserInteraction, animations: {
             self.topBar?.layoutSuperviewIfNeeded()
             self.bottomBar?.layoutSuperviewIfNeeded()
 
