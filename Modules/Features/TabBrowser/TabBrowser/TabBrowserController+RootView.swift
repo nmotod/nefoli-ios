@@ -3,9 +3,17 @@ import Foundation
 import ThemeSystem
 import UIKit
 
+private func makeBarBackgroundView() -> UIView {
+    let view = UIView()
+    view.backgroundColor = Colors.barBackground.color
+    return view
+}
+
 extension TabBrowserController {
     class RootView: UIView {
-        let bottomBarBackgroundView = UIVisualEffectView(effect: Effects.barBackground)
+        let topBarBackgroundView = makeBarBackgroundView()
+
+        let bottomBarBackgroundView = makeBarBackgroundView()
 
         let omnibar = Omnibar()
 
@@ -24,9 +32,10 @@ extension TabBrowserController {
 
             super.init(frame: frame)
 
-            addSubview(containerView)
-            containerView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
+            addSubview(topBarBackgroundView)
+            topBarBackgroundView.snp.makeConstraints { make in
+                make.top.left.right.equalToSuperview()
+                make.bottom.equalTo(safeAreaLayoutGuide.snp.top)
             }
 
             stickyToolbar.contentView.addSubview(omnibar)
@@ -37,6 +46,7 @@ extension TabBrowserController {
             addSubview(bottomBarBackgroundView)
             addSubview(stickyToolbar)
             addSubview(tabGroupView)
+            addSubview(containerView)
 
             tabGroupView.snp.makeConstraints { make in
                 make.left.right.bottom.equalToSuperview()
@@ -51,6 +61,12 @@ extension TabBrowserController {
             bottomBarBackgroundView.snp.makeConstraints { make in
                 make.left.right.bottom.equalToSuperview()
                 make.top.equalTo(omnibar.snp.top)
+            }
+
+            containerView.snp.makeConstraints { make in
+                make.left.right.equalToSuperview()
+                make.top.equalTo(topBarBackgroundView.snp.bottom)
+                make.bottom.equalTo(bottomBarBackgroundView.snp.top)
             }
         }
 

@@ -195,7 +195,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
                 _ = webView.load(URLRequest(url: url))
             }
 
-            webView.nfl_stickyInsets = webView.safeAreaInsets
+//            webView.nfl_stickyInsets = webView.safeAreaInsets
 
             webViewContainerController.didMove(toParent: self)
         }

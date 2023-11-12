@@ -98,7 +98,7 @@ class WebViewStickyInteraction: NSObject, UIScrollViewDelegate {
         bottomBar?.percentHidden = percentHidden
         stickyInsets.bottom -= bottomBar?.hiddenHeight ?? 0
 
-        webView.nfl_stickyInsets = stickyInsets
+//        webView.nfl_stickyInsets = stickyInsets
 
         if isReachedBottom {
             offsetTopBase = 0
