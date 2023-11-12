@@ -62,7 +62,7 @@ class MigrationV18Tests: XCTestCase {
 
         let dump = dumpObject(root)
         try print(String(data: JSONSerialization.data(withJSONObject: dump, options: .prettyPrinted), encoding: .utf8)!)
-        
+
         XCTAssertEqual(2, root.groups.count)
         XCTAssert(root.groups[0] is Object)
     }
