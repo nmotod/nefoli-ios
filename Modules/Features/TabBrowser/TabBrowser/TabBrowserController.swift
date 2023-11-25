@@ -365,43 +365,6 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
         }
     }
 
-    private var goBackActionStateCancellable: Any?
-    private var goForwardActionStateCancellable: Any?
-
-    // TODO: support long press
-    func makeButton(actionType: any ActionTypeProtocol) -> UIButton? {
-        guard let uiAction = makeUIAction(type: actionType) else {
-            return nil
-        }
-
-        uiAction.title = ""
-
-        let button = UIButton(primaryAction: uiAction)
-        button.tintColor = Colors.tint.color
-        button.snp.makeConstraints { make in
-            make.width.equalTo(44)
-        }
-
-        if let action = actionType as? TabActionType {
-            switch action {
-            case .goBack:
-                // TODO: make subclass of UIButton that can have a cancallable
-                goBackActionStateCancellable = activeVC?.canGoBackPublisher.sink { [weak button] isEnabled in
-                    button?.isEnabled = isEnabled
-                }
-
-            case .goForward:
-                goForwardActionStateCancellable = activeVC?.canGoForwardPublisher.sink { [weak button] isEnabled in
-                    button?.isEnabled = isEnabled
-                }
-
-            default: ()
-            }
-        }
-
-        return button
-    }
-
     // MARK: - Tab View Controller Delegate
 
     func tabVC(_ tabVC: TabViewController, searchWeb text: String) {

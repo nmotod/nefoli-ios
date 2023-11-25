@@ -1,5 +1,6 @@
 import ActionSystem
 import Foundation
+import ThemeSystem
 import UIKit
 
 extension TabBrowserController {
@@ -57,5 +58,34 @@ extension TabBrowserController {
 
             try! self.dispatchAnyAction(type: actionType, sender: uiAction.sender)
         }
+    }
+
+    // TODO: support long press
+    func makeButton(actionType: any ActionTypeProtocol) -> UIButton? {
+        guard let uiAction = makeUIAction(type: actionType) else {
+            return nil
+        }
+
+        uiAction.title = ""
+
+        let button = UIButton(primaryAction: uiAction)
+        button.tintColor = Colors.tint.color
+        button.snp.makeConstraints { make in
+            make.width.equalTo(44)
+        }
+
+        if let activeVC, let action = actionType as? TabActionType {
+            switch action {
+            case .goBack:
+                button.nfl_syncIsEnabled(publisher: activeVC.canGoBackPublisher)
+
+            case .goForward:
+                button.nfl_syncIsEnabled(publisher: activeVC.canGoForwardPublisher)
+
+            default: ()
+            }
+        }
+
+        return button
     }
 }
