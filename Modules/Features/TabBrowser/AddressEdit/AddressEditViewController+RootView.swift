@@ -100,6 +100,8 @@ extension AddressEditViewController {
                 make.bottom.equalTo(toolbar.snp.top)
                 make.height.greaterThanOrEqualTo(50)
             }
+
+            clearTextButtonItem.isEnabled = !addressField.text.isEmpty
         }
 
         @available(*, unavailable)
