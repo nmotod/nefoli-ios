@@ -12,11 +12,15 @@ class MultilineAddressField: UIView, UITextViewDelegate {
 
     private let font = UIFont.systemFont(ofSize: 16)
 
-    private let textContainerInset = UIEdgeInsets(top: 13, left: 10, bottom: 13, right: 10)
+    private let textContainerInset = UIEdgeInsets(top: 20, left: 16, bottom: 14, right: 16)
+
+    private let borderInsets = UIEdgeInsets(top: 10, left: 10, bottom: 4, right: 10)
 
     private let textView = UITextView()
 
     private let placeholderView = UITextView()
+
+    private let borderLayer = CALayer()
 
     var text: String {
         get { textView.text }
@@ -29,10 +33,16 @@ class MultilineAddressField: UIView, UITextViewDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        borderLayer.backgroundColor = Colors.addressBarLabelBackgroundNormal.color.cgColor
+        borderLayer.cornerRadius = 12
+        borderLayer.masksToBounds = true
+        layer.addSublayer(borderLayer)
+
         textView.delegate = self
 
         textView.returnKeyType = .go
         textView.enablesReturnKeyAutomatically = true
+        textView.keyboardType = .webSearch
         textView.keyboardAppearance = ThemeValues.keyboardAppearance
 
         textView.textContainer.lineBreakMode = .byCharWrapping
@@ -68,6 +78,15 @@ class MultilineAddressField: UIView, UITextViewDelegate {
 
     override var intrinsicContentSize: CGSize {
         return textView.contentSize
+    }
+
+    override func layoutSublayers(of layer: CALayer) {
+        super.layoutSublayers(of: layer)
+
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        borderLayer.frame = textView.frame.inset(by: borderInsets)
+        CATransaction.commit()
     }
 
     // MARK: - Responder

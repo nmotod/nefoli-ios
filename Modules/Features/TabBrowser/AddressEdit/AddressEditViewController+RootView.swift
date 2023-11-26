@@ -54,7 +54,7 @@ extension AddressEditViewController {
                 make.edges.equalToSuperview()
             }
 
-            contentView.backgroundColor = UIColor(white: 0.2, alpha: 1)
+            contentView.backgroundColor = Colors.background.color
             addSubview(contentView)
             contentView.snp.makeConstraints { make in
                 make.left.right.bottom.equalToSuperview()
