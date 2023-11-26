@@ -26,13 +26,21 @@ extension AddressEditViewController {
 
         lazy var clearTextButtonItem: UIBarButtonItem = {
             let item = UIBarButtonItem(primaryAction: UIAction(
-                image: UIImage(systemName: "trash",
-                               withConfiguration: UIImage.SymbolConfiguration(scale: .small)),
+                title: NSLocalizedString("Clear", comment: ""),
                 handler: { [weak self] _ in
                     self?.addressField.clearText()
                 }
             ))
-            item.width = 44
+            return item
+        }()
+
+        lazy var cancelButtonItem: UIBarButtonItem = {
+            let item = UIBarButtonItem(primaryAction: UIAction(
+                title: NSLocalizedString("Cancel", comment: ""),
+                handler: { [weak self] _ in
+                    self?.handler?.cancel()
+                }
+            ))
             return item
         }()
 
@@ -72,12 +80,7 @@ extension AddressEditViewController {
             toolbar.items = [
                 UIBarButtonItem.flexibleSpace(),
                 clearTextButtonItem,
-                UIBarButtonItem(primaryAction: UIAction(
-                    title: NSLocalizedString("Cancel", comment: ""),
-                    handler: { [weak self] _ in
-                        self?.cancel()
-                    }
-                )),
+                cancelButtonItem,
             ]
 
             toolbar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(deselectText)))
