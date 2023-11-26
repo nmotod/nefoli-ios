@@ -106,14 +106,6 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
     func showMenuSheet() {
         let cmmandGroups: [[any ActionTypeProtocol]] = [
             [
-                CustomActionType.script(id: "fix-viewport-fit", title: "Fix viewport-fit", script: #"""
-                let meta = document.querySelector('meta[name="viewport"]');
-                if (meta && meta.content.includes('viewport-fit=cover')) {
-                  meta.content = meta.content.split(/\s*,\s*/).filter(s => s != 'viewport-fit=cover').join(',');
-                }
-                """#),
-            ],
-            [
                 TabBrowserActionType.bookmarks,
                 TabBrowserActionType.tabs,
             ],
