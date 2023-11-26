@@ -61,7 +61,13 @@ extension AddressEditViewController {
                 make.top.greaterThanOrEqualTo(safeAreaLayoutGuide.snp.top)
             }
 
-            toolbar.barStyle = .black
+            let appearance = UIToolbarAppearance()
+            appearance.configureWithTransparentBackground()
+            appearance.backgroundEffect = nil
+            appearance.backgroundColor = .clear
+            appearance.shadowColor = .clear
+            toolbar.standardAppearance = appearance
+
             toolbar.tintColor = Colors.tint.color
             toolbar.items = [
                 UIBarButtonItem.flexibleSpace(),
