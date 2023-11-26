@@ -10,7 +10,7 @@ protocol MultilineAddressFieldDelegate: AnyObject {
 class MultilineAddressField: UIView, UITextViewDelegate {
     weak var delegate: MultilineAddressFieldDelegate?
 
-    private let font = UIFont.systemFont(ofSize: 16)
+    private let font = UIFont.systemFont(ofSize: 15)
 
     private let textContainerInset = UIEdgeInsets(top: 20, left: 16, bottom: 14, right: 16)
 
