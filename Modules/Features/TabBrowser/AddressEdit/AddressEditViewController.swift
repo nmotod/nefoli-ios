@@ -25,7 +25,7 @@ class AddressEditViewController: UIViewController, AddressEditViewControllerRoot
 
     init(
         initialURL: URL?,
-        delegate: AddressEditViewControllerDelegate
+        delegate: AddressEditViewControllerDelegate?
     ) {
         self.initialURL = initialURL
         self.delegate = delegate
@@ -78,3 +78,10 @@ class AddressEditViewController: UIViewController, AddressEditViewControllerRoot
         }
     }
 }
+
+#Preview("AddressEdit", body: {
+    return AddressEditViewController(
+        initialURL: nil,
+        delegate: nil
+    )
+})
