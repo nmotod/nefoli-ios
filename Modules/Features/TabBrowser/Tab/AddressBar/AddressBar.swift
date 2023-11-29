@@ -13,6 +13,8 @@ class AddressBar: UIView {
         }
     }
 
+    static let borderCornerRadius: CGFloat = 12
+
     var contentConfiguration: ContentConfiguration? {
         didSet {
             updateContent()
@@ -101,6 +103,7 @@ class AddressBar: UIView {
         private let borderLayer: CALayer = {
             let layer = CALayer()
             layer.backgroundColor = Colors.addressBarLabelBackgroundNormal.color.cgColor
+            layer.cornerRadius = borderCornerRadius
             layer.masksToBounds = true
             return layer
         }()
@@ -168,7 +171,6 @@ class AddressBar: UIView {
             super.layoutSublayers(of: layer)
 
             borderLayer.frame = bounds.inset(by: borderInsets)
-            borderLayer.cornerRadius = borderLayer.bounds.height / 2
         }
     }
 }
