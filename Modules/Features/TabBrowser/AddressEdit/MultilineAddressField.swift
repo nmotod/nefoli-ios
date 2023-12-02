@@ -33,7 +33,7 @@ class MultilineAddressField: UIView, UITextViewDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        borderLayer.backgroundColor = ThemeColors.addressBarLabelBackgroundEditing.color.cgColor
+        borderLayer.backgroundColor = ThemeColors.AddressBar.Label.backgroundEditing.color.cgColor
         borderLayer.cornerRadius = AddressBar.borderCornerRadius
         borderLayer.masksToBounds = true
         layer.addSublayer(borderLayer)

@@ -77,8 +77,8 @@ class AddressBar: UIView {
         override var isHighlighted: Bool {
             didSet {
                 borderLayer.backgroundColor = isHighlighted
-                    ? ThemeColors.addressBarLabelBackgroundHighlighted.color.cgColor
-                    : ThemeColors.addressBarLabelBackgroundNormal.color.cgColor
+                    ? ThemeColors.AddressBar.Label.backgroundHighlighted.color.cgColor
+                    : ThemeColors.AddressBar.Label.backgroundNormal.color.cgColor
             }
         }
 
@@ -102,7 +102,7 @@ class AddressBar: UIView {
 
         private let borderLayer: CALayer = {
             let layer = CALayer()
-            layer.backgroundColor = ThemeColors.addressBarLabelBackgroundNormal.color.cgColor
+            layer.backgroundColor = ThemeColors.AddressBar.Label.backgroundNormal.color.cgColor
             layer.cornerRadius = borderCornerRadius
             layer.masksToBounds = true
             return layer
@@ -120,7 +120,7 @@ class AddressBar: UIView {
         private let secureIconView: UIImageView = {
             let secureIconView = UIImageView(image: UIImage(systemName: "lock.fill"))
             secureIconView.preferredSymbolConfiguration = .init(pointSize: 10)
-            secureIconView.tintColor = ThemeColors.addressBarLabelTextNormal.color
+            secureIconView.tintColor = ThemeColors.AddressBar.Label.textNormal.color
             secureIconView.contentMode = .center
             return secureIconView
         }()
@@ -136,7 +136,7 @@ class AddressBar: UIView {
             let label = UILabel()
             label.isUserInteractionEnabled = false
             label.font = .systemFont(ofSize: 14)
-            label.textColor = ThemeColors.addressBarLabelPlaceholder.color
+            label.textColor = ThemeColors.AddressBar.Label.textPlaceholder.color
             label.text = String(localized: "Search or enter address")
             label.isHidden = true
             return label
