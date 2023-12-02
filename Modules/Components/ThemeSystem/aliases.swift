@@ -1,2 +1,2 @@
 public typealias ThemeColors = Asset.ThemeColors
-public typealias Images = Asset.Images
+public typealias ThemeAssets = Asset.ThemeAssets

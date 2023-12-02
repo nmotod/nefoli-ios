@@ -107,7 +107,7 @@ extension NewTabViewController {
                 make.bottom.equalTo(addressBarBox.snp.top)
             }
 
-            let heroImageView = UIImageView(image: Images.blade.image)
+            let heroImageView = UIImageView(image: ThemeAssets.blade.image)
             heroImageBox.addSubview(heroImageView)
             heroImageView.contentMode = .scaleAspectFit
             heroImageView.snp.makeConstraints { make in
