@@ -127,8 +127,8 @@ extension TabGroupView {
 
         func didChangeState() {
             //        titleBox.backgroundColor = isActive
-            //            ? Colors.tabGroupViewTitleBackgroundActive.color
-            //            : Colors.tabGroupViewTitleBackgroundNormal.color
+            //            ? ThemeColors.tabGroupViewTitleBackgroundActive.color
+            //            : ThemeColors.tabGroupViewTitleBackgroundNormal.color
 
             if style.hidesActiveIndicator {
                 setActiveIndicatorHidden(true)

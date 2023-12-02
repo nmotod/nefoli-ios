@@ -12,11 +12,11 @@ class MenuSheetHeaderView: UIStackView {
     init() {
         titleLabel = .init()
         titleLabel.font = .systemFont(ofSize: 15)
-        titleLabel.textColor = Colors.textNormal.color
+        titleLabel.textColor = ThemeColors.textNormal.color
 
         urlLabel = .init()
         urlLabel.font = .systemFont(ofSize: 14)
-        urlLabel.textColor = Colors.textNormal.color.withAlphaComponent(0.6)
+        urlLabel.textColor = ThemeColors.textNormal.color.withAlphaComponent(0.6)
 
         super.init(frame: .zero)
 
@@ -56,7 +56,7 @@ class MenuSheetHeaderView: UIStackView {
                         self?.onClose?()
                     }
                 ))
-                closeButton.tintColor = Colors.tint.color.withAlphaComponent(0.4)
+                closeButton.tintColor = ThemeColors.tint.color.withAlphaComponent(0.4)
                 closeButton.snp.makeConstraints { make in
                     make.width.equalTo(44)
                 }

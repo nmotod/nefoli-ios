@@ -5,7 +5,7 @@ import UIKit
 
 private func makeBarBackgroundView() -> UIView {
     let view = UIView()
-    view.backgroundColor = Colors.barBackground.color
+    view.backgroundColor = ThemeColors.barBackground.color
     return view
 }
 

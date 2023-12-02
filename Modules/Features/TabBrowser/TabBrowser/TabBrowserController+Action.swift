@@ -69,7 +69,7 @@ extension TabBrowserController {
         uiAction.title = ""
 
         let button = UIButton(primaryAction: uiAction)
-        button.tintColor = Colors.tint.color
+        button.tintColor = ThemeColors.tint.color
         button.snp.makeConstraints { make in
             make.width.equalTo(44)
         }

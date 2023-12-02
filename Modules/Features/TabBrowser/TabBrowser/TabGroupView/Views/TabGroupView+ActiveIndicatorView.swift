@@ -22,7 +22,7 @@ extension TabGroupView {
         }
 
         private func setup() {
-            backgroundColor = Colors.tabCollectionActiveIndicatorTint.color
+            backgroundColor = ThemeColors.tabCollectionActiveIndicatorTint.color
             clipsToBounds = true
 
             addSubview(arrow)

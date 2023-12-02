@@ -21,7 +21,7 @@ struct MultilineTextField: View {
             if text.wrappedValue.isEmpty {
                 VStack {
                     Text(titleKey)
-                        .foregroundStyle(Colors.secondaryLabel.swiftUIColor)
+                        .foregroundStyle(ThemeColors.secondaryLabel.swiftUIColor)
                         .padding(.top, 6)
 
                     Spacer()

@@ -30,7 +30,7 @@ class AddressBar: UIView {
         config.preferredSymbolConfigurationForImage = .init(pointSize: 13)
 
         let button = UIButton(configuration: config, primaryAction: nil)
-        button.tintColor = Colors.tint.color
+        button.tintColor = ThemeColors.tint.color
         return button
     }()
 
@@ -77,8 +77,8 @@ class AddressBar: UIView {
         override var isHighlighted: Bool {
             didSet {
                 borderLayer.backgroundColor = isHighlighted
-                    ? Colors.addressBarLabelBackgroundHighlighted.color.cgColor
-                    : Colors.addressBarLabelBackgroundNormal.color.cgColor
+                    ? ThemeColors.addressBarLabelBackgroundHighlighted.color.cgColor
+                    : ThemeColors.addressBarLabelBackgroundNormal.color.cgColor
             }
         }
 
@@ -102,7 +102,7 @@ class AddressBar: UIView {
 
         private let borderLayer: CALayer = {
             let layer = CALayer()
-            layer.backgroundColor = Colors.addressBarLabelBackgroundNormal.color.cgColor
+            layer.backgroundColor = ThemeColors.addressBarLabelBackgroundNormal.color.cgColor
             layer.cornerRadius = borderCornerRadius
             layer.masksToBounds = true
             return layer
@@ -111,7 +111,7 @@ class AddressBar: UIView {
         private let label: UILabel = {
             let label = UILabel()
             label.font = .systemFont(ofSize: 14)
-            label.textColor = Colors.label.color
+            label.textColor = ThemeColors.label.color
             label.textAlignment = .center
             label.lineBreakMode = .byTruncatingMiddle
             return label
@@ -120,7 +120,7 @@ class AddressBar: UIView {
         private let secureIconView: UIImageView = {
             let secureIconView = UIImageView(image: UIImage(systemName: "lock.fill"))
             secureIconView.preferredSymbolConfiguration = .init(pointSize: 10)
-            secureIconView.tintColor = Colors.addressBarLabelTextNormal.color
+            secureIconView.tintColor = ThemeColors.addressBarLabelTextNormal.color
             secureIconView.contentMode = .center
             return secureIconView
         }()
@@ -136,7 +136,7 @@ class AddressBar: UIView {
             let label = UILabel()
             label.isUserInteractionEnabled = false
             label.font = .systemFont(ofSize: 14)
-            label.textColor = Colors.addressBarLabelPlaceholder.color
+            label.textColor = ThemeColors.addressBarLabelPlaceholder.color
             label.text = String(localized: "Search or enter address")
             label.isHidden = true
             return label

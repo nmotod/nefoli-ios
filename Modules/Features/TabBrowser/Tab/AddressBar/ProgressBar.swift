@@ -42,7 +42,7 @@ class ProgressBar: UIView {
 
         backgroundColor = .clear
 
-        indicatorView.backgroundColor = Colors.progressBarIndicator.color
+        indicatorView.backgroundColor = ThemeColors.progressBarIndicator.color
         indicatorView.snp.makeConstraints { make in
             make.left.top.bottom.equalToSuperview()
             indicatorWidthConstraint = make.width.equalTo(0).constraint

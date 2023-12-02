@@ -33,7 +33,7 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollec
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: collectionViewLayout)
         collectionView.delegate = self
-        collectionView.backgroundColor = Colors.background.color
+        collectionView.backgroundColor = ThemeColors.background.color
 
         collectionView.dragInteractionEnabled = true
         collectionView.dragDelegate = self

@@ -56,7 +56,7 @@ extension NewTabViewController {
             }
 
             titleLabel.font = Self.titleFont
-            titleLabel.textColor = Colors.textNormal.color
+            titleLabel.textColor = ThemeColors.textNormal.color
             titleLabel.numberOfLines = 2
             titleLabel.textAlignment = .center
 

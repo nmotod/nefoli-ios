@@ -13,7 +13,7 @@ class MenuSheetActionCell: UICollectionViewListCell {
         super.init(frame: frame)
 
         var background = defaultBackgroundConfiguration()
-        background.backgroundColor = Colors.background.color
+        background.backgroundColor = ThemeColors.background.color
         backgroundConfiguration = background
 
         addSubview(button)
@@ -42,14 +42,14 @@ class MenuSheetActionCell: UICollectionViewListCell {
 
         content.text = action?.title
         content.textProperties.font = .systemFont(ofSize: 15)
-        content.textProperties.color = Colors.textNormal.color
+        content.textProperties.color = ThemeColors.textNormal.color
 
         content.image = action?.image
         content.imageProperties.preferredSymbolConfiguration = .init(
             pointSize: 18,
             weight: .regular
         )
-        content.imageProperties.tintColor = Colors.tint.color
+        content.imageProperties.tintColor = ThemeColors.tint.color
 
         // The contentView will put at the frontmost
         contentConfiguration = content

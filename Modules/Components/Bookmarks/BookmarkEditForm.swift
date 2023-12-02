@@ -98,9 +98,9 @@ struct BookmarkEditForm: View {
     private func backgroundFor(field: Field) -> Color {
 //        return Colors.formFieldBackground.swiftUIColor
         if field == focusedField {
-            return Colors.formFieldBackgroundFocused.swiftUIColor
+            return ThemeColors.formFieldBackgroundFocused.swiftUIColor
         }
-        return Colors.formFieldBackground.swiftUIColor
+        return ThemeColors.formFieldBackground.swiftUIColor
     }
 
     var body: some View {
@@ -139,7 +139,7 @@ struct BookmarkEditForm: View {
                     }
                 }
             }
-            .listRowBackground(Colors.formFieldBackground.swiftUIColor)
+            .listRowBackground(ThemeColors.formFieldBackground.swiftUIColor)
 
             Section {
                 Button(action: {
@@ -150,7 +150,7 @@ struct BookmarkEditForm: View {
                         .font(Font.system(.body).bold())
                 }
             }
-            .listRowBackground(Colors.formFieldBackground.swiftUIColor)
+            .listRowBackground(ThemeColors.formFieldBackground.swiftUIColor)
         }
         .themedGroupedList()
         .themedNavigationBar()

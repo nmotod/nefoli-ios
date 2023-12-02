@@ -3,7 +3,7 @@ import SnapKit
 import ThemeSystem
 import UIKit
 
-private let backgroundColor = Colors.backgroundDark.color
+private let backgroundColor = ThemeColors.backgroundDark.color
 
 public class MenuSheetController: UIViewController, UICollectionViewDelegate, UIAdaptivePresentationControllerDelegate {
     public let webpageMetadata: WebpageMetadata?
@@ -49,7 +49,7 @@ public class MenuSheetController: UIViewController, UICollectionViewDelegate, UI
         listConfig.backgroundColor = backgroundColor
         listConfig.showsSeparators = true
         listConfig.separatorConfiguration = .init(listAppearance: .grouped)
-        listConfig.separatorConfiguration.color = Colors.tableSeparator.color
+        listConfig.separatorConfiguration.color = ThemeColors.tableSeparator.color
 
         let section = NSCollectionLayoutSection.list(using: listConfig, layoutEnvironment: layoutEnv)
         section.contentInsets.top = 15

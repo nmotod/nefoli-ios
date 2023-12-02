@@ -14,7 +14,7 @@ class ForwardPanGestureInteraction: NSObject, UIInteraction {
 
     private let destinationPlaceholderView: UIView = {
         let view = UIView()
-        view.backgroundColor = Colors.formFieldBackground.color
+        view.backgroundColor = ThemeColors.formFieldBackground.color
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 0.2
         view.layer.shadowRadius = 10

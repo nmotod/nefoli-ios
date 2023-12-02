@@ -62,7 +62,7 @@ extension AddressEditViewController {
                 make.edges.equalToSuperview()
             }
 
-            contentView.backgroundColor = Colors.background.color
+            contentView.backgroundColor = ThemeColors.background.color
             addSubview(contentView)
             contentView.snp.makeConstraints { make in
                 make.left.right.bottom.equalToSuperview()
@@ -76,7 +76,7 @@ extension AddressEditViewController {
             appearance.shadowColor = .clear
             toolbar.standardAppearance = appearance
 
-            toolbar.tintColor = Colors.tint.color
+            toolbar.tintColor = ThemeColors.tint.color
             toolbar.items = [
                 UIBarButtonItem.flexibleSpace(),
                 clearTextButtonItem,

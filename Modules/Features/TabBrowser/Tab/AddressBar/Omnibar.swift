@@ -92,7 +92,7 @@ class Omnibar: UIStackView {
 
     func makeButton(actionType: any ActionTypeProtocol) -> UIButton {
         let button = UIButton(primaryAction: UIAction(image: actionType.image) { _ in })
-        button.tintColor = Colors.tint.color
+        button.tintColor = ThemeColors.tint.color
         button.snp.makeConstraints { make in
             make.width.equalTo(44)
         }

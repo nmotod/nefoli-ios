@@ -42,7 +42,7 @@ struct BookmarkList: View {
                 NavigationLink(value: bookmarkStore.favoritesFolder) {
                     BookmarkListItem(item: bookmarkStore.favoritesFolder)
                 }
-                .listRowBackground(Colors.backgroundDark.swiftUIColor)
+                .listRowBackground(ThemeColors.backgroundDark.swiftUIColor)
 
             } else if folder.children.isEmpty {
                 Text("No Bookmarks")
@@ -50,7 +50,7 @@ struct BookmarkList: View {
                     .font(.system(size: 14))
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.top, 20)
-                    .listRowBackground(Colors.backgroundDark.swiftUIColor)
+                    .listRowBackground(ThemeColors.backgroundDark.swiftUIColor)
             }
 
             ForEach(folder.children) { (item: BookmarkItem) in
@@ -84,13 +84,13 @@ struct BookmarkList: View {
             }
             .onDelete(perform: $folder.children.remove)
             .onMove(perform: $folder.children.move)
-            .listRowBackground(Colors.backgroundDark.swiftUIColor)
+            .listRowBackground(ThemeColors.backgroundDark.swiftUIColor)
         }
         .themedNavigationBar()
         .listStyle(.plain)
-        .listRowBackground(Colors.backgroundDark.swiftUIColor)
-        .background(Colors.backgroundDark.swiftUIColor)
-        .foregroundColor(Colors.textNormal.swiftUIColor)
+        .listRowBackground(ThemeColors.backgroundDark.swiftUIColor)
+        .background(ThemeColors.backgroundDark.swiftUIColor)
+        .foregroundColor(ThemeColors.textNormal.swiftUIColor)
         .navigationTitle(folder.localizedTitle)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
@@ -140,7 +140,7 @@ struct BookmarkList: View {
                 }
             }
         }
-        .tint(Color(Colors.tint.color))
+        .tint(Color(ThemeColors.tint.color))
         .environment(\.editMode, $editMode)
         .sheet(isPresented: $itemEditingState.isEditing) {
             NavigationView {

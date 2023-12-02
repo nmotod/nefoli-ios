@@ -39,7 +39,7 @@ struct BookmarkListItem: View {
 
                     Text(item.url?.absoluteString ?? "")
                         .lineLimit(1)
-                        .foregroundColor(Colors.textNormal.swiftUIColor.opacity(0.7))
+                        .foregroundColor(ThemeColors.textNormal.swiftUIColor.opacity(0.7))
                         .font(.system(size: 13))
                 }
             }

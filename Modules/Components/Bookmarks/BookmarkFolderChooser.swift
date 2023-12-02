@@ -58,8 +58,8 @@ struct BookmarkFolderChooser: View {
                     checked: selectedFolder.id == row.folder.id
                 )
             }
-            .tint(Colors.tint.swiftUIColor)
-            .listRowBackground(Colors.formFieldBackground.swiftUIColor)
+            .tint(ThemeColors.tint.swiftUIColor)
+            .listRowBackground(ThemeColors.formFieldBackground.swiftUIColor)
         }
         .themedNavigationBar()
         .themedGroupedList()
