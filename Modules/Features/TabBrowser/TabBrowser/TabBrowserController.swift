@@ -79,14 +79,6 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
         view = rootView
         self.rootView = rootView
 
-        rootView.addressBar.addressButton.addAction(.init { [weak self] action in
-            self?.activeVC?.editAddress(action.sender)
-        }, for: .touchUpInside)
-
-        rootView.addressBar.reloadButton.addAction(.init { [weak self] action in
-            self?.activeVC?.reload(action.sender)
-        }, for: .touchUpInside)
-
         rootView.tabGroupView.delegate = self
         rootView.tabGroupView.group = group
 
@@ -215,6 +207,11 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
             dependency: dependency
         )
 
+        tabVC.setOmnibarButtons(
+            left: makeTabActionButton(type: TabActionType.goBack, for: tabVC),
+            right: makeActionButton(type: TabBrowserActionType.menuSheet)
+        )
+
         viewControllersByTabId[tab.id] = tabVC
 
         return tabVC
@@ -248,20 +245,7 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
                 make.edges.equalToSuperview()
             }
 
-            rootView.addressBar.contentConfiguration = newVC.addressBarContentConfiguration
-
-            rootView.progressBar.progressProvider = newVC.progressProvider
-
-            if newVC.isLoading {
-                rootView.progressBar.start()
-            } else {
-                rootView.progressBar.finish()
-            }
-
-            rootView.omnibar.setButtons(
-                left: makeButton(actionType: TabActionType.goBack),
-                right: makeButton(actionType: TabBrowserActionType.menuSheet)
-            )
+            rootView.setTabStickyBar(newVC.stickyBar)
 
             newVC.didMove(toParent: self)
 
@@ -368,23 +352,5 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
 
         let tab = Tab(initialURL: url)
         try! open(tab: tab, options: .init(activate: true, position: .afterActive))
-    }
-
-    func tabVCDidChangeAddressBarContent(_ tabVC: TabViewController) {
-        guard tabVC == activeVC else { return }
-
-        rootView?.omnibar.addressBar.contentConfiguration = tabVC.addressBarContentConfiguration
-    }
-
-    func tabVCDidStartLoading(_ tabVC: TabViewController) {
-        guard tabVC == activeVC else { return }
-
-        rootView?.progressBar.start()
-    }
-
-    func tabVCDidFinishLoading(_ tabVC: TabViewController) {
-        guard tabVC == activeVC else { return }
-
-        rootView?.progressBar.finish()
     }
 }

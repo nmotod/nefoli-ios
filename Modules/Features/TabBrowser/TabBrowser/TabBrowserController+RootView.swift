@@ -15,12 +15,6 @@ extension TabBrowserController {
 
         let bottomBarBackgroundView = makeBarBackgroundView()
 
-        let omnibar = Omnibar()
-
-        var addressBar: AddressBar { omnibar.addressBar }
-
-        var progressBar: ProgressBar { omnibar.progressBar }
-
         let stickyToolbar = StickyContainerView(position: .bottom)
 
         let tabGroupView: TabGroupView
@@ -36,11 +30,6 @@ extension TabBrowserController {
             topBarBackgroundView.snp.makeConstraints { make in
                 make.top.left.right.equalToSuperview()
                 make.bottom.equalTo(safeAreaLayoutGuide.snp.top)
-            }
-
-            stickyToolbar.contentView.addSubview(omnibar)
-            omnibar.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
             }
 
             addSubview(bottomBarBackgroundView)
@@ -60,7 +49,7 @@ extension TabBrowserController {
 
             bottomBarBackgroundView.snp.makeConstraints { make in
                 make.left.right.bottom.equalToSuperview()
-                make.top.equalTo(omnibar.snp.top)
+                make.top.equalTo(stickyToolbar.contentView.snp.top)
             }
 
             containerView.snp.makeConstraints { make in
@@ -73,6 +62,17 @@ extension TabBrowserController {
         @available(*, unavailable)
         required init?(coder _: NSCoder) {
             fatalError("init(coder:) has not been implemented")
+        }
+
+        func setTabStickyBar(_ bar: UIView) {
+            for v in stickyToolbar.contentView.subviews {
+                v.removeFromSuperview()
+            }
+
+            stickyToolbar.contentView.addSubview(bar)
+            bar.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
         }
     }
 }

@@ -1,6 +1,25 @@
+import ActionSystem
 import Foundation
+import ThemeSystem
+import UIKit
 
-extension TabViewController {
+extension TabViewController: ActionDispatcher {
+    func canDispatchAction(type: any ActionTypeProtocol) -> Bool {
+        return type is TabActionType || type is CustomActionType
+    }
+
+    func dispatchAnyAction(type actionType: any ActionTypeProtocol, sender: Any?) throws {
+        if let actionType = actionType as? TabActionType {
+            performAction(type: actionType, sender: sender)
+
+        } else if let actionType = actionType as? CustomActionType {
+            performCustomAction(type: actionType, sender: sender)
+
+        } else {
+            throw ActionDispatchError.unsupported
+        }
+    }
+
     func performAction(type actionType: TabActionType, sender: Any?) {
         switch actionType {
         case .goBack:

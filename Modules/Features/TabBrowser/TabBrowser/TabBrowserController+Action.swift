@@ -3,13 +3,32 @@ import Foundation
 import ThemeSystem
 import UIKit
 
-extension TabBrowserController {
-    public enum ActionError: Error {
-        case unsupported
+private func makeButton(primaryAction: UIAction) -> UIButton {
+    primaryAction.title = ""
+
+    let button = UIButton(primaryAction: primaryAction)
+    button.tintColor = ThemeColors.tint.color
+    button.snp.makeConstraints { make in
+        make.width.equalTo(44)
     }
 
+    return button
+}
+
+extension TabBrowserController: ActionDispatcher {
     public class func supportedActionTypes() -> [any ActionTypeProtocol] {
         return TabBrowserActionType.allCases + TabActionType.allCases
+    }
+
+    public func canDispatchAction(type: any ActionTypeProtocol) -> Bool {
+        if type is TabBrowserActionType {
+            return true
+
+        } else if let activeVC {
+            return activeVC.canDispatchAction(type: type)
+        }
+
+        return false
     }
 
     func performAction(type actionType: TabBrowserActionType, sender: Any?) {
@@ -41,49 +60,38 @@ extension TabBrowserController {
         if let actionType = actionType as? TabBrowserActionType {
             performAction(type: actionType, sender: sender)
 
-        } else if let actionType = actionType as? TabActionType {
-            activeVC?.performAction(type: actionType, sender: sender)
-
-        } else if let actionType = actionType as? CustomActionType {
-            activeVC?.performCustomAction(type: actionType, sender: sender)
+        } else if let activeVC, activeVC.canDispatchAction(type: actionType) {
+            try activeVC.dispatchAnyAction(type: actionType, sender: sender)
 
         } else {
-            throw ActionError.unsupported
-        }
-    }
-
-    func makeUIAction(type actionType: any ActionTypeProtocol) -> UIAction? {
-        return actionType.makeUIAction { [weak self] uiAction in
-            guard let self else { return }
-
-            try! self.dispatchAnyAction(type: actionType, sender: uiAction.sender)
+            throw ActionDispatchError.unsupported
         }
     }
 
     // TODO: support long press
-    func makeButton(actionType: any ActionTypeProtocol) -> UIButton? {
+    func makeActionButton(type actionType: TabBrowserActionType) -> UIButton? {
         guard let uiAction = makeUIAction(type: actionType) else {
             return nil
         }
 
-        uiAction.title = ""
+        return makeButton(primaryAction: uiAction)
+    }
 
-        let button = UIButton(primaryAction: uiAction)
-        button.tintColor = ThemeColors.tint.color
-        button.snp.makeConstraints { make in
-            make.width.equalTo(44)
+    func makeTabActionButton(type actionType: TabActionType, for tabVC: TabViewController) -> UIButton? {
+        guard let uiAction = tabVC.makeUIAction(type: actionType) else {
+            return nil
         }
 
-        if let activeVC, let action = actionType as? TabActionType {
-            switch action {
-            case .goBack:
-                button.nfl_syncIsEnabled(publisher: activeVC.canGoBackPublisher)
+        let button = makeButton(primaryAction: uiAction)
 
-            case .goForward:
-                button.nfl_syncIsEnabled(publisher: activeVC.canGoForwardPublisher)
+        switch actionType {
+        case .goBack:
+            button.nfl_syncIsEnabled(publisher: tabVC.canGoBackPublisher)
 
-            default: ()
-            }
+        case .goForward:
+            button.nfl_syncIsEnabled(publisher: tabVC.canGoForwardPublisher)
+
+        default: ()
         }
 
         return button

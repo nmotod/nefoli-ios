@@ -11,12 +11,6 @@ public typealias TabViewControllerDependency = UsesWebViewManager & UsesScreensh
 
 protocol TabViewControllerDelegate: AnyObject {
     func tabVC(_ tabVC: TabViewController, searchWeb text: String)
-
-    func tabVCDidChangeAddressBarContent(_ tabVC: TabViewController)
-
-    func tabVCDidStartLoading(_ tabVC: TabViewController)
-
-    func tabVCDidFinishLoading(_ tabVC: TabViewController)
 }
 
 class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, NewTabViewControllerDelegate, AddressEditViewControllerDelegate {
@@ -37,6 +31,32 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
     weak var delegate: TabViewControllerDelegate?
 
     private var rootView: RootView!
+
+    var stickyBar: UIView { omnibar }
+
+    private lazy var omnibar: Omnibar = {
+        let omnibar = Omnibar()
+
+        omnibar.addressBar.contentConfiguration = addressBarContentConfiguration
+
+        omnibar.progressBar.progressProvider = { [weak self] in
+            self?.webView?.estimatedProgress ?? 0
+        }
+
+        omnibar.addressBar.addressButton.addAction(.init { [weak self] action in
+            self?.editAddress(action.sender)
+        }, for: .touchUpInside)
+
+        omnibar.addressBar.reloadButton.addAction(.init { [weak self] action in
+            self?.reload(action.sender)
+        }, for: .touchUpInside)
+
+        return omnibar
+    }()
+
+    func setOmnibarButtons(left: UIButton?, right: UIButton?) {
+        omnibar.setButtons(left: left, right: right)
+    }
 
     private let webViewContainerController = UIViewController()
 
@@ -87,12 +107,6 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
     }
 
     var isLoading: Bool { webView?.isLoading ?? false }
-
-    var progressProvider: ProgressBar.ProgressProvider {
-        return { [weak self] in
-            self?.webView?.estimatedProgress ?? 0
-        }
-    }
 
     init(
         tab: Tab,
@@ -359,13 +373,13 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
     func webView(_: WKWebView, didStartProvisionalNavigation _: WKNavigation!) {
         stickyInteraction?.showStickyBars(animated: true)
 
-        delegate?.tabVCDidStartLoading(self)
+        omnibar.progressBar.start()
 
         stickyInteraction?.update(isInteractive: false)
     }
 
     func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
-        delegate?.tabVCDidFinishLoading(self)
+        omnibar.progressBar.finish()
     }
 
     func webView(_ webView: WKWebView, didCommit _: WKNavigation!) {
@@ -375,13 +389,13 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
             tab.updateBackForwardList(wkBackForwardList: webView.backForwardList)
         }
 
-        delegate?.tabVCDidFinishLoading(self)
+        omnibar.progressBar.finish()
 
         screenshotManager.updateScreenshot(sources: [tab], webView: webView)
     }
 
     func webView(_: WKWebView, didFail _: WKNavigation!, withError _: Error) {
-        delegate?.tabVCDidFinishLoading(self)
+        omnibar.progressBar.finish()
     }
 
     func webView(_ webView: WKWebView, createWebViewWith _: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures _: WKWindowFeatures) -> WKWebView? {
@@ -430,7 +444,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
     }
 
     private func addressDidChange() {
-        delegate?.tabVCDidChangeAddressBarContent(self)
+        omnibar.addressBar.contentConfiguration = addressBarContentConfiguration
     }
 
     private func titleOrURLDidChange() {
