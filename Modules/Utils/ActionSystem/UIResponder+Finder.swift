@@ -3,7 +3,7 @@ import UIKit
 
 extension UIResponder {
     public func nfl_findResponder<T: UIResponder>(of type: T.Type) -> T? {
-        var responder: UIResponder? = self
+        var responder: UIResponder? = next
 
         while responder != nil {
             if let vc = responder as? T {
