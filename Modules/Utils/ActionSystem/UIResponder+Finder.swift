@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 extension UIResponder {
-    public func nfl_findResponder<T: UIResponder>(of type: T.Type) -> T? {
+    public func nfl_findResponder<T>(of type: T.Type) -> T? {
         var responder: UIResponder? = next
 
         while responder != nil {
