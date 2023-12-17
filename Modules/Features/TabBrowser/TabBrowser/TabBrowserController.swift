@@ -353,4 +353,12 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
         let tab = Tab(initialURL: url)
         try! open(tab: tab, options: .init(activate: true, position: .afterActive))
     }
+
+    func tabVC(_ tabVC: TabViewController, willShowNewTabVC newTabVC: NewTabViewController) {
+        newTabVC.topToolbarItems = [
+            UIBarButtonItem(systemItem: .flexibleSpace),
+            UIBarButtonItem(primaryAction: makeUIAction(type: TabBrowserActionType.bookmarks)),
+            UIBarButtonItem(primaryAction: makeUIAction(type: TabBrowserActionType.settings)),
+        ]
+    }
 }

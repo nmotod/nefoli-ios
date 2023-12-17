@@ -17,11 +17,12 @@ extension NewTabViewController {
 
         weak var delegate: NewTabHeroHeaderViewDelegate?
 
-        private let backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterialDark))
-
-//        private let addressBar = AddressBar(frame: .init(x: 0, y: 0, width: 300, height: 60))
-
-        private let addressBarBox = UIView()
+//        private let backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterialDark))
+        private let backgroundView: UIView = {
+            let view = UIView()
+            view.backgroundColor = ThemeColors.background.color
+            return view
+        }()
 
         private var addressBarHeightConstraint: Constraint!
 
@@ -32,7 +33,7 @@ extension NewTabViewController {
         private let heroImageBox = UIView()
 
         private let topToolbar: UIToolbar = {
-            let toolbar = UIToolbar()
+            let toolbar = UIToolbar(frame: .init(x: 0, y: 0, width: 100, height: 44))
 
             let appearance = UIToolbarAppearance()
             appearance.configureWithTransparentBackground()
@@ -50,15 +51,22 @@ extension NewTabViewController {
         var percentExpansion: CGFloat = 0 {
             didSet {
 //                backgroundView.isHidden = (percentExpansion > 0)
-//
-//                addressBarHeightConstraint.update(offset: clamp(min: 50, max: 60, percent: percentExpansion))
-//                addressBarAlignLeftConstraint.update(offset: clamp(min: 0, max: 10, percent: percentExpansion))
-//                addressBarAlignRightConstraint.update(offset: -clamp(min: 0, max: 10, percent: percentExpansion))
-//
-//                let labelScale = clamp(min: 1.1, max: 1, percent: percentExpansion)
-//                addressBar.labelButton.titleLabel?.transform = .init(scaleX: labelScale, y: labelScale)
-//
-//                heroImageBox.alpha = percentExpansion
+
+                heroImageBox.alpha = percentExpansion
+            }
+        }
+
+        var topToolbarItems: [UIBarButtonItem] {
+            get {
+                return topToolbar.items ?? []
+            }
+
+            set {
+                topToolbar.items = newValue.map { item in
+                    item.width = 70
+                    item.tintColor = ThemeColors.tint.color.withAlphaComponent(0.5)
+                    return item
+                }
             }
         }
 
@@ -74,37 +82,23 @@ extension NewTabViewController {
 
         private func setup() {
             addSubview(backgroundView)
-            addSubview(addressBarBox)
-//            addressBarBox.addSubview(addressBar)
-            addSubview(heroImageBox)
             addSubview(topToolbar)
+            addSubview(heroImageBox)
 
-            // Background  view
+            // Background view
             backgroundView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
 
-            // Address bar
-            addressBarBox.snp.makeConstraints { make in
+            topToolbar.snp.makeConstraints { make in
                 make.left.right.bottom.equalToSuperview()
-                make.height.equalTo(50)
+                make.height.equalTo(44)
             }
-
-//            addressBar.snp.makeConstraints { make in
-//                addressBarAlignLeftConstraint = make.left.equalToSuperview().constraint
-//                addressBarAlignRightConstraint = make.right.equalToSuperview().constraint
-//                make.centerY.equalToSuperview()
-//                addressBarHeightConstraint = make.height.equalTo(50).constraint
-//            }
-//
-//            addressBar.labelButton.addTarget(self, action: #selector(editAddress(_:)), for: .touchUpInside)
-//            addressBar.labelButton.isPlaceholder = true
-//            addressBar.labelButton.addressText = NSLocalizedString("Search or enter address", comment: "")
 
             // Hero image
             heroImageBox.snp.makeConstraints { make in
                 make.left.right.top.equalToSuperview()
-                make.bottom.equalTo(addressBarBox.snp.top)
+                make.bottom.equalTo(topToolbar.snp.top)
             }
 
             let heroImageView = UIImageView(image: ThemeAssets.blade.image)
@@ -113,30 +107,6 @@ extension NewTabViewController {
             heroImageView.snp.makeConstraints { make in
                 make.top.bottom.equalToSuperview().inset(50)
                 make.left.right.equalToSuperview().inset(20)
-            }
-
-//            topToolbar.items = [
-//                UIBarButtonItem(systemItem: .flexibleSpace),
-//                UIBarButtonItem(
-//                    image: UIImage(systemName: "book"),
-//                    landscapeImagePhone: nil,
-//                    style: .plain,
-//                    target: self,
-//                    action: nil
-//                ),
-//                UIBarButtonItem(
-//                    image: UIImage(systemName: "gearshape.fill"),
-//                    landscapeImagePhone: nil,
-//                    style: .plain,
-//                    target: self,
-//                    action: #selector(NFActionsResponder.nef_openSettings(_:))
-//                ),
-//            ]
-
-            topToolbar.snp.makeConstraints { make in
-                make.top.equalToSuperview()
-                make.left.right.equalToSuperview()
-                make.height.equalTo(44)
             }
 
             percentExpansion = 0

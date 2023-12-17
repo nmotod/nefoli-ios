@@ -44,6 +44,8 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     private var dataSource: UICollectionViewDiffableDataSource<Section, BookmarkItem>?
 
+    var topToolbarItems: [UIBarButtonItem] = []
+
     // MARK: - Initializer
 
     init(
@@ -93,7 +95,9 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollec
             cell.item = item
         }
 
-        let headerRegistration = UICollectionView.SupplementaryRegistration<HeroHeaderView>(elementKind: UICollectionView.elementKindSectionHeader) { _, _, _ in }
+        let headerRegistration = UICollectionView.SupplementaryRegistration<HeroHeaderView>(elementKind: UICollectionView.elementKindSectionHeader) { [weak self] view, _, _ in
+            view.topToolbarItems = self?.topToolbarItems ?? []
+        }
 
         let dataSource = UICollectionViewDiffableDataSource<Section, BookmarkItem>(
             collectionView: collectionView,

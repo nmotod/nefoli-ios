@@ -11,6 +11,8 @@ public typealias TabViewControllerDependency = UsesWebViewManager & UsesScreensh
 
 protocol TabViewControllerDelegate: AnyObject {
     func tabVC(_ tabVC: TabViewController, searchWeb text: String)
+
+    func tabVC(_ tabVC: TabViewController, willShowNewTabVC newTabVC: NewTabViewController)
 }
 
 class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, NewTabViewControllerDelegate, AddressEditViewControllerDelegate {
@@ -467,6 +469,9 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
             allowsForwardGesture: webView.canGoForward,
             dependency: dependency
         )
+
+        delegate?.tabVC(self, willShowNewTabVC: newTabVC)
+
         self.newTabVC = newTabVC
 
         addChild(newTabVC)
