@@ -93,7 +93,16 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
         applySafeAreaInsetsToChildren()
     }
 
-    private func applySafeAreaInsetsToChildren() {}
+    private func applySafeAreaInsetsToChildren() {
+        guard let rootView = rootView else { return }
+
+        let toolbarY0 = view.convert(CGPoint.zero, from: rootView.stickyToolbar).y
+        let bottomInset = view.bounds.height - toolbarY0 - view.safeAreaInsets.bottom
+
+        for childVC in children {
+            childVC.additionalSafeAreaInsets.bottom = bottomInset
+        }
+    }
 
     func showMenuSheet() {
         let cmmandGroups: [[any ActionTypeProtocol]] = [

@@ -2,6 +2,7 @@ import Database
 import Foundation
 import ThemeSystem
 import UIKit
+import WebViewStickyInteraction
 
 private func makeBarBackgroundView() -> UIView {
     let view = UIView()
@@ -15,7 +16,7 @@ extension TabBrowserController {
 
         let bottomBarBackgroundView = makeBarBackgroundView()
 
-        let stickyToolbar = StickyContainerView(position: .bottom)
+        let stickyToolbar = ContainerStickyView(position: .bottom)
 
         let tabGroupView: TabGroupView
 
@@ -26,6 +27,11 @@ extension TabBrowserController {
 
             super.init(frame: frame)
 
+            addSubview(containerView)
+            containerView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+
             addSubview(topBarBackgroundView)
             topBarBackgroundView.snp.makeConstraints { make in
                 make.top.left.right.equalToSuperview()
@@ -35,7 +41,6 @@ extension TabBrowserController {
             addSubview(bottomBarBackgroundView)
             addSubview(stickyToolbar)
             addSubview(tabGroupView)
-            addSubview(containerView)
 
             tabGroupView.snp.makeConstraints { make in
                 make.left.right.bottom.equalToSuperview()
@@ -50,12 +55,6 @@ extension TabBrowserController {
             bottomBarBackgroundView.snp.makeConstraints { make in
                 make.left.right.bottom.equalToSuperview()
                 make.top.equalTo(stickyToolbar.contentView.snp.top)
-            }
-
-            containerView.snp.makeConstraints { make in
-                make.left.right.equalToSuperview()
-                make.top.equalTo(topBarBackgroundView.snp.bottom)
-                make.bottom.equalTo(bottomBarBackgroundView.snp.top)
             }
         }
 

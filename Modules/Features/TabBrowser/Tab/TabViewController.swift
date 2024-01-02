@@ -6,6 +6,7 @@ import RealmSwift
 import UIKit
 import Utils
 import WebKit
+import WebViewStickyInteraction
 
 public typealias TabViewControllerDependency = UsesWebViewManager & UsesScreenshotManager & NewTabViewControllerDependency
 
@@ -101,10 +102,10 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         return canGoForwardSubject.value
     }
 
-    private var stickyBottomBar: StickyContainerView? {
+    private var stickyBottomBar: ContainerStickyView? {
         didSet {
-            stickyInteraction?.bottomBar = stickyBottomBar
-            stickyInteraction?.update(isInteractive: false)
+            stickyInteraction?.bottomView = stickyBottomBar
+            stickyInteraction?.updateLayout(animated: false)
         }
     }
 
@@ -156,12 +157,15 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
 
             addChild(webViewContainerController)
 
-            stickyInteraction = WebViewStickyInteraction(
-                webView: webView,
-                topBar: nil,
-                bottomBar: stickyBottomBar
+            let stickyInteraction = WebViewStickyInteraction(
+                topView: nil,
+                bottomView: stickyBottomBar,
+                allowsOverwriteScrollViewDelegate: true
             )
-            webView.scrollView.delegate = stickyInteraction
+            self.stickyInteraction = stickyInteraction
+
+            webView.addInteraction(stickyInteraction)
+            webView.nfl_setCSSSafeAreaInsets(.zero)
 
             webView.uiDelegate = self
             webView.navigationDelegate = self
@@ -226,7 +230,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
 
-        stickyInteraction?.update(isInteractive: false)
+        stickyInteraction?.updateLayout(animated: false)
     }
 
     // MARK: - Actions
@@ -311,7 +315,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         }
     }
 
-    func tabDidActivate(stickyBottomBar: StickyContainerView) {
+    func tabDidActivate(stickyBottomBar: ContainerStickyView) {
         self.stickyBottomBar = stickyBottomBar
     }
 
@@ -373,11 +377,11 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
     }
 
     func webView(_: WKWebView, didStartProvisionalNavigation _: WKNavigation!) {
-        stickyInteraction?.showStickyBars(animated: true)
+        stickyInteraction?.setStickyViewsHidden(false, animated: true)
 
         omnibar.progressBar.start()
 
-        stickyInteraction?.update(isInteractive: false)
+        stickyInteraction?.updateLayout(animated: false)
     }
 
     func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {

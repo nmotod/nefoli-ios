@@ -119,6 +119,19 @@ defineModule(.Components, .target(
 ), previews: true)
 
 defineModule(.Utils, .target(
+    name: "Utils",
+    dependencies: [
+        .product(name: "SnapKit", package: "SnapKit"),
+        .target(name: "ThemeSystem"),
+    ]
+), previews: true)
+
+defineModule(.Utils, .target(
+    name: "ActionSystem",
+    dependencies: []
+), test: noTests)
+
+defineModule(.Utils, .target(
     name: "WebViewStickyInteraction"
 ), test: noTests)
 
@@ -133,21 +146,9 @@ defineModule(.Features, .target(
         .target(name: "SettingsUI"),
         .target(name: "TabManageUI"),
         .target(name: "ActionSystem"),
+        .target(name: "WebViewStickyInteraction"),
     ]
 ), previews: true)
-
-defineModule(.Utils, .target(
-    name: "Utils",
-    dependencies: [
-        .product(name: "SnapKit", package: "SnapKit"),
-        .target(name: "ThemeSystem"),
-    ]
-), previews: true)
-
-defineModule(.Utils, .target(
-    name: "ActionSystem",
-    dependencies: []
-), test: noTests)
 
 func defineModule(
     _ category: ModuleCategory,
