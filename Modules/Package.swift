@@ -132,7 +132,10 @@ defineModule(.Utils, .target(
 ), test: noTests)
 
 defineModule(.Utils, .target(
-    name: "WebViewStickyInteraction"
+    name: "WebViewStickyInteraction",
+    dependencies: [
+        .product(name: "SnapKit", package: "SnapKit"),
+    ]
 ), test: noTests)
 
 defineModule(.Features, .target(
