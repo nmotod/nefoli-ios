@@ -1,42 +1,43 @@
 import Foundation
+import SnapKit
 import UIKit
 
-class StickyContainerView: UIView, StickyView {
-    enum Position {
+public class ContainerStickyView: UIView, StickyViewProtocol {
+    public enum Position {
         case top
         case bottom
     }
 
-    let position: Position
+    public let position: Position
 
-    let contentView = UIView()
+    public let contentView = UIView()
 
-    var maximumHeight: CGFloat { frame.height }
+    public var maxHeight: CGFloat { frame.height }
 
-    var minimumHeight: CGFloat = 0
+    public var minHeight: CGFloat = 0
 
-    var percentHidden: CGFloat = 0 {
+    public var currentPercentHidden: CGFloat = 0 {
         didSet {
             switch position {
             case .top:
-                hiddenOffsetConstraint.update(offset: -hiddenHeight)
+                hiddenOffsetConstraint.update(offset: -currentHiddenHeight)
 
             case .bottom:
-                hiddenOffsetConstraint.update(offset: hiddenHeight)
+                hiddenOffsetConstraint.update(offset: currentHiddenHeight)
             }
 
-            contentView.alpha = 1 - percentHidden
-            isUserInteractionEnabled = percentHidden < 1
+            contentView.alpha = 1 - currentPercentHidden
+            isUserInteractionEnabled = currentPercentHidden < 1
         }
     }
 
-    var hiddenHeight: CGFloat {
-        return minimumHeight + (maximumHeight - minimumHeight) * percentHidden
+    public var currentHiddenHeight: CGFloat {
+        return minHeight + (maxHeight - minHeight) * currentPercentHidden
     }
 
     private var hiddenOffsetConstraint: Constraint!
 
-    init(position: Position) {
+    public init(position: Position) {
         self.position = position
 
         super.init(frame: .zero)
@@ -59,9 +60,5 @@ class StickyContainerView: UIView, StickyView {
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    func layoutSuperviewIfNeeded() {
-        superview?.layoutIfNeeded()
     }
 }

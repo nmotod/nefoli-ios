@@ -118,6 +118,10 @@ defineModule(.Components, .target(
     ]
 ), previews: true)
 
+defineModule(.Utils, .target(
+    name: "WebViewStickyInteraction"
+), test: noTests)
+
 defineModule(.Features, .target(
     name: "TabBrowser",
     dependencies: [
