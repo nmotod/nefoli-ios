@@ -4,11 +4,15 @@ import ThemeSystem
 import UIKit
 
 class Omnibar: UIStackView {
-    static let defaultHeight: CGFloat = 60
+    static let defaultHeight: CGFloat = 58
+
+    static let addressBarInnerHeight: CGFloat = 40
+
+    static let addressBarBorderInsetY: CGFloat = (defaultHeight - addressBarInnerHeight) / 2
 
     let addressBar = AddressBar(
-        frame: .init(x: 0, y: 0, width: 50, height: 50),
-        borderInsets: .init(top: 10, left: 0, bottom: 10, right: 0)
+        frame: .init(x: 0, y: 0, width: 50, height: defaultHeight),
+        borderInsets: .init(top: addressBarBorderInsetY, left: 0, bottom: addressBarBorderInsetY, right: 0)
     )
 
     let progressBar = ProgressBar()

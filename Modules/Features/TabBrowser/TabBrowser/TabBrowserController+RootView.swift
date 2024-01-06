@@ -49,7 +49,7 @@ extension TabBrowserController {
             stickyToolbar.snp.makeConstraints { make in
                 make.left.right.equalToSuperview()
                 make.bottom.equalTo(tabGroupView.snp.top)
-                make.height.equalTo(60)
+                make.height.equalTo(Omnibar.defaultHeight)
             }
 
             bottomBarBackgroundView.snp.makeConstraints { make in
