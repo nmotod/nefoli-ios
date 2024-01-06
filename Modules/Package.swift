@@ -53,7 +53,6 @@ defineModule(.Components, .target(
         .product(name: "RealmSwift", package: "realm-swift"),
     ]
 ), test: { (target: Target) in
-    var target = target
     target.resources = [.process("Resources")]
     return target
 })
