@@ -23,6 +23,8 @@
 		2CC9678E2B4BBB2400726505 /* ActionRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51AA9B296FBD9200FA0963 /* ActionRequestHandler.swift */; };
 		2CC9678F2B4BBB2400726505 /* OpenInExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C51AA9C296FBD9200FA0963 /* OpenInExtension.m */; };
 		2CC967972B4BBBBC00726505 /* OpenIn.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2CC967952B4BBB2400726505 /* OpenIn.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2CC9679A2B4BBD7F00726505 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CA7AB092AD136760017E6D3 /* GoogleService-Info.plist */; };
+		2CC9679B2B4BBD8200726505 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CA7AB102AD161960017E6D3 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -306,7 +308,6 @@
 				2C3AD5C72AD3AAB100B04536 /* Sources */,
 				2C3AD5C92AD3AAB100B04536 /* Frameworks */,
 				2C3AD5CB2AD3AAB100B04536 /* Resources */,
-				2C3AD5EE2AD3B04B00B04536 /* Copy Bundle Resources (Conditional) */,
 				2C3AD5D02AD3AAB100B04536 /* Embed Frameworks */,
 				2C3AD5F62AD3CDF800B04536 /* Embed Foundation Extensions */,
 				2C3AD5D32AD3AAB100B04536 /* [Crashlytics] Upload dSYM */,
@@ -349,7 +350,6 @@
 				2CC9677A2B4BBAEC00726505 /* Sources */,
 				2CC9677C2B4BBAEC00726505 /* Frameworks */,
 				2CC9677E2B4BBAEC00726505 /* Resources */,
-				2CC967822B4BBAEC00726505 /* Copy Bundle Resources (Conditional) */,
 				2CC967832B4BBAEC00726505 /* Embed Frameworks */,
 				2CC967842B4BBAEC00726505 /* Embed Foundation Extensions */,
 				2CC967862B4BBAEC00726505 /* [Crashlytics] Upload dSYM */,
@@ -422,6 +422,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C3AD5CC2AD3AAB100B04536 /* LaunchScreen.storyboard in Resources */,
+				2CC9679A2B4BBD7F00726505 /* GoogleService-Info.plist in Resources */,
 				2C3AD5CD2AD3AAB100B04536 /* Assets.xcassets in Resources */,
 				2C3AD5CF2AD3AAB100B04536 /* infoPlist.strings in Resources */,
 			);
@@ -439,6 +440,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CC9677F2B4BBAEC00726505 /* LaunchScreen.storyboard in Resources */,
+				2CC9679B2B4BBD8200726505 /* GoogleService-Info.plist in Resources */,
 				2CC967802B4BBAEC00726505 /* Assets.xcassets in Resources */,
 				2CC967812B4BBAEC00726505 /* infoPlist.strings in Resources */,
 			);
@@ -498,26 +500,6 @@
 			shellPath = /bin/sh;
 			shellScript = "# @see https://firebase.google.com/docs/crashlytics/get-started?platform=ios&authuser=2&hl=ja\n# @see https://firebase.google.com/docs/crashlytics/get-deobfuscated-reports?hl=ja&authuser=2&platform=ios\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
 		};
-		2C3AD5EE2AD3B04B00B04536 /* Copy Bundle Resources (Conditional) */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Sources/nefoli/Resources",
-			);
-			name = "Copy Bundle Resources (Conditional)";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_FOLDER_PATH)/GoogleService-Info.plist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -eu\n     \ncase \"$CONFIGURATION\" in\ndev.*)\n    subdir=dev\n    ;;\nprod.*)\n    subdir=prod\n    ;;\n*)\n    echo \"[ERROR] Unnown configuration: $CONFIGURATION\" >&2\n    exit 1\n    ;;\nesac\n\ncp -v \"$SRCROOT/Sources/nefoli/Resources/$subdir/GoogleService-Info.plist\" \\\n    \"$BUILT_PRODUCTS_DIR/$EXECUTABLE_FOLDER_PATH/GoogleService-Info.plist\"\n";
-		};
 		2CC967792B4BBAEC00726505 /* SwiftFormat --lint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -536,26 +518,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# @see https://github.com/nicklockwood/SwiftFormat/blob/0.50.6/README.md#xcode-build-phase\ncd ../BuildTools\n\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\n# Lint while project\nswift run swiftformat --lint --lenient \"$SRCROOT/..\"\n";
-		};
-		2CC967822B4BBAEC00726505 /* Copy Bundle Resources (Conditional) */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Sources/nefoli/Resources",
-			);
-			name = "Copy Bundle Resources (Conditional)";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_FOLDER_PATH)/GoogleService-Info.plist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -eu\n     \ncase \"$CONFIGURATION\" in\ndev.*)\n    subdir=dev\n    ;;\nprod.*)\n    subdir=prod\n    ;;\n*)\n    echo \"[ERROR] Unnown configuration: $CONFIGURATION\" >&2\n    exit 1\n    ;;\nesac\n\ncp -v \"$SRCROOT/Sources/nefoli/Resources/$subdir/GoogleService-Info.plist\" \\\n    \"$BUILT_PRODUCTS_DIR/$EXECUTABLE_FOLDER_PATH/GoogleService-Info.plist\"\n";
 		};
 		2CC967862B4BBAEC00726505 /* [Crashlytics] Upload dSYM */ = {
 			isa = PBXShellScriptBuildPhase;
