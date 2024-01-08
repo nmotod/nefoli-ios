@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2C8563CA297D09E20003D442"
+               BlueprintIdentifier = "2CC967752B4BBAEC00726505"
                BuildableName = "nefoli.app"
                BlueprintName = "nefoli-prod"
                ReferencedContainer = "container:App.xcodeproj">
@@ -31,7 +31,7 @@
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "prod.Debug"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -44,21 +44,12 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2C3AD5C22AD3AAB100B04536"
-            BuildableName = "nefoli.app"
-            BlueprintName = "nefoli"
-            ReferencedContainer = "container:App.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2C8563CA297D09E20003D442"
+            BlueprintIdentifier = "2CC967752B4BBAEC00726505"
             BuildableName = "nefoli.app"
             BlueprintName = "nefoli-prod"
             ReferencedContainer = "container:App.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -66,15 +57,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2C8563CA297D09E20003D442"
+            BlueprintIdentifier = "2CC967752B4BBAEC00726505"
             BuildableName = "nefoli.app"
             BlueprintName = "nefoli-prod"
             ReferencedContainer = "container:App.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

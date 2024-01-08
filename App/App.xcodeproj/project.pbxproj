@@ -14,7 +14,15 @@
 		2C3AD5CF2AD3AAB100B04536 /* infoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C367ECB294ED2B00077380E /* infoPlist.strings */; };
 		2C3AD5E22AD3ADF000B04536 /* ActionRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51AA9B296FBD9200FA0963 /* ActionRequestHandler.swift */; };
 		2C3AD5E32AD3ADF000B04536 /* OpenInExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C51AA9C296FBD9200FA0963 /* OpenInExtension.m */; };
-		2C3AD5F32AD3CDF800B04536 /* OpenIn.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2C3AD5EB2AD3ADF000B04536 /* OpenIn.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2C3AD5F32AD3CDF800B04536 /* OpenIn-dev.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2C3AD5EB2AD3ADF000B04536 /* OpenIn-dev.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2CC9677B2B4BBAEC00726505 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C367EA6294DC3590077380E /* main.swift */; };
+		2CC9677D2B4BBAEC00726505 /* AppEntryPoint in Frameworks */ = {isa = PBXBuildFile; productRef = 2CC967782B4BBAEC00726505 /* AppEntryPoint */; };
+		2CC9677F2B4BBAEC00726505 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C367EB1294DC35A0077380E /* LaunchScreen.storyboard */; };
+		2CC967802B4BBAEC00726505 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C367EAF294DC35A0077380E /* Assets.xcassets */; };
+		2CC967812B4BBAEC00726505 /* infoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C367ECB294ED2B00077380E /* infoPlist.strings */; };
+		2CC9678E2B4BBB2400726505 /* ActionRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51AA9B296FBD9200FA0963 /* ActionRequestHandler.swift */; };
+		2CC9678F2B4BBB2400726505 /* OpenInExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C51AA9C296FBD9200FA0963 /* OpenInExtension.m */; };
+		2CC967972B4BBBBC00726505 /* OpenIn.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2CC967952B4BBB2400726505 /* OpenIn.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,6 +32,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 2C3AD5E02AD3ADF000B04536;
 			remoteInfo = OpenIn;
+		};
+		2CC967982B4BBBBC00726505 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C367E9B294DC3590077380E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2CC9678C2B4BBB2400726505;
+			remoteInfo = "OpenIn-prod";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -44,7 +59,28 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				2C3AD5F32AD3CDF800B04536 /* OpenIn.appex in Embed Foundation Extensions */,
+				2C3AD5F32AD3CDF800B04536 /* OpenIn-dev.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CC967832B4BBAEC00726505 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CC967842B4BBAEC00726505 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2CC967972B4BBBBC00726505 /* OpenIn.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -61,8 +97,8 @@
 		2C367ECC294ED2C40077380E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/infoPlist.strings; sourceTree = "<group>"; };
 		2C367ECD294EE8D40077380E /* BuildTools */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BuildTools; path = ../BuildTools; sourceTree = "<group>"; };
 		2C367EDA294EE9350077380E /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../BuildTools/Package.swift; sourceTree = "<group>"; };
-		2C3AD5D82AD3AAB100B04536 /* nefoli.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nefoli.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		2C3AD5EB2AD3ADF000B04536 /* OpenIn.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenIn.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C3AD5D82AD3AAB100B04536 /* nefoli-dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nefoli-dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C3AD5EB2AD3ADF000B04536 /* OpenIn-dev.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "OpenIn-dev.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C51AA2E296D451200FA0963 /* Base.Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.Debug.xcconfig; sourceTree = "<group>"; };
 		2C51AA2F296D451200FA0963 /* Base.Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.Release.xcconfig; sourceTree = "<group>"; };
 		2C51AA35296D451200FA0963 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
@@ -89,6 +125,8 @@
 		2C51AAA0296FC09D00FA0963 /* prod.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = prod.xcconfig; sourceTree = "<group>"; };
 		2CA7AB092AD136760017E6D3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2CA7AB102AD161960017E6D3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2CC9678A2B4BBAEC00726505 /* nefoli.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nefoli.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CC967952B4BBB2400726505 /* OpenIn.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenIn.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +139,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2C3AD5E42AD3ADF000B04536 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CC9677C2B4BBAEC00726505 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CC9677D2B4BBAEC00726505 /* AppEntryPoint in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CC967902B4BBB2400726505 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -123,8 +176,10 @@
 		2C367EA4294DC3590077380E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2C3AD5D82AD3AAB100B04536 /* nefoli.app */,
-				2C3AD5EB2AD3ADF000B04536 /* OpenIn.appex */,
+				2C3AD5D82AD3AAB100B04536 /* nefoli-dev.app */,
+				2C3AD5EB2AD3ADF000B04536 /* OpenIn-dev.appex */,
+				2CC9678A2B4BBAEC00726505 /* nefoli.app */,
+				2CC967952B4BBB2400726505 /* OpenIn.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -243,9 +298,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2C3AD5C22AD3AAB100B04536 /* nefoli */ = {
+		2C3AD5C22AD3AAB100B04536 /* nefoli-dev */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2C3AD5D42AD3AAB100B04536 /* Build configuration list for PBXNativeTarget "nefoli" */;
+			buildConfigurationList = 2C3AD5D42AD3AAB100B04536 /* Build configuration list for PBXNativeTarget "nefoli-dev" */;
 			buildPhases = (
 				2C3AD5C62AD3AAB100B04536 /* SwiftFormat --lint */,
 				2C3AD5C72AD3AAB100B04536 /* Sources */,
@@ -261,17 +316,17 @@
 			dependencies = (
 				2C3AD5F52AD3CDF800B04536 /* PBXTargetDependency */,
 			);
-			name = nefoli;
+			name = "nefoli-dev";
 			packageProductDependencies = (
 				2C3094702AD4039F0080BB06 /* AppEntryPoint */,
 			);
 			productName = "nefoli-iOS";
-			productReference = 2C3AD5D82AD3AAB100B04536 /* nefoli.app */;
+			productReference = 2C3AD5D82AD3AAB100B04536 /* nefoli-dev.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2C3AD5E02AD3ADF000B04536 /* OpenIn */ = {
+		2C3AD5E02AD3ADF000B04536 /* OpenIn-dev */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2C3AD5E62AD3ADF000B04536 /* Build configuration list for PBXNativeTarget "OpenIn" */;
+			buildConfigurationList = 2C3AD5E62AD3ADF000B04536 /* Build configuration list for PBXNativeTarget "OpenIn-dev" */;
 			buildPhases = (
 				2C3AD5E12AD3ADF000B04536 /* Sources */,
 				2C3AD5E42AD3ADF000B04536 /* Frameworks */,
@@ -281,9 +336,52 @@
 			);
 			dependencies = (
 			);
-			name = OpenIn;
+			name = "OpenIn-dev";
 			productName = OpenIn;
-			productReference = 2C3AD5EB2AD3ADF000B04536 /* OpenIn.appex */;
+			productReference = 2C3AD5EB2AD3ADF000B04536 /* OpenIn-dev.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		2CC967752B4BBAEC00726505 /* nefoli-prod */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CC967872B4BBAEC00726505 /* Build configuration list for PBXNativeTarget "nefoli-prod" */;
+			buildPhases = (
+				2CC967792B4BBAEC00726505 /* SwiftFormat --lint */,
+				2CC9677A2B4BBAEC00726505 /* Sources */,
+				2CC9677C2B4BBAEC00726505 /* Frameworks */,
+				2CC9677E2B4BBAEC00726505 /* Resources */,
+				2CC967822B4BBAEC00726505 /* Copy Bundle Resources (Conditional) */,
+				2CC967832B4BBAEC00726505 /* Embed Frameworks */,
+				2CC967842B4BBAEC00726505 /* Embed Foundation Extensions */,
+				2CC967862B4BBAEC00726505 /* [Crashlytics] Upload dSYM */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2CC967992B4BBBBC00726505 /* PBXTargetDependency */,
+			);
+			name = "nefoli-prod";
+			packageProductDependencies = (
+				2CC967782B4BBAEC00726505 /* AppEntryPoint */,
+			);
+			productName = "nefoli-iOS";
+			productReference = 2CC9678A2B4BBAEC00726505 /* nefoli.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2CC9678C2B4BBB2400726505 /* OpenIn-prod */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CC967922B4BBB2400726505 /* Build configuration list for PBXNativeTarget "OpenIn-prod" */;
+			buildPhases = (
+				2CC9678D2B4BBB2400726505 /* Sources */,
+				2CC967902B4BBB2400726505 /* Frameworks */,
+				2CC967912B4BBB2400726505 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "OpenIn-prod";
+			productName = OpenIn;
+			productReference = 2CC967952B4BBB2400726505 /* OpenIn.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -310,8 +408,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2C3AD5C22AD3AAB100B04536 /* nefoli */,
-				2C3AD5E02AD3ADF000B04536 /* OpenIn */,
+				2CC967752B4BBAEC00726505 /* nefoli-prod */,
+				2C3AD5C22AD3AAB100B04536 /* nefoli-dev */,
+				2CC9678C2B4BBB2400726505 /* OpenIn-prod */,
+				2C3AD5E02AD3ADF000B04536 /* OpenIn-dev */,
 			);
 		};
 /* End PBXProject section */
@@ -328,6 +428,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2C3AD5E52AD3ADF000B04536 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CC9677E2B4BBAEC00726505 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CC9677F2B4BBAEC00726505 /* LaunchScreen.storyboard in Resources */,
+				2CC967802B4BBAEC00726505 /* Assets.xcassets in Resources */,
+				2CC967812B4BBAEC00726505 /* infoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CC967912B4BBB2400726505 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -401,6 +518,70 @@
 			shellPath = /bin/sh;
 			shellScript = "set -eu\n     \ncase \"$CONFIGURATION\" in\ndev.*)\n    subdir=dev\n    ;;\nprod.*)\n    subdir=prod\n    ;;\n*)\n    echo \"[ERROR] Unnown configuration: $CONFIGURATION\" >&2\n    exit 1\n    ;;\nesac\n\ncp -v \"$SRCROOT/Sources/nefoli/Resources/$subdir/GoogleService-Info.plist\" \\\n    \"$BUILT_PRODUCTS_DIR/$EXECUTABLE_FOLDER_PATH/GoogleService-Info.plist\"\n";
 		};
+		2CC967792B4BBAEC00726505 /* SwiftFormat --lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "SwiftFormat --lint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# @see https://github.com/nicklockwood/SwiftFormat/blob/0.50.6/README.md#xcode-build-phase\ncd ../BuildTools\n\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\n# Lint while project\nswift run swiftformat --lint --lenient \"$SRCROOT/..\"\n";
+		};
+		2CC967822B4BBAEC00726505 /* Copy Bundle Resources (Conditional) */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Sources/nefoli/Resources",
+			);
+			name = "Copy Bundle Resources (Conditional)";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_FOLDER_PATH)/GoogleService-Info.plist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -eu\n     \ncase \"$CONFIGURATION\" in\ndev.*)\n    subdir=dev\n    ;;\nprod.*)\n    subdir=prod\n    ;;\n*)\n    echo \"[ERROR] Unnown configuration: $CONFIGURATION\" >&2\n    exit 1\n    ;;\nesac\n\ncp -v \"$SRCROOT/Sources/nefoli/Resources/$subdir/GoogleService-Info.plist\" \\\n    \"$BUILT_PRODUCTS_DIR/$EXECUTABLE_FOLDER_PATH/GoogleService-Info.plist\"\n";
+		};
+		2CC967862B4BBAEC00726505 /* [Crashlytics] Upload dSYM */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = "[Crashlytics] Upload dSYM";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# @see https://firebase.google.com/docs/crashlytics/get-started?platform=ios&authuser=2&hl=ja\n# @see https://firebase.google.com/docs/crashlytics/get-deobfuscated-reports?hl=ja&authuser=2&platform=ios\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -421,13 +602,35 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2CC9677A2B4BBAEC00726505 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CC9677B2B4BBAEC00726505 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CC9678D2B4BBB2400726505 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CC9678E2B4BBB2400726505 /* ActionRequestHandler.swift in Sources */,
+				2CC9678F2B4BBB2400726505 /* OpenInExtension.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		2C3AD5F52AD3CDF800B04536 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2C3AD5E02AD3ADF000B04536 /* OpenIn */;
+			target = 2C3AD5E02AD3ADF000B04536 /* OpenIn-dev */;
 			targetProxy = 2C3AD5F42AD3CDF800B04536 /* PBXContainerItemProxy */;
+		};
+		2CC967992B4BBBBC00726505 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2CC9678C2B4BBB2400726505 /* OpenIn-prod */;
+			targetProxy = 2CC967982B4BBBBC00726505 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -470,7 +673,7 @@
 		};
 		2C3AD5D52AD3AAB100B04536 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C51AA52296D497C00FA0963 /* nefoli-prod.Debug.xcconfig */;
+			baseConfigurationReference = 2C51AA38296D484B00FA0963 /* nefoli-dev.Debug.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
 				MARKETING_VERSION = 1.0;
@@ -479,7 +682,7 @@
 		};
 		2C3AD5D72AD3AAB100B04536 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C51AA55296D4CE600FA0963 /* nefoli-prod.Release.xcconfig */;
+			baseConfigurationReference = 2C51AA54296D4CDB00FA0963 /* nefoli-dev.Release.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
 				MARKETING_VERSION = 1.0;
@@ -488,7 +691,7 @@
 		};
 		2C3AD5E72AD3ADF000B04536 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C51AA8E296FB86500FA0963 /* OpenIn-prod.Debug.xcconfig */;
+			baseConfigurationReference = 2C51AA87296FB65B00FA0963 /* OpenIn-dev.Debug.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
 				MARKETING_VERSION = 1.0;
@@ -496,6 +699,42 @@
 			name = Debug;
 		};
 		2C3AD5E92AD3ADF000B04536 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C51AA8F296FB8B400FA0963 /* OpenIn-dev.Release.xcconfig */;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				MARKETING_VERSION = 1.0;
+			};
+			name = Release;
+		};
+		2CC967882B4BBAEC00726505 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C51AA52296D497C00FA0963 /* nefoli-prod.Debug.xcconfig */;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				MARKETING_VERSION = 1.0;
+			};
+			name = Debug;
+		};
+		2CC967892B4BBAEC00726505 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C51AA55296D4CE600FA0963 /* nefoli-prod.Release.xcconfig */;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				MARKETING_VERSION = 1.0;
+			};
+			name = Release;
+		};
+		2CC967932B4BBB2400726505 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C51AA8E296FB86500FA0963 /* OpenIn-prod.Debug.xcconfig */;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				MARKETING_VERSION = 1.0;
+			};
+			name = Debug;
+		};
+		2CC967942B4BBB2400726505 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2C51AA90296FB8C600FA0963 /* OpenIn-prod.Release.xcconfig */;
 			buildSettings = {
@@ -516,7 +755,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2C3AD5D42AD3AAB100B04536 /* Build configuration list for PBXNativeTarget "nefoli" */ = {
+		2C3AD5D42AD3AAB100B04536 /* Build configuration list for PBXNativeTarget "nefoli-dev" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2C3AD5D52AD3AAB100B04536 /* Debug */,
@@ -525,7 +764,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2C3AD5E62AD3ADF000B04536 /* Build configuration list for PBXNativeTarget "OpenIn" */ = {
+		2C3AD5E62AD3ADF000B04536 /* Build configuration list for PBXNativeTarget "OpenIn-dev" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2C3AD5E72AD3ADF000B04536 /* Debug */,
@@ -534,10 +773,32 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		2CC967872B4BBAEC00726505 /* Build configuration list for PBXNativeTarget "nefoli-prod" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CC967882B4BBAEC00726505 /* Debug */,
+				2CC967892B4BBAEC00726505 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2CC967922B4BBB2400726505 /* Build configuration list for PBXNativeTarget "OpenIn-prod" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CC967932B4BBB2400726505 /* Debug */,
+				2CC967942B4BBB2400726505 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		2C3094702AD4039F0080BB06 /* AppEntryPoint */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppEntryPoint;
+		};
+		2CC967782B4BBAEC00726505 /* AppEntryPoint */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppEntryPoint;
 		};

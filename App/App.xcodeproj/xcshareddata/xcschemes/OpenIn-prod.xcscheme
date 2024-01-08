@@ -15,9 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2C3AD5E02AD3ADF000B04536"
-               BuildableName = "OpenIn-dev.appex"
-               BlueprintName = "OpenIn-dev"
+               BlueprintIdentifier = "2CC9678C2B4BBB2400726505"
+               BuildableName = "OpenIn.appex"
+               BlueprintName = "OpenIn-prod"
                ReferencedContainer = "container:App.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,9 +29,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2C3AD5C22AD3AAB100B04536"
-               BuildableName = "nefoli-dev.app"
-               BlueprintName = "nefoli-dev"
+               BlueprintIdentifier = "2CC967752B4BBAEC00726505"
+               BuildableName = "nefoli.app"
+               BlueprintName = "nefoli-prod"
                ReferencedContainer = "container:App.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -59,37 +59,36 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2C3AD5C22AD3AAB100B04536"
-            BuildableName = "nefoli-dev.app"
-            BlueprintName = "nefoli-dev"
+            BlueprintIdentifier = "2CC967752B4BBAEC00726505"
+            BuildableName = "nefoli.app"
+            BlueprintName = "nefoli-prod"
             ReferencedContainer = "container:App.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES"
       askForAppToLaunch = "Yes"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2C3AD5C22AD3AAB100B04536"
-            BuildableName = "nefoli-dev.app"
-            BlueprintName = "nefoli-dev"
+            BlueprintIdentifier = "2CC9678C2B4BBB2400726505"
+            BuildableName = "OpenIn.appex"
+            BlueprintName = "OpenIn-prod"
             ReferencedContainer = "container:App.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
