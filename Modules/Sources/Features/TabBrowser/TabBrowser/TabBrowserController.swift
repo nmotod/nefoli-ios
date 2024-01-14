@@ -153,6 +153,8 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
         if willCloseActiveTab {
             activeTabDidChange()
         }
+
+        pruneViewControllers()
     }
 
     func restoreClosedTab(_ sender: Any?) {
