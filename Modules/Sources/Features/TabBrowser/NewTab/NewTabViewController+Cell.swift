@@ -48,11 +48,10 @@ extension NewTabViewController {
                 make.width.height.equalTo(Self.iconSize)
             }
 
-            iconImageView.contentMode = .scaleAspectFit
+            iconImageView.contentMode = .scaleAspectFill
             iconView.addSubview(iconImageView)
             iconImageView.snp.makeConstraints { make in
-                make.center.equalToSuperview()
-                make.width.height.lessThanOrEqualToSuperview()
+                make.edges.equalToSuperview()
             }
 
             titleLabel.font = Self.titleFont
