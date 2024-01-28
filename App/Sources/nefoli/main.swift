@@ -1,4 +1,4 @@
-import AppEntryPoint
+import NFLAppEntryPoint
 import UIKit
 
 UIApplicationMain(

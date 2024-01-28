@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2C3094712AD4039F0080BB06 /* AppEntryPoint in Frameworks */ = {isa = PBXBuildFile; productRef = 2C3094702AD4039F0080BB06 /* AppEntryPoint */; };
 		2C3AD5C82AD3AAB100B04536 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C367EA6294DC3590077380E /* main.swift */; };
 		2C3AD5CC2AD3AAB100B04536 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C367EB1294DC35A0077380E /* LaunchScreen.storyboard */; };
 		2C3AD5CD2AD3AAB100B04536 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C367EAF294DC35A0077380E /* Assets.xcassets */; };
@@ -15,8 +14,9 @@
 		2C3AD5E22AD3ADF000B04536 /* ActionRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51AA9B296FBD9200FA0963 /* ActionRequestHandler.swift */; };
 		2C3AD5E32AD3ADF000B04536 /* OpenInExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C51AA9C296FBD9200FA0963 /* OpenInExtension.m */; };
 		2C3AD5F32AD3CDF800B04536 /* OpenIn-dev.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2C3AD5EB2AD3ADF000B04536 /* OpenIn-dev.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2C8E90592B6617EF008A221A /* NFLAppEntryPoint in Frameworks */ = {isa = PBXBuildFile; productRef = 2C8E90582B6617EF008A221A /* NFLAppEntryPoint */; };
+		2C8E905B2B6617FA008A221A /* NFLAppEntryPoint in Frameworks */ = {isa = PBXBuildFile; productRef = 2C8E905A2B6617FA008A221A /* NFLAppEntryPoint */; };
 		2CC9677B2B4BBAEC00726505 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C367EA6294DC3590077380E /* main.swift */; };
-		2CC9677D2B4BBAEC00726505 /* AppEntryPoint in Frameworks */ = {isa = PBXBuildFile; productRef = 2CC967782B4BBAEC00726505 /* AppEntryPoint */; };
 		2CC9677F2B4BBAEC00726505 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C367EB1294DC35A0077380E /* LaunchScreen.storyboard */; };
 		2CC967802B4BBAEC00726505 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C367EAF294DC35A0077380E /* Assets.xcassets */; };
 		2CC967812B4BBAEC00726505 /* infoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C367ECB294ED2B00077380E /* infoPlist.strings */; };
@@ -136,7 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C3094712AD4039F0080BB06 /* AppEntryPoint in Frameworks */,
+				2C8E90592B6617EF008A221A /* NFLAppEntryPoint in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,7 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CC9677D2B4BBAEC00726505 /* AppEntryPoint in Frameworks */,
+				2C8E905B2B6617FA008A221A /* NFLAppEntryPoint in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,7 +319,7 @@
 			);
 			name = "nefoli-dev";
 			packageProductDependencies = (
-				2C3094702AD4039F0080BB06 /* AppEntryPoint */,
+				2C8E90582B6617EF008A221A /* NFLAppEntryPoint */,
 			);
 			productName = "nefoli-iOS";
 			productReference = 2C3AD5D82AD3AAB100B04536 /* nefoli-dev.app */;
@@ -361,7 +361,7 @@
 			);
 			name = "nefoli-prod";
 			packageProductDependencies = (
-				2CC967782B4BBAEC00726505 /* AppEntryPoint */,
+				2C8E905A2B6617FA008A221A /* NFLAppEntryPoint */,
 			);
 			productName = "nefoli-iOS";
 			productReference = 2CC9678A2B4BBAEC00726505 /* nefoli.app */;
@@ -756,13 +756,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		2C3094702AD4039F0080BB06 /* AppEntryPoint */ = {
+		2C8E90582B6617EF008A221A /* NFLAppEntryPoint */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = AppEntryPoint;
+			productName = NFLAppEntryPoint;
 		};
-		2CC967782B4BBAEC00726505 /* AppEntryPoint */ = {
+		2C8E905A2B6617FA008A221A /* NFLAppEntryPoint */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = AppEntryPoint;
+			productName = NFLAppEntryPoint;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

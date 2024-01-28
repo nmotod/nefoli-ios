@@ -1,6 +1,6 @@
 import Foundation
+import NFLThemeSystem
 import SnapKit
-import ThemeSystem
 import UIKit
 
 private let backgroundColor = ThemeColors.backgroundDark.color
