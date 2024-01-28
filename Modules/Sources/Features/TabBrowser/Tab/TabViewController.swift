@@ -14,6 +14,8 @@ protocol TabViewControllerDelegate: AnyObject {
     func tabVC(_ tabVC: TabViewController, searchWeb text: String)
 
     func tabVC(_ tabVC: TabViewController, willShowNewTabVC newTabVC: NewTabViewController)
+
+    func open(tab: Tab, from tabVC: TabViewController)
 }
 
 class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, NewTabViewControllerDelegate, AddressEditViewControllerDelegate {
@@ -38,7 +40,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
     var stickyBar: UIView { omnibar }
 
     private lazy var omnibar: Omnibar = {
-        let omnibar = Omnibar()
+        let omnibar = Omnibar(frame: .init(x: 0, y: 0, width: 300, height: Omnibar.defaultHeight))
 
         omnibar.addressBar.contentConfiguration = addressBarContentConfiguration
 
@@ -76,12 +78,8 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
               let tab = self.tab
         else { return }
 
-        try! tab.realm!.write {
-            tab.group!.add(tab: .init(initialURL: linkURL), options: .init(
-                activate: false,
-                position: .afterActive
-            ))
-        }
+        let newTab = Tab(initialURL: linkURL)
+        delegate?.open(tab: newTab, from: self)
     }
 
     private let canGoBackSubject = CurrentValueSubject<Bool, Never>(false)

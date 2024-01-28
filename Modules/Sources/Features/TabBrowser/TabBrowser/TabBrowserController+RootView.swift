@@ -22,10 +22,18 @@ extension TabBrowserController {
 
         let containerView = UIView()
 
+        let preloadingView = UIView()
+
         init(frame: CGRect, dependency: TabBrowserControllerDependency) {
             tabGroupView = .init(frame: .zero, style: .default, dependency: dependency)
 
             super.init(frame: frame)
+
+            preloadingView.isHidden = true
+            addSubview(preloadingView)
+            preloadingView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
 
             addSubview(containerView)
             containerView.snp.makeConstraints { make in

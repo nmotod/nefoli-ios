@@ -286,6 +286,25 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
         activeTabDidChange()
     }
 
+    private func preload(tab: Tab) {
+        guard let rootView = rootView else {
+            return
+        }
+
+        let newVC = ensureVC(tab: tab)
+
+        addChild(newVC)
+
+        rootView.preloadingView.addSubview(newVC.view)
+        newVC.view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
+        newVC.didMove(toParent: self)
+
+        applySafeAreaInsetsToChildren()
+    }
+
     // MARK: - TabGroupView
 
     func tabGroupView(_: TabGroupView, didSelectTabAt index: Int) {
@@ -312,8 +331,15 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
     public func open(tab: Tab, options: TabGroup.AddingOptions) throws {
         guard let group = group else { fatalError() }
 
-        try group.realm!.write {
+        try group.realm!.write(withoutNotifying: groupTokens) {
             group.add(tab: tab, options: options)
+        }
+
+        if options.activate {
+            activeTabDidChange()
+
+        } else {
+            preload(tab: tab)
         }
     }
 
@@ -371,5 +397,9 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
             UIBarButtonItem(primaryAction: makeUIAction(type: TabBrowserActionType.bookmarks)),
             UIBarButtonItem(primaryAction: makeUIAction(type: TabBrowserActionType.settings)),
         ]
+    }
+
+    func open(tab: Tab, from tabVC: TabViewController) {
+        try! open(tab: tab, options: .init(activate: false, position: .afterActive))
     }
 }
