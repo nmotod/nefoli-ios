@@ -85,7 +85,9 @@ class ProgressBar: UIView {
 
         progress = 0
 
-        updatingTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateProgressFromProvider), userInfo: nil, repeats: true)
+        updatingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { [weak self] _ in
+            self?.updateProgressFromProvider()
+        })
 
         UIView.animate(withDuration: 0.1, animations: {
             self.indicatorView.alpha = 1
@@ -96,7 +98,7 @@ class ProgressBar: UIView {
         updatingTimer = nil
     }
 
-    @objc private func updateProgressFromProvider() {
+    private func updateProgressFromProvider() {
         progress = progressProvider?() ?? 0.0
 
         redrawIndicator()
