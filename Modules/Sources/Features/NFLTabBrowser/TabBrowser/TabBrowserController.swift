@@ -2,6 +2,7 @@ import ActionSystem
 import Foundation
 import NFLBookmark
 import NFLDatabase
+import NFLMenuSheet
 import NFLSettings
 import NFLThemeSystem
 import RealmSwift

@@ -117,11 +117,18 @@ defineModule(.Components, .target(
     ]
 ), previews: true)
 
+defineModule(.Components, .target(
+    name: "NFLMenuSheet",
+    dependencies: [
+        .target(name: "NFLThemeSystem"),
+        .target(name: "Utils"),
+    ]
+), test: noTests, previews: true)
+
 defineModule(.Utils, .target(
     name: "Utils",
     dependencies: [
         .product(name: "SnapKit", package: "SnapKit"),
-        .target(name: "NFLThemeSystem"),
     ]
 ), previews: true)
 
@@ -147,6 +154,7 @@ defineModule(.Features, .target(
         .target(name: "NFLBookmark"),
         .target(name: "NFLSettings"),
         .target(name: "NFLTabManager"),
+        .target(name: "NFLMenuSheet"),
         .target(name: "ActionSystem"),
         .target(name: "WebViewStickyInteraction"),
     ]
