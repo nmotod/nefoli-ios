@@ -7,8 +7,8 @@ extension TabGroup {
     }
 
     public struct AddingOptions {
-        var activate: Bool
-        var position: AddingPosition
+        public var activate: Bool
+        public var position: AddingPosition
 
         public init(activate: Bool, position: AddingPosition) {
             self.activate = activate
