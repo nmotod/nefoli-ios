@@ -3,7 +3,7 @@ import Foundation
 class BundleToken {
     // https://forums.swift.org/t/unable-to-find-bundle-in-package-target-tests-when-package-depends-on-another-package-containing-resources-accessed-via-bundle-module/43974/5
     static var bundle: Bundle = {
-        let bundleName = "Modules_ThemeSystem"
+        let bundleName = "Modules_" + String(reflecting: BundleToken.self).split(separator: ".")[0]
 
         let candidates = [
             /* Bundle should be present here when the package is linked into an App. */
