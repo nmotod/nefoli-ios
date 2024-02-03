@@ -110,6 +110,8 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
 
     var isLoading: Bool { webView?.isLoading ?? false }
 
+    private lazy var dialogPresenter = WebViewDialogPresenter(viewController: self)
+
     init(
         tab: Tab,
         delegate: TabViewControllerDelegate?,
@@ -410,6 +412,18 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         }
 
         return nil
+    }
+
+    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        dialogPresenter.webView(webView, runJavaScriptAlertPanelWithMessage: message, initiatedByFrame: frame, completionHandler: completionHandler)
+    }
+
+    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
+        dialogPresenter.webView(webView, runJavaScriptConfirmPanelWithMessage: message, initiatedByFrame: frame, completionHandler: completionHandler)
+    }
+
+    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
+        dialogPresenter.webView(webView, runJavaScriptTextInputPanelWithPrompt: prompt, defaultText: defaultText, initiatedByFrame: frame, completionHandler: completionHandler)
     }
 
     private func confirmOpenExternalApp(url: URL) {
