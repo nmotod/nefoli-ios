@@ -52,4 +52,27 @@ class WebViewDialogPresenter {
 
         viewController?.present(alert, animated: true)
     }
+
+    func confirmOpenExternalApp(url: URL) {
+        let title = String(format: NSLocalizedString("Open the \"%@:\" link in an external app?", comment: ""), url.scheme ?? "")
+
+        let alert = UIAlertController(
+            title: title,
+            message: url.absoluteString.removingPercentEncoding,
+            preferredStyle: .alert
+        )
+
+        let open = UIAlertAction(title: NSLocalizedString("Open", comment: ""), style: .default) { _ in
+            UIApplication.shared.open(url)
+        }
+        alert.addAction(open)
+        alert.preferredAction = open
+
+        alert.addAction(.init(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+
+        alert.addAction(.init(title: NSLocalizedString("Copy", comment: ""), style: .default) { _ in UIPasteboard.general.url = url
+        })
+
+        viewController?.present(alert, animated: true)
+    }
 }

@@ -372,7 +372,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
             return .allowWithoutTryingAppLink
 
         } else {
-            confirmOpenExternalApp(url: url)
+            dialogPresenter.confirmOpenExternalApp(url: url)
             return .cancel
         }
     }
@@ -424,29 +424,6 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
 
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
         dialogPresenter.webView(webView, runJavaScriptTextInputPanelWithPrompt: prompt, defaultText: defaultText, initiatedByFrame: frame, completionHandler: completionHandler)
-    }
-
-    private func confirmOpenExternalApp(url: URL) {
-        let title = String(format: NSLocalizedString("Open the \"%@:\" link in an external app?", comment: ""), url.scheme ?? "")
-
-        let alert = UIAlertController(
-            title: title,
-            message: url.absoluteString.removingPercentEncoding,
-            preferredStyle: .alert
-        )
-
-        let open = UIAlertAction(title: NSLocalizedString("Open", comment: ""), style: .default) { _ in
-            UIApplication.shared.open(url)
-        }
-        alert.addAction(open)
-        alert.preferredAction = open
-
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
-
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Copy", comment: ""), style: .default) { _ in UIPasteboard.general.url = url
-        })
-
-        present(alert, animated: true)
     }
 
     private var newTabVC: NewTabViewController?
