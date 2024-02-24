@@ -3,6 +3,7 @@ import Foundation
 import NFLBookmark
 import NFLDatabase
 import NFLMenuSheet
+import NFLThemeSystem
 import RealmSwift
 import UIKit
 import Utils
@@ -53,9 +54,10 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
             self?.editAddress(action.sender)
         }, for: .touchUpInside)
 
-        omnibar.addressBar.reloadButton.addAction(.init { [weak self] action in
-            self?.reload(action.sender)
-        }, for: .touchUpInside)
+        let shareAction = UIAction(image: UIImage(systemName: "square.and.arrow.up")) { [weak self] action in
+            self?.share(action.sender)
+        }
+        omnibar.addressBar.rightAccessoryView.addArrangedSubview(AddressBar.makeAccessoryButton(primaryAction: shareAction))
 
         return omnibar
     }()
