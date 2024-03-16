@@ -302,6 +302,19 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         webView?.reload()
     }
 
+    func translate(_ sender: Any?) {
+        guard let webView, let url = webView.url else { return }
+
+        let locale = Locale.current
+        let lang = locale.language.minimalIdentifier
+
+        let googleTranslate = GoogleTranslateURLGenerator(translationLanguage: lang)
+
+        guard let translationURL = googleTranslate.translationURL(from: url) else { return }
+
+        webView.load(URLRequest(url: translationURL))
+    }
+
     // MARK: - Tab lifecycle
 
     private func tabDidSet() {

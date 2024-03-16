@@ -42,6 +42,9 @@ extension TabViewController: ActionDispatcher {
 
         case .editAddress:
             editAddress(sender)
+
+        case .translate:
+            translate(sender)
         }
     }
 }

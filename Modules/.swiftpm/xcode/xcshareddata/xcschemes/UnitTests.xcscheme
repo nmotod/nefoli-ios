@@ -14,7 +14,7 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2C367EA2294DC3590077380E"
+               BlueprintIdentifier = "2C3AD5C22AD3AAB100B04536"
                BuildableName = "nefoli-dev.app"
                BlueprintName = "nefoli-dev"
                ReferencedContainer = "container:../App/App.xcodeproj">

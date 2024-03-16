@@ -12,6 +12,7 @@ enum TabActionType: String, ActionTypeProtocol, CaseIterable {
     case openInDefaultApp
     case addBookmark
     case editAddress
+    case translate
 
     var definition: ActionTypeDefinition {
         switch self {
@@ -35,6 +36,9 @@ enum TabActionType: String, ActionTypeProtocol, CaseIterable {
 
         case .editAddress:
             return editAddressDefinition
+
+        case .translate:
+            return translateDefinition
         }
     }
 }
@@ -72,4 +76,9 @@ private let addBookmarkDefinition = ActionTypeDefinition(
 private let editAddressDefinition = ActionTypeDefinition(
     title: NSLocalizedString("Search", comment: ""),
     image: UIImage(systemName: "magnifyingglass")
+)
+
+private let translateDefinition = ActionTypeDefinition(
+    title: NSLocalizedString("Translate", comment: ""),
+    image: UIImage(systemName: "character.bubble")
 )
