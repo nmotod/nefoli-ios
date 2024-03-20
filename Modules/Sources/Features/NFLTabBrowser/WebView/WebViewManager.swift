@@ -55,6 +55,8 @@ public class WebViewManager {
             // (only .audio by default in iOS 17.0)
             configuration.mediaTypesRequiringUserActionForPlayback = .all
 
+            configuration.allowsInlineMediaPlayback = true
+
             configuration.setURLSchemeHandler(internalURLSchemeHandler, forURLScheme: InternalURL.scheme)
 
             let webView = WKWebView(frame: frame, configuration: configuration)
