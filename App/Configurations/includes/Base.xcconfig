@@ -19,6 +19,7 @@ SUPPORTED_PLATFORMS = iphonesimulator iphoneos
 // iPhone, iPad
 TARGETED_DEVICE_FAMILY = 1,2
 COPY_PHASE_STRIP = NO
+IPHONEOS_DEPLOYMENT_TARGET = 17.0
 
 //
 // Packaging
