@@ -315,6 +315,14 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         webView.load(URLRequest(url: translationURL))
     }
 
+    func openHatenaBookmark(_ sender: Any?) {
+        guard let webView, let url = webView.url else { return }
+
+        guard let entryURL = HatenaBookmarkURLGenerator().entryURL(of: url) else { return }
+
+        webView.load(URLRequest(url: entryURL))
+    }
+
     // MARK: - Tab lifecycle
 
     private func tabDidSet() {

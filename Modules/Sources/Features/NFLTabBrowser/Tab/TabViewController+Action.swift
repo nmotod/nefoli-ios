@@ -45,6 +45,9 @@ extension TabViewController: ActionDispatcher {
 
         case .translate:
             translate(sender)
+
+        case .hatenaBookmark:
+            openHatenaBookmark(sender)
         }
     }
 }

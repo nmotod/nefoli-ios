@@ -116,6 +116,7 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
                 TabActionType.openInDefaultApp,
                 TabActionType.addBookmark,
                 TabActionType.translate,
+                TabActionType.hatenaBookmark,
             ],
             [
                 TabBrowserActionType.settings,
