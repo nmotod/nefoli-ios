@@ -36,8 +36,8 @@
     {
       "target" : {
         "containerPath" : "container:..\/Modules",
-        "identifier" : "BookmarksTests",
-        "name" : "BookmarksTests"
+        "identifier" : "BookmarkTests",
+        "name" : "BookmarkTests"
       }
     },
     {
@@ -50,8 +50,8 @@
     {
       "target" : {
         "containerPath" : "container:..\/Modules",
-        "identifier" : "SettingsUITests",
-        "name" : "SettingsUITests"
+        "identifier" : "SettingsTests",
+        "name" : "SettingsTests"
       }
     }
   ],
