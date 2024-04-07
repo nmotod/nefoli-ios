@@ -10,8 +10,8 @@ var package = Package(
     ],
     products: [
         .library(
-            name: "NFLAppEntryPoint",
-            targets: ["NFLAppEntryPoint"]
+            name: "AppEntryPoint",
+            targets: ["AppEntryPoint"]
         ),
         // `products` will be added via defineModule()
     ],
@@ -35,19 +35,19 @@ enum ModuleCategory: String {
 let noTests: (Target) -> Target? = { _ in nil }
 
 defineModule(.EntryPoints, .target(
-    name: "NFLAppEntryPoint",
+    name: "AppEntryPoint",
     dependencies: [
         // .product(name: "AlignedCollectionViewFlowLayout", package: "AlignedCollectionViewFlowLayout"),
         // .product(name: "SnapKit", package: "SnapKit"),
         // .product(name: "Introspect", package: "SwiftUI-Introspect"),
         .product(name: "FirebaseCrashlytics", package: "firebase-ios-sdk"),
-        .target(name: "NFLDatabase"),
-        .target(name: "NFLTabBrowser"),
+        .target(name: "Database"),
+        .target(name: "TabBrowser"),
     ]
 ), test: noTests)
 
 defineModule(.Components, .target(
-    name: "NFLDatabase",
+    name: "Database",
     dependencies: [
         .product(name: "Realm", package: "realm-swift"),
         .product(name: "RealmSwift", package: "realm-swift"),
@@ -58,7 +58,7 @@ defineModule(.Components, .target(
 })
 
 defineModule(.Components, .executableTarget(
-    name: "NFLDatabase_v17",
+    name: "Database_v17",
     dependencies: [
         .product(name: "Realm", package: "realm-swift"),
         .product(name: "RealmSwift", package: "realm-swift"),
@@ -67,11 +67,11 @@ defineModule(.Components, .executableTarget(
 
 package.products.append(.executable(
     name: "db-fixture-gen-v17",
-    targets: ["NFLDatabase_v17"]
+    targets: ["Database_v17"]
 ))
 
 defineModule(.Components, .target(
-    name: "NFLThemeSystem",
+    name: "ThemeSystem",
     exclude: [
         "swiftgen.yml",
     ],
@@ -84,43 +84,43 @@ defineModule(.Components, .target(
 ), test: noTests, previews: true)
 
 defineModule(.Components, .target(
-    name: "NFLBookmark",
+    name: "Bookmark",
     dependencies: [
-        .target(name: "NFLDatabase"),
-        .target(name: "NFLThemeSystem"),
+        .target(name: "Database"),
+        .target(name: "ThemeSystem"),
         .target(name: "Utils"),
     ]
 ), previews: true)
 
 defineModule(.Components, .target(
-    name: "NFLSettings",
+    name: "Settings",
     dependencies: [
-        .target(name: "NFLDatabase"),
-        .target(name: "NFLThemeSystem"),
+        .target(name: "Database"),
+        .target(name: "ThemeSystem"),
         .target(name: "Utils"),
-        .target(name: "NFLContentBlocker"),
+        .target(name: "ContentBlocker"),
     ]
 ), previews: true)
 
 defineModule(.Components, .target(
-    name: "NFLContentBlocker",
+    name: "ContentBlocker",
     dependencies: [
-        .target(name: "NFLDatabase"),
+        .target(name: "Database"),
     ]
 ))
 
 defineModule(.Components, .target(
-    name: "NFLTabManager",
+    name: "TabManager",
     dependencies: [
-        .target(name: "NFLDatabase"),
-        .target(name: "NFLThemeSystem"),
+        .target(name: "Database"),
+        .target(name: "ThemeSystem"),
     ]
 ), previews: true)
 
 defineModule(.Components, .target(
-    name: "NFLMenuSheet",
+    name: "MenuSheet",
     dependencies: [
-        .target(name: "NFLThemeSystem"),
+        .target(name: "ThemeSystem"),
         .target(name: "Utils"),
     ]
 ), test: noTests, previews: true)
@@ -145,16 +145,16 @@ defineModule(.Utils, .target(
 ), test: noTests)
 
 defineModule(.Features, .target(
-    name: "NFLTabBrowser",
+    name: "TabBrowser",
     dependencies: [
         .product(name: "SnapKit", package: "SnapKit"),
-        .target(name: "NFLDatabase"),
-        .target(name: "NFLThemeSystem"),
+        .target(name: "Database"),
+        .target(name: "ThemeSystem"),
         .target(name: "Utils"),
-        .target(name: "NFLBookmark"),
-        .target(name: "NFLSettings"),
-        .target(name: "NFLTabManager"),
-        .target(name: "NFLMenuSheet"),
+        .target(name: "Bookmark"),
+        .target(name: "Settings"),
+        .target(name: "TabManager"),
+        .target(name: "MenuSheet"),
         .target(name: "ActionSystem"),
         .target(name: "WebViewStickyInteraction"),
     ]

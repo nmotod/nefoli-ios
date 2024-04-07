@@ -14,8 +14,8 @@
 		2C3AD5E22AD3ADF000B04536 /* ActionRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C51AA9B296FBD9200FA0963 /* ActionRequestHandler.swift */; };
 		2C3AD5E32AD3ADF000B04536 /* OpenInExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C51AA9C296FBD9200FA0963 /* OpenInExtension.m */; };
 		2C3AD5F32AD3CDF800B04536 /* OpenIn-dev.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2C3AD5EB2AD3ADF000B04536 /* OpenIn-dev.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		2C8E90592B6617EF008A221A /* NFLAppEntryPoint in Frameworks */ = {isa = PBXBuildFile; productRef = 2C8E90582B6617EF008A221A /* NFLAppEntryPoint */; };
-		2C8E905B2B6617FA008A221A /* NFLAppEntryPoint in Frameworks */ = {isa = PBXBuildFile; productRef = 2C8E905A2B6617FA008A221A /* NFLAppEntryPoint */; };
+		2C7998022BC247B8000EB955 /* AppEntryPoint in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7998012BC247B8000EB955 /* AppEntryPoint */; };
+		2C7998042BC247BF000EB955 /* AppEntryPoint in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7998032BC247BF000EB955 /* AppEntryPoint */; };
 		2CC9677B2B4BBAEC00726505 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C367EA6294DC3590077380E /* main.swift */; };
 		2CC9677F2B4BBAEC00726505 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C367EB1294DC35A0077380E /* LaunchScreen.storyboard */; };
 		2CC967802B4BBAEC00726505 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C367EAF294DC35A0077380E /* Assets.xcassets */; };
@@ -136,7 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C8E90592B6617EF008A221A /* NFLAppEntryPoint in Frameworks */,
+				2C7998022BC247B8000EB955 /* AppEntryPoint in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,7 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C8E905B2B6617FA008A221A /* NFLAppEntryPoint in Frameworks */,
+				2C7998042BC247BF000EB955 /* AppEntryPoint in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,7 +319,7 @@
 			);
 			name = "nefoli-dev";
 			packageProductDependencies = (
-				2C8E90582B6617EF008A221A /* NFLAppEntryPoint */,
+				2C7998012BC247B8000EB955 /* AppEntryPoint */,
 			);
 			productName = "nefoli-iOS";
 			productReference = 2C3AD5D82AD3AAB100B04536 /* nefoli-dev.app */;
@@ -361,7 +361,7 @@
 			);
 			name = "nefoli-prod";
 			packageProductDependencies = (
-				2C8E905A2B6617FA008A221A /* NFLAppEntryPoint */,
+				2C7998032BC247BF000EB955 /* AppEntryPoint */,
 			);
 			productName = "nefoli-iOS";
 			productReference = 2CC9678A2B4BBAEC00726505 /* nefoli.app */;
@@ -638,6 +638,12 @@
 			baseConfigurationReference = 2C51AA38296D484B00FA0963 /* nefoli-dev.Debug.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_KEY_CFBundleDisplayName = "nefoli-dev";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				MARKETING_VERSION = 1.0;
 			};
 			name = Debug;
@@ -647,6 +653,12 @@
 			baseConfigurationReference = 2C51AA54296D4CDB00FA0963 /* nefoli-dev.Release.xcconfig */;
 			buildSettings = {
 				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_KEY_CFBundleDisplayName = "nefoli-dev";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				MARKETING_VERSION = 1.0;
 			};
 			name = Release;
@@ -756,13 +768,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		2C8E90582B6617EF008A221A /* NFLAppEntryPoint */ = {
+		2C7998012BC247B8000EB955 /* AppEntryPoint */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = NFLAppEntryPoint;
+			productName = AppEntryPoint;
 		};
-		2C8E905A2B6617FA008A221A /* NFLAppEntryPoint */ = {
+		2C7998032BC247BF000EB955 /* AppEntryPoint */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = NFLAppEntryPoint;
+			productName = AppEntryPoint;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
