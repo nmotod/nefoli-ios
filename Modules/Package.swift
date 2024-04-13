@@ -110,14 +110,6 @@ defineModule(.Components, .target(
 ))
 
 defineModule(.Components, .target(
-    name: "TabManager",
-    dependencies: [
-        .target(name: "Database"),
-        .target(name: "ThemeSystem"),
-    ]
-), previews: true)
-
-defineModule(.Components, .target(
     name: "MenuSheet",
     dependencies: [
         .target(name: "ThemeSystem"),
@@ -134,10 +126,16 @@ defineModule(.Components, .target(
         .target(name: "Utils"),
         .target(name: "Bookmark"),
         .target(name: "Settings"),
-        .target(name: "TabManager"),
         .target(name: "MenuSheet"),
         .target(name: "ActionSystem"),
         .target(name: "WebViewStickyInteraction"),
+    ]
+), previews: true)
+
+defineModule(.Components, .target(
+    name: "TabManager",
+    dependencies: [
+        .target(name: "TabBrowserCore"),
     ]
 ), previews: true)
 
@@ -145,6 +143,7 @@ defineModule(.Features, .target(
     name: "TabBrowser",
     dependencies: [
         .target(name: "TabBrowserCore"),
+        .target(name: "TabManager"),
     ]
 ), test: noTests, previews: false)
 

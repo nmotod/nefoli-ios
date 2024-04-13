@@ -44,7 +44,7 @@ extension TabBrowserController: ActionDispatcher {
             showMenuSheet()
 
         case .tabs:
-            ()
+            presentTabManager(sender)
 
         case .settings:
             showSettings(sender)

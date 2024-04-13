@@ -6,6 +6,7 @@ import MenuSheet
 import RealmSwift
 import Settings
 import TabBrowserCore
+import TabManager
 import ThemeSystem
 import UIKit
 import Utils
@@ -382,6 +383,18 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
         }
     }
 
+    func presentTabManager(_ sender: Any?) {
+        let sender = sender as? UIResponder
+
+        let tabManagerController = TabManagerController(dependency: dependency)
+
+        if let menuSheet = sender?.nfl_findResponder(of: MenuSheetController.self) {
+            menuSheet.show(tabManagerController, animated: true)
+        } else {
+            present(tabManagerController, animated: true)
+        }
+    }
+
     // MARK: - Tab View Controller Delegate
 
     public func tabVC(_ tabVC: TabViewController, searchWeb text: String) {
@@ -401,6 +414,10 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
             UIBarButtonItem(primaryAction: makeUIAction(type: TabBrowserActionType.bookmarks)),
             UIBarButtonItem(primaryAction: makeUIAction(type: TabBrowserActionType.settings)),
         ]
+    }
+
+    public func tabVCDidLongPressAddressBar(_ tabVC: TabViewController) {
+        presentTabManager(tabVC)
     }
 
     public func open(tab: Tab, from tabVC: TabViewController) {

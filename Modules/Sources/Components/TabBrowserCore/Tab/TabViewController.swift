@@ -17,6 +17,8 @@ public protocol TabViewControllerDelegate: AnyObject {
 
     func tabVC(_ tabVC: TabViewController, willShowNewTabVC newTabVC: NewTabViewController)
 
+    func tabVCDidLongPressAddressBar(_ tabVC: TabViewController)
+
     func open(tab: Tab, from tabVC: TabViewController)
 }
 
@@ -46,6 +48,8 @@ public class TabViewController: UIViewController, WKUIDelegate, WKNavigationDele
 
         omnibar.addressBar.contentConfiguration = addressBarContentConfiguration
 
+        omnibar.addressBar.addressButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(addressButtonDidLogPress(_:))))
+
         omnibar.progressBar.progressProvider = { [weak self] in
             self?.webView?.estimatedProgress ?? 0
         }
@@ -61,6 +65,12 @@ public class TabViewController: UIViewController, WKUIDelegate, WKNavigationDele
 
         return omnibar
     }()
+
+    @objc private func addressButtonDidLogPress(_ recognizer: UILongPressGestureRecognizer) {
+        guard recognizer.state == .began else { return }
+
+        delegate?.tabVCDidLongPressAddressBar(self)
+    }
 
     public func setOmnibarButtons(left: UIButton?, right: UIButton?) {
         omnibar.setButtons(left: left, right: right)
