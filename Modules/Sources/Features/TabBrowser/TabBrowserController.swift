@@ -319,7 +319,7 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
         }
     }
 
-    func tabGroupViewRequestsAddNewTab(_: TabGroupView) {
+    public func tabGroupViewRequestsAddNewTab(_: TabGroupView) {
         let tab = Tab(initialURL: InternalURL.home.url)
 
         try! open(tab: tab, options: .init(
@@ -328,7 +328,7 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
         ))
     }
 
-    func tabGroupView(_: TabGroupView, requestsCloseTabAt index: Int) {
+    public func tabGroupView(_: TabGroupView, requestsCloseTabAt index: Int) {
         closeTab(at: index)
     }
 

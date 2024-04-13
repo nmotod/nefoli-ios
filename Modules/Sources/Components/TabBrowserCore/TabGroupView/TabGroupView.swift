@@ -3,7 +3,7 @@ import SnapKit
 import UIKit
 import Utils
 
-protocol TabGroupViewDelegate: AnyObject {
+public protocol TabGroupViewDelegate: AnyObject {
     func tabGroupViewRequestsAddNewTab(_: TabGroupView)
 
     func tabGroupView(_: TabGroupView, requestsCloseTabAt index: Int)
@@ -11,7 +11,7 @@ protocol TabGroupViewDelegate: AnyObject {
 
 public typealias TabGroupViewDependency = TabGroupViewCellDependency
 
-class TabGroupView: UIView,
+public class TabGroupView: UIView,
     UICollectionViewDataSource,
     UICollectionViewDelegate,
     UICollectionViewDragDelegate,
@@ -26,9 +26,9 @@ class TabGroupView: UIView,
 
 //    private var log = defaultLogger
 
-    var style: Style { collectionViewLayout.style }
+    public var style: Style { collectionViewLayout.style }
 
-    var group: TabGroup? {
+    public var group: TabGroup? {
         didSet {
             groupTokens = [
                 group?.observe { [weak self] change in
@@ -51,13 +51,13 @@ class TabGroupView: UIView,
         }
     }
 
-    override var intrinsicContentSize: CGSize {
+    override public var intrinsicContentSize: CGSize {
         return .init(width: UIView.noIntrinsicMetric, height: style.height)
     }
 
     private var groupTokens = [NotificationToken]()
 
-    weak var delegate: TabGroupViewDelegate?
+    public weak var delegate: TabGroupViewDelegate?
 
     private var collectionViewLayout: Layout
 
@@ -135,7 +135,7 @@ class TabGroupView: UIView,
 
     // MARK: - Initializing
 
-    init(frame: CGRect, style: Style, dependency: TabGroupViewDependency) {
+    public init(frame: CGRect, style: Style, dependency: TabGroupViewDependency) {
         self.dependency = dependency
         collectionViewLayout = .init(style: style)
         closeIndicator = .init(frame: .zero, style: style)
@@ -172,7 +172,7 @@ class TabGroupView: UIView,
 
     // MARK: - Close Gesture
 
-    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    override public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard gestureRecognizer == closeGestureRecognizer else { return true }
 
         let p = gestureRecognizer.location(in: collectionView)
@@ -391,11 +391,11 @@ class TabGroupView: UIView,
 
     // MARK: - Collection view data source
 
-    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
+    public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return group?.children.count ?? 0
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let group = group else {
             fatalError()
         }
@@ -404,7 +404,7 @@ class TabGroupView: UIView,
         return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: tab)
     }
 
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
@@ -419,7 +419,7 @@ class TabGroupView: UIView,
 
     // MARK: - Collection view delegate
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let group = group else { return }
 
         collectionView.deselectItem(at: indexPath, animated: false)
@@ -431,7 +431,7 @@ class TabGroupView: UIView,
 
     // MARK: - Drag delegate
 
-    func collectionView(_ collectionView: UICollectionView, itemsForBeginning _: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+    public func collectionView(_ collectionView: UICollectionView, itemsForBeginning _: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         guard let tab = tabAt(indexPath) else { return [] }
 
         let dragItem = UIDragItem(itemProvider: NSItemProvider())
@@ -449,28 +449,28 @@ class TabGroupView: UIView,
         return [dragItem]
     }
 
-    func collectionView(_: UICollectionView, shouldSpringLoadItemAt _: IndexPath, with _: UISpringLoadedInteractionContext) -> Bool {
+    public func collectionView(_: UICollectionView, shouldSpringLoadItemAt _: IndexPath, with _: UISpringLoadedInteractionContext) -> Bool {
 //        log.debug("\(indexPath)  \(context)")
         return false
     }
 
-    func collectionView(_: UICollectionView, dragSessionIsRestrictedToDraggingApplication _: UIDragSession) -> Bool {
+    public func collectionView(_: UICollectionView, dragSessionIsRestrictedToDraggingApplication _: UIDragSession) -> Bool {
         // Allow drag only within the app.
         return true
     }
 
-    func collectionView(_ collectionView: UICollectionView, dragPreviewParametersForItemAt indexPath: IndexPath) -> UIDragPreviewParameters? {
+    public func collectionView(_ collectionView: UICollectionView, dragPreviewParametersForItemAt indexPath: IndexPath) -> UIDragPreviewParameters? {
         guard let cell = collectionView.cellForItem(at: indexPath) as? Cell else { return nil }
         return cell.dragPreviewParameters()
     }
 
-    func collectionView(_: UICollectionView, dragSessionAllowsMoveOperation _: UIDragSession) -> Bool {
+    public func collectionView(_: UICollectionView, dragSessionAllowsMoveOperation _: UIDragSession) -> Bool {
         return true
     }
 
     // MARK: - Drop delegate
 
-    func collectionView(_: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+    public func collectionView(_: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
         // Accept only items that has tab.
         if session.items.first?.localObject is Tab {
             collectionViewLayout.dropDestinationIndexPath = destinationIndexPath
@@ -481,7 +481,7 @@ class TabGroupView: UIView,
         return UICollectionViewDropProposal(operation: .cancel)
     }
 
-    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+    public func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
         guard let group = group,
               let dropItem = coordinator.items.first,
               dropItem.dragItem.localObject is Tab
@@ -518,11 +518,11 @@ class TabGroupView: UIView,
 
     // func collectionView(_: UICollectionView, dropSessionDidEnter _: UIDropSession) {}
 
-    func collectionView(_: UICollectionView, dropSessionDidEnd _: UIDropSession) {
+    public func collectionView(_: UICollectionView, dropSessionDidEnd _: UIDropSession) {
         collectionViewLayout.dropDestinationIndexPath = nil
     }
 
-    func collectionView(_: UICollectionView, dropSessionDidExit _: UIDropSession) {
+    public func collectionView(_: UICollectionView, dropSessionDidExit _: UIDropSession) {
         collectionViewLayout.dropDestinationIndexPath = nil
     }
 }

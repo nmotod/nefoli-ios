@@ -1,6 +1,5 @@
 import Database
 import SnapKit
-import TabBrowserCore
 import UIKit
 
 protocol TabGroupViewCellDelegate: AnyObject {
