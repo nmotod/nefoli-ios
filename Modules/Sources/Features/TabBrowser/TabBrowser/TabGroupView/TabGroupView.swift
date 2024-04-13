@@ -1,4 +1,5 @@
 import Database
+import SnapKit
 import UIKit
 import Utils
 
@@ -302,8 +303,6 @@ class TabGroupView: UIView,
             break
 
         case let .update(_, deletions, insertions, modifications):
-            logger.debug("d=\(deletions),  i=\(insertions),  m=\(modifications)")
-
             for indexPath in deletions.map({ IndexPath(row: $0, section: 0) }) {
                 if let cell = collectionView.cellForItem(at: indexPath) as? Cell {
                     cell.tab = nil
@@ -383,9 +382,9 @@ class TabGroupView: UIView,
     // MARK: - Cell delegate
 
     func tabGroupViewCell(_ cell: Cell, dragStateDidChange dragState: UICollectionViewCell.DragState) {
-        guard let indexPath = collectionView.indexPath(for: cell) else { return }
-
-        logger.debug("[\(indexPath.row)] dragStateDidChange --> \(dragState.rawValue)")
+//        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+//
+//        logger.debug("[\(indexPath.row)] dragStateDidChange --> \(dragState.rawValue)")
     }
 
     func tabGroupViewCellRequestsDelete(_: Cell) {}
@@ -434,8 +433,6 @@ class TabGroupView: UIView,
 
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning _: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         guard let tab = tabAt(indexPath) else { return [] }
-
-        logger.debug("itemsForBeginning row: \(indexPath.row)")
 
         let dragItem = UIDragItem(itemProvider: NSItemProvider())
         dragItem.localObject = tab
@@ -496,8 +493,6 @@ class TabGroupView: UIView,
 
         if let sourceIndexPath = dropItem.sourceIndexPath {
             // Move within one collectionView.
-            logger.debug("move \(sourceIndexPath.row) --> \(destinationIndexPath.row)")
-
             try! group.realm!.write(withoutNotifying: groupTokens) {
                 group.children.move(from: sourceIndexPath.row, to: destinationIndexPath.row)
             }
@@ -509,8 +504,6 @@ class TabGroupView: UIView,
 
         } else {
             // Move from other collectionView to this one.
-            logger.debug("move (other group) --> \(destinationIndexPath)")
-
 //            try! group.realm!.write(withoutNotifying: groupTokens) {
 //                tabStore.transfer(tab: tab, toGroup: group, isRecursive: true)
 //            }

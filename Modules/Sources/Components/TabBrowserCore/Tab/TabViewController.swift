@@ -12,7 +12,7 @@ import WebViewStickyInteraction
 
 public typealias TabViewControllerDependency = UsesWebViewManager & UsesScreenshotManager & NewTabViewControllerDependency
 
-protocol TabViewControllerDelegate: AnyObject {
+public protocol TabViewControllerDelegate: AnyObject {
     func tabVC(_ tabVC: TabViewController, searchWeb text: String)
 
     func tabVC(_ tabVC: TabViewController, willShowNewTabVC newTabVC: NewTabViewController)
@@ -20,14 +20,14 @@ protocol TabViewControllerDelegate: AnyObject {
     func open(tab: Tab, from tabVC: TabViewController)
 }
 
-class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, NewTabViewControllerDelegate, AddressEditViewControllerDelegate {
+public class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, NewTabViewControllerDelegate, AddressEditViewControllerDelegate {
     private let dependency: TabViewControllerDependency
 
     private let webViewManager: WebViewManager
 
     private let screenshotManager: ScreenshotManager
 
-    var tab: Tab? {
+    public var tab: Tab? {
         didSet {
             tabDidSet()
         }
@@ -35,11 +35,11 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
 
     private var tabToken: NotificationToken?
 
-    weak var delegate: TabViewControllerDelegate?
+    public weak var delegate: TabViewControllerDelegate?
 
     private var rootView: RootView!
 
-    var stickyBar: UIView { omnibar }
+    public var stickyBar: UIView { omnibar }
 
     private lazy var omnibar: Omnibar = {
         let omnibar = Omnibar(frame: .init(x: 0, y: 0, width: 300, height: Omnibar.defaultHeight))
@@ -62,7 +62,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         return omnibar
     }()
 
-    func setOmnibarButtons(left: UIButton?, right: UIButton?) {
+    public func setOmnibarButtons(left: UIButton?, right: UIButton?) {
         omnibar.setButtons(left: left, right: right)
     }
 
@@ -87,19 +87,19 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
 
     private let canGoBackSubject = CurrentValueSubject<Bool, Never>(false)
 
-    var canGoBackPublisher: AnyPublisher<Bool, Never> {
+    public var canGoBackPublisher: AnyPublisher<Bool, Never> {
         return canGoBackSubject.eraseToAnyPublisher()
     }
 
-    var canGoBack: Bool { canGoBackSubject.value }
+    public var canGoBack: Bool { canGoBackSubject.value }
 
     private let canGoForwardSubject = CurrentValueSubject<Bool, Never>(false)
 
-    var canGoForwardPublisher: AnyPublisher<Bool, Never> {
+    public var canGoForwardPublisher: AnyPublisher<Bool, Never> {
         return canGoForwardSubject.eraseToAnyPublisher()
     }
 
-    var canGoForward: Bool {
+    public var canGoForward: Bool {
         return canGoForwardSubject.value
     }
 
@@ -110,11 +110,11 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         }
     }
 
-    var isLoading: Bool { webView?.isLoading ?? false }
+    public var isLoading: Bool { webView?.isLoading ?? false }
 
     private lazy var dialogPresenter = WebViewDialogPresenter(viewController: self)
 
-    init(
+    public init(
         tab: Tab,
         delegate: TabViewControllerDelegate?,
         dependency: TabViewControllerDependency
@@ -140,7 +140,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
 
     // MARK: - View lifecycle
 
-    override func loadView() {
+    override public func loadView() {
         let rootView = RootView(frame: UIScreen.main.bounds)
         self.rootView = rootView
         view = rootView
@@ -148,7 +148,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         rootView.addGestureRecognizer(linkLongPressGestureRecognizer)
     }
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
 
         // TODO: Show newTabVC if needed
@@ -224,13 +224,13 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         }
     }
 
-    override func viewDidLayoutSubviews() {
+    override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
 //        webViewContainerController.additionalSafeAreaInsets.top = rootView.addressBar.frame.height
     }
 
-    override func viewSafeAreaInsetsDidChange() {
+    override public func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
 
         stickyInteraction?.updateLayout(animated: false)
@@ -339,13 +339,13 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         }
     }
 
-    func tabDidActivate(stickyBottomBar: ContainerStickyView) {
+    public func tabDidActivate(stickyBottomBar: ContainerStickyView) {
         self.stickyBottomBar = stickyBottomBar
     }
 
     // MARK: -
 
-    var webpageMetadata: WebpageMetadata? {
+    public var webpageMetadata: WebpageMetadata? {
         guard let tab = tab else { return nil }
 
         if let webView = webView,
@@ -366,7 +366,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         return nil
     }
 
-    func webView(_: WKWebView, contextMenuConfigurationFor elementInfo: WKContextMenuElementInfo) async -> UIContextMenuConfiguration? {
+    public func webView(_: WKWebView, contextMenuConfigurationFor elementInfo: WKContextMenuElementInfo) async -> UIContextMenuConfiguration? {
         guard let linkURL = elementInfo.linkURL else {
             return nil
         }
@@ -376,7 +376,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         return UIContextMenuConfiguration()
     }
 
-    func webView(_: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
+    public func webView(_: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
         logger.debug("\(navigationAction.request.httpMethod ?? "<nil method>") \(navigationAction.request.url?.absoluteString ?? "<nil url>")")
 
         guard let url = navigationAction.request.url else {
@@ -400,7 +400,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         }
     }
 
-    func webView(_: WKWebView, didStartProvisionalNavigation _: WKNavigation!) {
+    public func webView(_: WKWebView, didStartProvisionalNavigation _: WKNavigation!) {
         stickyInteraction?.setStickyViewsHidden(false, animated: true)
 
         omnibar.progressBar.start()
@@ -408,11 +408,11 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         stickyInteraction?.updateLayout(animated: false)
     }
 
-    func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
+    public func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError _: Error) {
         omnibar.progressBar.finish()
     }
 
-    func webView(_ webView: WKWebView, didCommit _: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didCommit _: WKNavigation!) {
         guard let tab = tab else { return }
 
         try! tab.realm!.write {
@@ -424,11 +424,11 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         screenshotManager.updateScreenshot(sources: [tab], webView: webView)
     }
 
-    func webView(_: WKWebView, didFail _: WKNavigation!, withError _: Error) {
+    public func webView(_: WKWebView, didFail _: WKNavigation!, withError _: Error) {
         omnibar.progressBar.finish()
     }
 
-    func webView(_ webView: WKWebView, createWebViewWith _: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures _: WKWindowFeatures) -> WKWebView? {
+    public func webView(_ webView: WKWebView, createWebViewWith _: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures _: WKWindowFeatures) -> WKWebView? {
         // Requested new window.
         if navigationAction.targetFrame == nil {
             webView.load(navigationAction.request)
@@ -437,15 +437,15 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
         return nil
     }
 
-    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+    public func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         dialogPresenter.webView(webView, runJavaScriptAlertPanelWithMessage: message, initiatedByFrame: frame, completionHandler: completionHandler)
     }
 
-    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
+    public func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
         dialogPresenter.webView(webView, runJavaScriptConfirmPanelWithMessage: message, initiatedByFrame: frame, completionHandler: completionHandler)
     }
 
-    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
+    public func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
         dialogPresenter.webView(webView, runJavaScriptTextInputPanelWithPrompt: prompt, defaultText: defaultText, initiatedByFrame: frame, completionHandler: completionHandler)
     }
 
@@ -546,7 +546,7 @@ class TabViewController: UIViewController, WKUIDelegate, WKNavigationDelegate, N
 
     // MARK: - Edit Menu
 
-    override func buildMenu(with builder: UIMenuBuilder) {
+    override public func buildMenu(with builder: UIMenuBuilder) {
         let menu = UIMenu(identifier: .nfl_custom, options: .displayInline, children: [
             UIAction(title: NSLocalizedString("Search Web", comment: ""), handler: { [weak self] _ in
                 self?.searchSelectedText()

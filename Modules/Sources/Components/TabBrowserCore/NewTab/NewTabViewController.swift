@@ -13,7 +13,7 @@ protocol NewTabViewControllerDelegate: AnyObject {
     func newTabVCForwardGestureDidRecognize(_: NewTabViewController)
 }
 
-class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDragDelegate, UICollectionViewDropDelegate {
+public class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDragDelegate, UICollectionViewDropDelegate {
     enum Section: Int {
         case favorites
     }
@@ -44,7 +44,7 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     private var dataSource: UICollectionViewDiffableDataSource<Section, BookmarkItem>?
 
-    var topToolbarItems: [UIBarButtonItem] = []
+    public var topToolbarItems: [UIBarButtonItem] = []
 
     // MARK: - Initializer
 
@@ -69,7 +69,7 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     // MARK: - View lifecycle
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
 
         view.addSubview(collectionView)
@@ -127,19 +127,19 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollec
         dataSource.apply(snapshot)
     }
 
-    override func viewDidLayoutSubviews() {
+    override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
     }
 
     // MARK: - Collection view
 
-    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = favoritesFolder.children[indexPath.item]
 
         delegate?.newTabVC(self, openBookmark: item)
     }
 
-    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
+    public func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
         guard let i = indexPaths.first?.item else { return nil }
 
         let item = favoritesFolder.children[i]
@@ -171,7 +171,7 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollec
         present(controller, animated: true)
     }
 
-    func collectionView(_ collectionView: UICollectionView, contextMenuConfiguration configuration: UIContextMenuConfiguration, highlightPreviewForItemAt indexPath: IndexPath) -> UITargetedPreview? {
+    public func collectionView(_ collectionView: UICollectionView, contextMenuConfiguration configuration: UIContextMenuConfiguration, highlightPreviewForItemAt indexPath: IndexPath) -> UITargetedPreview? {
         guard let cell = collectionView.cellForItem(at: indexPath) as? Cell else { return nil }
 
         return UITargetedPreview(view: cell, parameters: cell.dragPreviewParameters)
@@ -179,7 +179,7 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     // MARK: - Collection view drag delegate
 
-    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+    public func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         let item = favoritesFolder.children[indexPath.item]
 
         let dragItem = UIDragItem(itemProvider: NSItemProvider())
@@ -187,11 +187,11 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollec
         return [dragItem]
     }
 
-    func collectionView(_ collectionView: UICollectionView, dragSessionAllowsMoveOperation session: UIDragSession) -> Bool {
+    public func collectionView(_ collectionView: UICollectionView, dragSessionAllowsMoveOperation session: UIDragSession) -> Bool {
         return true
     }
 
-    func collectionView(_ collectionView: UICollectionView, dragPreviewParametersForItemAt indexPath: IndexPath) -> UIDragPreviewParameters? {
+    public func collectionView(_ collectionView: UICollectionView, dragPreviewParametersForItemAt indexPath: IndexPath) -> UIDragPreviewParameters? {
         guard let cell = collectionView.cellForItem(at: indexPath) as? Cell else { return nil }
 
         return cell.dragPreviewParameters
@@ -199,17 +199,17 @@ class NewTabViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     // MARK: - Collection view drop delegate
 
-    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+    public func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
         return .init(operation: .move, intent: .insertAtDestinationIndexPath)
     }
 
-    func collectionView(_ collectionView: UICollectionView, dropPreviewParametersForItemAt indexPath: IndexPath) -> UIDragPreviewParameters? {
+    public func collectionView(_ collectionView: UICollectionView, dropPreviewParametersForItemAt indexPath: IndexPath) -> UIDragPreviewParameters? {
         guard let cell = collectionView.cellForItem(at: indexPath) as? Cell else { return nil }
 
         return cell.dragPreviewParameters
     }
 
-    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+    public func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
         // Support only reordering within itself
         guard let dataSource,
               let dropItem = coordinator.items.first,

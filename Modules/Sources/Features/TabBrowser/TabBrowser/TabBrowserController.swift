@@ -5,6 +5,7 @@ import Foundation
 import MenuSheet
 import RealmSwift
 import Settings
+import TabBrowserCore
 import ThemeSystem
 import UIKit
 import Utils
@@ -383,7 +384,7 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
 
     // MARK: - Tab View Controller Delegate
 
-    func tabVC(_ tabVC: TabViewController, searchWeb text: String) {
+    public func tabVC(_ tabVC: TabViewController, searchWeb text: String) {
         guard tabVC == activeVC,
               let url = buildSearchURL(text: text)
         else {
@@ -394,7 +395,7 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
         try! open(tab: tab, options: .init(activate: true, position: .afterActive))
     }
 
-    func tabVC(_ tabVC: TabViewController, willShowNewTabVC newTabVC: NewTabViewController) {
+    public func tabVC(_ tabVC: TabViewController, willShowNewTabVC newTabVC: NewTabViewController) {
         newTabVC.topToolbarItems = [
             UIBarButtonItem(systemItem: .flexibleSpace),
             UIBarButtonItem(primaryAction: makeUIAction(type: TabBrowserActionType.bookmarks)),
@@ -402,7 +403,7 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
         ]
     }
 
-    func open(tab: Tab, from tabVC: TabViewController) {
+    public func open(tab: Tab, from tabVC: TabViewController) {
         try! open(tab: tab, options: .init(activate: false, position: .afterActive))
     }
 }

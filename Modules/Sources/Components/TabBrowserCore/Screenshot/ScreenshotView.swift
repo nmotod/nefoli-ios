@@ -1,16 +1,16 @@
 import UIKit
 import Utils
 
-class ScreenshotView: UIView {
+public class ScreenshotView: UIView {
     public typealias Dependency = UsesScreenshotManager
 
     private let screenshotManager: ScreenshotManager
 
     private var screenshotToken: Any?
 
-    @IBInspectable var scale: CGFloat = 1.3
+    @IBInspectable public var scale: CGFloat = 1.3
 
-    var source: ScreenshotSource? {
+    public var source: ScreenshotSource? {
         didSet {
             guard let source = source else {
                 contentView = nil
@@ -33,7 +33,7 @@ class ScreenshotView: UIView {
         }
     }
 
-    init(frame: CGRect, dependency: Dependency) {
+    public init(frame: CGRect, dependency: Dependency) {
         screenshotManager = dependency.screenshotManager
 
         super.init(frame: frame)
@@ -47,7 +47,7 @@ class ScreenshotView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func didMoveToWindow() {
+    override public func didMoveToWindow() {
         super.didMoveToWindow()
 
         if window != nil {
@@ -62,7 +62,7 @@ class ScreenshotView: UIView {
         }
     }
 
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
 
         if let imageView = contentView as? UIImageView,

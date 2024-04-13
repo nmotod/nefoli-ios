@@ -3,6 +3,7 @@ import ContentBlocker
 import Database
 import Foundation
 import TabBrowser
+import TabBrowserCore
 import UIKit
 import WebKit
 

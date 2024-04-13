@@ -4,6 +4,7 @@ import Database
 import Foundation
 import RealmSwift
 import TabBrowser
+import TabBrowserCore
 
 struct RootContainer: TabBrowserControllerDependency {
     var appBundleIdentifier: String

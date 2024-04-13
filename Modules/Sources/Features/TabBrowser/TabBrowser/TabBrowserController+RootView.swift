@@ -1,5 +1,6 @@
 import Database
 import Foundation
+import TabBrowserCore
 import ThemeSystem
 import UIKit
 import WebViewStickyInteraction

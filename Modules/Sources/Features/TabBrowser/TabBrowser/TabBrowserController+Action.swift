@@ -1,5 +1,6 @@
 import ActionSystem
 import Foundation
+import TabBrowserCore
 import ThemeSystem
 import UIKit
 

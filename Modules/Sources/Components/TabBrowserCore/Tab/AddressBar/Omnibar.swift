@@ -3,12 +3,12 @@ import Foundation
 import ThemeSystem
 import UIKit
 
-class Omnibar: UIStackView {
-    static let defaultHeight: CGFloat = 58
+public class Omnibar: UIStackView {
+    public static let defaultHeight: CGFloat = 58
 
-    static let addressBarInnerHeight: CGFloat = 40
+    public static let addressBarInnerHeight: CGFloat = 40
 
-    static let addressBarBorderInsetY: CGFloat = (defaultHeight - addressBarInnerHeight) / 2
+    public static let addressBarBorderInsetY: CGFloat = (defaultHeight - addressBarInnerHeight) / 2
 
     let addressBar = AddressBar(
         frame: .init(x: 0, y: 0, width: 50, height: defaultHeight),
@@ -39,7 +39,7 @@ class Omnibar: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override var intrinsicContentSize: CGSize {
+    override public var intrinsicContentSize: CGSize {
         return .init(width: UIView.noIntrinsicMetric, height: type(of: self).defaultHeight)
     }
 
@@ -116,11 +116,6 @@ class Omnibar: UIStackView {
         }
 
         let omnibar = Omnibar()
-
-        omnibar.setButtons(
-            left: makeButton(actionType: TabActionType.goBack),
-            right: makeButton(actionType: TabBrowserActionType.menuSheet)
-        )
 
         bgView.contentView.addSubview(omnibar)
         omnibar.snp.makeConstraints { make in

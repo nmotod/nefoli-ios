@@ -1,12 +1,12 @@
 import Foundation
 
-enum InternalURL: String {
-    static let scheme = "internal"
-    static let host = "internal"
+public enum InternalURL: String {
+    public static let scheme = "internal"
+    public static let host = "internal"
 
     case home = "/home"
 
-    init?(url: URL) {
+    public init?(url: URL) {
         if url.scheme != Self.scheme {
             return nil
         }
@@ -20,13 +20,13 @@ enum InternalURL: String {
         }
     }
 
-    var path: String { rawValue }
+    public var path: String { rawValue }
 
-    var url: URL {
+    public var url: URL {
         return URL(string: Self.scheme + "://" + Self.host + path)!
     }
 
-    static func isInternalURL(_ url: URL) -> Bool {
+    public static func isInternalURL(_ url: URL) -> Bool {
         return InternalURL(url: url) != nil
     }
 }

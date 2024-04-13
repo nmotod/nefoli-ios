@@ -2,9 +2,9 @@ import Database
 import Foundation
 
 extension Tab: ScreenshotSource {
-    var screenshotKey: String { id }
+    public var screenshotKey: String { id }
 
-    var internalURL: InternalURL? {
+    public var internalURL: InternalURL? {
         guard let url = current?.url else {
             return nil
         }

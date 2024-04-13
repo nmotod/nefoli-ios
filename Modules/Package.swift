@@ -125,6 +125,29 @@ defineModule(.Components, .target(
     ]
 ), test: noTests, previews: true)
 
+defineModule(.Components, .target(
+    name: "TabBrowserCore",
+    dependencies: [
+        .product(name: "SnapKit", package: "SnapKit"),
+        .target(name: "Database"),
+        .target(name: "ThemeSystem"),
+        .target(name: "Utils"),
+        .target(name: "Bookmark"),
+        .target(name: "Settings"),
+        .target(name: "TabManager"),
+        .target(name: "MenuSheet"),
+        .target(name: "ActionSystem"),
+        .target(name: "WebViewStickyInteraction"),
+    ]
+), previews: true)
+
+defineModule(.Features, .target(
+    name: "TabBrowser",
+    dependencies: [
+        .target(name: "TabBrowserCore"),
+    ]
+), test: noTests, previews: false)
+
 defineModule(.Utils, .target(
     name: "Utils",
     dependencies: [
@@ -143,22 +166,6 @@ defineModule(.Utils, .target(
         .product(name: "SnapKit", package: "SnapKit"),
     ]
 ), test: noTests)
-
-defineModule(.Features, .target(
-    name: "TabBrowser",
-    dependencies: [
-        .product(name: "SnapKit", package: "SnapKit"),
-        .target(name: "Database"),
-        .target(name: "ThemeSystem"),
-        .target(name: "Utils"),
-        .target(name: "Bookmark"),
-        .target(name: "Settings"),
-        .target(name: "TabManager"),
-        .target(name: "MenuSheet"),
-        .target(name: "ActionSystem"),
-        .target(name: "WebViewStickyInteraction"),
-    ]
-), previews: true)
 
 func defineModule(
     _ category: ModuleCategory,

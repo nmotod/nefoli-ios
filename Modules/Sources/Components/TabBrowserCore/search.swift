@@ -19,7 +19,7 @@ func guessInputType(text: String) -> InputType {
     return .query(text)
 }
 
-func buildSearchURL(text: String) -> URL? {
+public func buildSearchURL(text: String) -> URL? {
     switch guessInputType(text: text) {
     case let .url(url):
         return url

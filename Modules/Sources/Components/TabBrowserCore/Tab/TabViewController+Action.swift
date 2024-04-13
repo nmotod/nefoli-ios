@@ -4,11 +4,11 @@ import ThemeSystem
 import UIKit
 
 extension TabViewController: ActionDispatcher {
-    func canDispatchAction(type: any ActionTypeProtocol) -> Bool {
+    public func canDispatchAction(type: any ActionTypeProtocol) -> Bool {
         return type is TabActionType || type is CustomActionType
     }
 
-    func dispatchAnyAction(type actionType: any ActionTypeProtocol, sender: Any?) throws {
+    public func dispatchAnyAction(type actionType: any ActionTypeProtocol, sender: Any?) throws {
         if let actionType = actionType as? TabActionType {
             performAction(type: actionType, sender: sender)
 

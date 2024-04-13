@@ -209,8 +209,6 @@ extension TabGroupView {
         override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
             let attributes = super.initialLayoutAttributesForAppearingItem(at: itemIndexPath)
 
-            logger.debug("\(itemIndexPath): \(attributes?.frame.debugDescription ?? "()")")
-
             return attributes
         }
 

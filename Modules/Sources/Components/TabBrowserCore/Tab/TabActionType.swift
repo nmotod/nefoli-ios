@@ -2,8 +2,8 @@ import ActionSystem
 import Foundation
 import UIKit
 
-enum TabActionType: String, ActionTypeProtocol, CaseIterable {
-    static let idPrefix = "tab"
+public enum TabActionType: String, ActionTypeProtocol, CaseIterable {
+    public static let idPrefix = "tab"
 
     case goBack
     case goForward
@@ -15,7 +15,7 @@ enum TabActionType: String, ActionTypeProtocol, CaseIterable {
     case translate
     case hatenaBookmark
 
-    var definition: ActionTypeDefinition {
+    public var definition: ActionTypeDefinition {
         switch self {
         case .goBack:
             return goBackDefinition
