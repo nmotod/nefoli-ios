@@ -224,8 +224,8 @@ public class TabBrowserController: UIViewController, TabGroupViewDelegate, TabVi
         )
 
         tabVC.setOmnibarButtons(
-            left: makeTabActionButton(type: TabActionType.goBack, for: tabVC),
-            right: makeActionButton(type: TabBrowserActionType.menuSheet)
+            left: tabVC.makeOmnibarButton(type: TabActionType.goBack),
+            right: makeOmnibarButton(type: TabBrowserActionType.menuSheet)
         )
 
         viewControllersByTabId[tab.id] = tabVC

@@ -50,4 +50,25 @@ extension TabViewController: ActionDispatcher {
             openHatenaBookmark(sender)
         }
     }
+
+    // TODO: support long press
+    public func makeOmnibarButton(type actionType: TabActionType) -> UIButton? {
+        guard let uiAction = makeUIAction(type: actionType) else {
+            return nil
+        }
+
+        let button = Omnibar.makeOmnibarButton(primaryAction: uiAction)
+
+        switch actionType {
+        case .goBack:
+            button.nfl_syncIsEnabled(publisher: canGoBackPublisher)
+
+        case .goForward:
+            button.nfl_syncIsEnabled(publisher: canGoForwardPublisher)
+
+        default: ()
+        }
+
+        return button
+    }
 }

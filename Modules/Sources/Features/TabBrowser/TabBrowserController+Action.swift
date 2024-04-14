@@ -4,18 +4,6 @@ import TabBrowserCore
 import ThemeSystem
 import UIKit
 
-private func makeButton(primaryAction: UIAction) -> UIButton {
-    primaryAction.title = ""
-
-    let button = UIButton(primaryAction: primaryAction)
-    button.tintColor = ThemeColors.tint.color
-    button.snp.makeConstraints { make in
-        make.width.equalTo(44)
-    }
-
-    return button
-}
-
 extension TabBrowserController: ActionDispatcher {
     public class func supportedActionTypes() -> [any ActionTypeProtocol] {
         return TabBrowserActionType.allCases + TabActionType.allCases
@@ -69,32 +57,11 @@ extension TabBrowserController: ActionDispatcher {
         }
     }
 
-    // TODO: support long press
-    func makeActionButton(type actionType: TabBrowserActionType) -> UIButton? {
+    func makeOmnibarButton(type actionType: TabBrowserActionType) -> UIButton? {
         guard let uiAction = makeUIAction(type: actionType) else {
             return nil
         }
 
-        return makeButton(primaryAction: uiAction)
-    }
-
-    func makeTabActionButton(type actionType: TabActionType, for tabVC: TabViewController) -> UIButton? {
-        guard let uiAction = tabVC.makeUIAction(type: actionType) else {
-            return nil
-        }
-
-        let button = makeButton(primaryAction: uiAction)
-
-        switch actionType {
-        case .goBack:
-            button.nfl_syncIsEnabled(publisher: tabVC.canGoBackPublisher)
-
-        case .goForward:
-            button.nfl_syncIsEnabled(publisher: tabVC.canGoForwardPublisher)
-
-        default: ()
-        }
-
-        return button
+        return Omnibar.makeOmnibarButton(primaryAction: uiAction)
     }
 }
