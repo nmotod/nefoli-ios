@@ -125,7 +125,6 @@ defineModule(.Components, .target(
         .target(name: "ThemeSystem"),
         .target(name: "Utils"),
         .target(name: "Bookmark"),
-        .target(name: "Settings"),
         .target(name: "MenuSheet"),
         .target(name: "ActionSystem"),
         .target(name: "WebViewStickyInteraction"),
@@ -144,6 +143,7 @@ defineModule(.Features, .target(
     dependencies: [
         .target(name: "TabBrowserCore"),
         .target(name: "TabManager"),
+        .target(name: "Settings"),
     ]
 ), test: noTests, previews: false)
 
