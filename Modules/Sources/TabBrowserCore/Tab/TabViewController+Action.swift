@@ -62,9 +62,11 @@ extension TabViewController: ActionDispatcher {
         switch actionType {
         case .goBack:
             button.nfl_syncIsEnabled(publisher: canGoBackPublisher)
+            button.menu = makeBackForwardMenu()
 
         case .goForward:
             button.nfl_syncIsEnabled(publisher: canGoForwardPublisher)
+            button.menu = makeBackForwardMenu()
 
         default: ()
         }

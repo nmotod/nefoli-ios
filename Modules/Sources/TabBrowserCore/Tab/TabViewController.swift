@@ -82,6 +82,8 @@ public class TabViewController: UIViewController, WKUIDelegate, WKNavigationDele
 
     private var webViewKVObservations: [NSKeyValueObservation] = []
 
+    private var cancellables: [AnyCancellable] = []
+
     private var stickyInteraction: WebViewStickyInteraction?
 
     private lazy var linkLongPressGestureRecognizer = WebLinkLongPressGestureRecognizer { [weak self] recognizer in
@@ -94,6 +96,23 @@ public class TabViewController: UIViewController, WKUIDelegate, WKNavigationDele
         let newTab = Tab(initialURL: linkURL)
         delegate?.open(tab: newTab, from: self)
     }
+
+    public var backForwardButton: UIButton { _backForwardButton }
+
+    private lazy var _backForwardButton = BackForwardButton(
+        onGoBack: { [weak self] sender in
+            self?.goBack(sender)
+        },
+        onGoForward: { [weak self] sender in
+            self?.goForward(sender)
+        },
+        onGoTo: { [weak self] item in
+            self?.webView?.go(to: item)
+        },
+        listProvider: { [weak self] in
+            return self?.webView?.backForwardList
+        }
+    )
 
     private let canGoBackSubject = CurrentValueSubject<Bool, Never>(false)
 
@@ -183,6 +202,13 @@ public class TabViewController: UIViewController, WKUIDelegate, WKNavigationDele
             webView.uiDelegate = self
             webView.navigationDelegate = self
 
+            webView.publisher(for: \.url)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] _ in
+                    self?.titleOrURLDidChange()
+                }
+                .store(in: &cancellables)
+
             self.webViewKVObservations = [
                 webView.observe(\.url) { [weak self] _, _ in
                     guard let self = self else { return }
@@ -221,6 +247,17 @@ public class TabViewController: UIViewController, WKUIDelegate, WKNavigationDele
                     }
                 },
             ]
+
+            Publishers.CombineLatest(
+                webView.publisher(for: \.canGoBack),
+                webView.publisher(for: \.canGoForward)
+            )
+            .receive(on: DispatchQueue.main)
+            .map(BackForwardState.init)
+            .sink { [weak self] state in
+                self?._backForwardButton.backForwardState = state
+            }
+            .store(in: &cancellables)
 
             rootView.showWebView(webView)
 
@@ -583,5 +620,37 @@ public class TabViewController: UIViewController, WKUIDelegate, WKNavigationDele
                 print("custom script '\(title)' result:", result)
             }
         }
+    }
+
+    func makeBackForwardMenu() -> UIMenu? {
+        let elem = UIDeferredMenuElement.uncached { [weak self] completion in
+            guard let self,
+                  let backForwardList = self.webView?.backForwardList,
+                  let currentItem = backForwardList.currentItem else { return }
+
+            let items = backForwardList.backList + [currentItem] + backForwardList.forwardList
+
+            let menuItems = items.map { item in
+                return self.makeBackForwardAction(item: item, isCurrentItem: item === currentItem)
+            }
+
+            completion(menuItems)
+        }
+
+        return UIMenu(children: [elem])
+    }
+
+    private func makeBackForwardAction(item: WKBackForwardListItem, isCurrentItem: Bool) -> UIAction {
+        let action = UIAction(title: item.title ?? "", subtitle: item.url.absoluteString) { [weak self] _ in
+            guard let webView = self?.webView else { return }
+
+            webView.go(to: item)
+        }
+
+        if isCurrentItem {
+            action.attributes = .disabled
+        }
+
+        return action
     }
 }
