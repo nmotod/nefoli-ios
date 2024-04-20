@@ -7,20 +7,21 @@ public class Tab: Object, CreatedDateStorable, PropertyIterable {
         case id
         case initialURL
         case createdDate
-        case backList
-        case forwardList
-        case current
+        case sessionState
+        case lastURL
+        case lastTitle
     }
 
     @Persisted(primaryKey: true) public var id = UUID().uuidString
 
     @Persisted public var initialURL: URL?
 
-    @Persisted public private(set) var backList: List<BackForwardListItem>
+    // WKWebView#interactionState
+    @Persisted public var sessionState: Data?
 
-    @Persisted public private(set) var forwardList: List<BackForwardListItem>
+    @Persisted public internal(set) var lastURL: URL?
 
-    @Persisted public var current: BackForwardListItem?
+    @Persisted public internal(set) var lastTitle: String?
 
     @Persisted public private(set) var createdDate: Date = .init()
 
@@ -31,21 +32,5 @@ public class Tab: Object, CreatedDateStorable, PropertyIterable {
     public convenience init(initialURL: URL) {
         self.init()
         self.initialURL = initialURL
-    }
-
-    public func updateBackForwardList(wkBackForwardList: WKBackForwardList) {
-        if let currentItem = wkBackForwardList.currentItem {
-            current = .init(wkItem: currentItem)
-        }
-
-        backList.removeAll()
-        backList.append(objectsIn: wkBackForwardList.backList.map(BackForwardListItem.init(wkItem:)))
-
-        forwardList.removeAll()
-        forwardList.append(objectsIn: wkBackForwardList.forwardList.map(BackForwardListItem.init(wkItem:)))
-    }
-
-    public func updateCurrentTitleOrURL(webView: WKWebView) {
-        current = .init(title: webView.title ?? "", url: webView.url)
     }
 }

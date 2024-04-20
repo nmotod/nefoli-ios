@@ -224,7 +224,10 @@ public class TabViewController: UIViewController, WKUIDelegate, WKNavigationDele
 
             rootView.showWebView(webView)
 
-            if let url = tab?.current?.url ?? tab?.initialURL {
+            if let sessionState = tab?.sessionState {
+                webView.interactionState = sessionState
+
+            } else if let url = tab?.lastURL ?? tab?.initialURL {
                 _ = webView.load(URLRequest(url: url))
             }
 
@@ -364,10 +367,8 @@ public class TabViewController: UIViewController, WKUIDelegate, WKNavigationDele
         {
             return WebpageMetadata(title: title, url: url)
 
-        } else if let current = tab.current,
-                  let url = current.url
-        {
-            return WebpageMetadata(title: current.title, url: url)
+        } else if let url = tab.lastURL {
+            return WebpageMetadata(title: tab.lastTitle ?? "", url: url)
 
         } else if let url = tab.initialURL {
             return WebpageMetadata(title: "", url: url)
@@ -426,7 +427,7 @@ public class TabViewController: UIViewController, WKUIDelegate, WKNavigationDele
         guard let tab = tab else { return }
 
         try! tab.realm!.write {
-            tab.updateBackForwardList(wkBackForwardList: webView.backForwardList)
+            tab.sessionState = webView.interactionState as? Data
         }
 
         omnibar.progressBar.finish()
@@ -480,7 +481,7 @@ public class TabViewController: UIViewController, WKUIDelegate, WKNavigationDele
         guard let tab, let webView else { return }
 
         try! tab.realm!.write {
-            tab.updateCurrentTitleOrURL(webView: webView)
+            tab.updateLastURLOrTitle(webView: webView)
         }
     }
 

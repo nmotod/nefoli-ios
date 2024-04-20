@@ -2,7 +2,7 @@ import Foundation
 import os.log
 import RealmSwift
 
-let schemaVersion: UInt64 = 18
+let schemaVersion: UInt64 = 20
 
 func doMigrate(_ migration: Migration, oldSchemaVersion: UInt64) {
     let log = Logger(category: "migration")
@@ -43,4 +43,15 @@ func doMigrate(_ migration: Migration, oldSchemaVersion: UInt64) {
     }
 
     // v18 does not require manual migration
+
+    // v19: add Tab.sessionState
+
+    // v20:
+    //   added:
+    //     - Tab.lastURL
+    //     - Tab.lastTitle
+    //   deleted:
+    //     - Tab.backList
+    //     - Tab.forwardList
+    //     - Tab.current
 }
