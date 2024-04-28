@@ -172,7 +172,7 @@ func defineModule(
     test: ((Target) -> Target?)? = nil,
     previews: Bool = false
 ) {
-    target.path = "Sources/\(category)/\(target.name)"
+//    target.path = "Sources/\(category)/\(target.name)"
 
     package.targets.append(target)
 
@@ -192,8 +192,8 @@ func defineModule(
         dependencies: [
             .target(name: target.name),
             .product(name: "Difference", package: "Difference"),
-        ],
-        path: "Tests/\(category)/\(target.name)Tests"
+        ]
+//        path: "Tests/\(category)/\(target.name)Tests"
     )
 
     if let test {
