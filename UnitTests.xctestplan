@@ -22,13 +22,6 @@
     {
       "target" : {
         "containerPath" : "container:..\/Modules",
-        "identifier" : "TabBrowserTests",
-        "name" : "TabBrowserTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/Modules",
         "identifier" : "UtilsTests",
         "name" : "UtilsTests"
       }
@@ -52,6 +45,20 @@
         "containerPath" : "container:..\/Modules",
         "identifier" : "SettingsTests",
         "name" : "SettingsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Modules",
+        "identifier" : "TabBrowserCoreTests",
+        "name" : "TabBrowserCoreTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Modules",
+        "identifier" : "TabManagerTests",
+        "name" : "TabManagerTests"
       }
     }
   ],
