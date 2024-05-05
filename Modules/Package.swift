@@ -109,6 +109,7 @@ let baseTargets: [Target] = [
             "MenuSheet",
             "ActionSystem",
             "WebViewStickyInteraction",
+            "ContentBlocker",
         ]
     ).with(
         test: true,
